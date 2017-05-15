@@ -1,0 +1,4 @@
+c:\users\sandy\documents\visual studio 2017\Projects\ITI.Simiti.DB\ITI.Simiti.DAL\bin\Debug\netstandard1.4\ITI.Simiti.DAL.deps.json
+c:\users\sandy\documents\visual studio 2017\Projects\ITI.Simiti.DB\ITI.Simiti.DAL\bin\Debug\netstandard1.4\ITI.Simiti.DAL.dll
+c:\users\sandy\documents\visual studio 2017\Projects\ITI.Simiti.DB\ITI.Simiti.DAL\obj\Debug\netstandard1.4\ITI.Simiti.DAL.AssemblyInfo.cs
+c:\users\sandy\documents\visual studio 2017\Projects\ITI.Simiti.DB\ITI.Simiti.DAL\obj\Debug\netstandard1.4\ITI.Simiti.DAL.csprojResolveAssemblyReference.cache

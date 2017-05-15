@@ -1,0 +1,6 @@
+c:\users\sandy\documents\visual studio 2017\Projects\ITI.Simiti.DB\ITI.Simiti.DAL.Tests\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.deps.json
+c:\users\sandy\documents\visual studio 2017\Projects\ITI.Simiti.DB\ITI.Simiti.DAL.Tests\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.runtimeconfig.json
+c:\users\sandy\documents\visual studio 2017\Projects\ITI.Simiti.DB\ITI.Simiti.DAL.Tests\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.runtimeconfig.dev.json
+c:\users\sandy\documents\visual studio 2017\Projects\ITI.Simiti.DB\ITI.Simiti.DAL.Tests\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.dll
+c:\users\sandy\documents\visual studio 2017\Projects\ITI.Simiti.DB\ITI.Simiti.DAL.Tests\obj\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.csprojResolveAssemblyReference.cache
+c:\users\sandy\documents\visual studio 2017\Projects\ITI.Simiti.DB\ITI.Simiti.DAL.Tests\obj\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.AssemblyInfo.cs

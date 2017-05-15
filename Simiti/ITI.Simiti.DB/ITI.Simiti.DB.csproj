@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net46</TargetFramework>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Scripts\20171505.0000.Create-Schema.sql" />
+    <None Remove="Scripts\20171505.0001.Install-tUser.sql" />
+    <None Remove="Scripts\20171505.0002.Install-tProject.sql" />
+    <None Remove="Scripts\20171505.0003.Install-vUser.sql" />
+    <None Remove="Scripts\20171505.0004.Install-vProject.sql" />
+    <None Remove="Scripts\20171505.0005.Install-sUserCreate.sql" />
+    <None Remove="Scripts\20171505.0006.Install-sUserDelete.sql" />
+    <None Remove="Scripts\20171505.0007.Install-sUserUpdate.sql" />
+    <None Remove="Scripts\20171505.0008.Install-sProjectCreate.sql" />
+    <None Remove="Scripts\20171505.0009.Install-sProjectDelete.sql" />
+    <None Remove="Scripts\20171505.0010.Install-sProjectUpdate.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\20171505.0000.Create-Schema.sql" />
+    <EmbeddedResource Include="Scripts\20171505.0001.Install-tUser.sql" />
+    <EmbeddedResource Include="Scripts\20171505.0002.Install-tProject.sql" />
+    <EmbeddedResource Include="Scripts\20171505.0003.Install-vUser.sql" />
+    <EmbeddedResource Include="Scripts\20171505.0004.Install-vProject.sql" />
+    <EmbeddedResource Include="Scripts\20171505.0005.Install-sUserCreate.sql" />
+    <EmbeddedResource Include="Scripts\20171505.0006.Install-sUserDelete.sql" />
+    <EmbeddedResource Include="Scripts\20171505.0007.Install-sUserUpdate.sql" />
+    <EmbeddedResource Include="Scripts\20171505.0008.Install-sProjectCreate.sql" />
+    <EmbeddedResource Include="Scripts\20171505.0009.Install-sProjectDelete.sql" />
+    <EmbeddedResource Include="Scripts\20171505.0010.Install-sProjectUpdate.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dbup" Version="3.3.5" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+    <Reference Include="System.Data" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+</Project>
