@@ -3,8 +3,8 @@
 
 	UserId int identity(0,1),
 	Pseudo nvarchar(32) not null,
-	Adress nvarchar(64),
-	UserPassword varbinary(128) not null,
+	Adress nvarchar(150),
+	UserPassword nvarchar(150) not null,
 
 	constraint PK_tUser primary key(UserId),
 	constraint UK_tUser unique(Pseudo),

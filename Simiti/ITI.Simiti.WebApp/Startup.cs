@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ITI.Simiti.DAL;
+using ITI.Simiti.WebApp.Services;
 
 namespace ITI.Simiti.WebApp
 {
@@ -29,6 +31,10 @@ namespace ITI.Simiti.WebApp
         {
             // Add framework services.
             services.AddMvc();
+            services.AddSingleton(_ => new UserGateway(Configuration["ConnectionStrings:SimitiDB"]));
+            services.AddSingleton(_ => new ProjectGateway(Configuration["ConnectionStrings:SimitiDB"]));
+            services.AddSingleton<UserService>();
+            services.AddSingleton<ProjectService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,7 +59,8 @@ namespace ITI.Simiti.WebApp
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller}/{action}/{id?}",
+                    defaults: new { controller = "Home", action = "Index" });
             });
         }
     }

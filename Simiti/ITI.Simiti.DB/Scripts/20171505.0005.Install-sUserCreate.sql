@@ -1,8 +1,8 @@
 ﻿create proc iti.sUserCreate
 (
 	@Pseudo nvarchar(32),
-	@Adress nvarchar(64),
-	@UserPassword varbinary(128)
+	@Adress nvarchar(150),
+	@UserPassword nvarchar(150)
 )
 as 
 begin

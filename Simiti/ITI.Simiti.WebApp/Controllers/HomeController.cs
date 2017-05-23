@@ -10,6 +10,7 @@ namespace ITI.Simiti.WebApp.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["NoLayout"] = true;
             return View();
         }
 
@@ -29,6 +30,18 @@ namespace ITI.Simiti.WebApp.Controllers
 
         public IActionResult Error()
         {
+            return View();
+        }
+        
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult RegisterPost()
+        {
+
             return View();
         }
     }
