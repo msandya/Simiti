@@ -8,7 +8,7 @@ namespace ITI.Simiti.DAL
     {
         public int ProjectId { get; set; }
 
-        public string Pseudo { get; set; }
+        public string Name { get; set; }
 
         public int UserId { get; set; }
     }

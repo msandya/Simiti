@@ -1,5 +1,6 @@
-﻿@{
-    string location = string.Format( "{0}://{1}/", Context.Request.Scheme, Context.Request.Host );
+
+@{
+    Layout = null;
 }
 
 <!DOCTYPE html>
@@ -7,21 +8,8 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Signed out</title>
+    <title>LogOff</title>
 </head>
 <body>
-    <script>
-        (function () {
-            var origin = window.opener || window.parent;
-            var isPopup = origin == window.opener;
-
-            origin.postMessage(JSON.stringify(
-            {
-                type: 'signedOut'
-            }), '@location');
-
-            if (isPopup) window.close();
-        })();
-    </script>
 </body>
 </html>

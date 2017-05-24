@@ -1,8 +1,8 @@
 ﻿using System;
-using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using ITI.Simiti.WebApp.Authentication;
+using Microsoft.Extensions.Options;
+using ITI.Simiti.WebApp.Authentification;
 
 namespace ITI.Simiti.WebApp.Services
 {
@@ -10,17 +10,15 @@ namespace ITI.Simiti.WebApp.Services
     {
         readonly TokenProviderOptions _options;
 
-        public TokenService(IOptions<TokenProviderOptions> options)
+        public TokenService( IOptions<TokenProviderOptions> options )
         {
             _options = options.Value;
         }
 
-        public Token GenerateToken(string userId, string email)
+        public Token GenerateToken ( string userId, string email )
         {
             var now = DateTime.UtcNow;
 
-            // Specifically add the iat (issued timestamp), and sub (subject/user) claims.
-            // You can add other claims here, if you want:
             var claims = new Claim[]
             {
                 new Claim( JwtRegisteredClaimNames.Sub, userId ),
@@ -28,7 +26,6 @@ namespace ITI.Simiti.WebApp.Services
                 new Claim( JwtRegisteredClaimNames.Iat, ( ( int )( now - new DateTime( 1970, 1, 1 ) ).TotalSeconds).ToString(), ClaimValueTypes.Integer64 )
             };
 
-            // Create the JWT and write it to a string
             var jwt = new JwtSecurityToken(
                 issuer: _options.Issuer,
                 audience: _options.Audience,
@@ -41,10 +38,9 @@ namespace ITI.Simiti.WebApp.Services
             return new Token(encodedJwt, (int)_options.Expiration.TotalSeconds);
         }
     }
-
     public class Token
     {
-        public Token(string accessToken, int expiresIn)
+        public Token( string accessToken, int expiresIn )
         {
             AccessToken = accessToken;
             ExpiresIn = expiresIn;

@@ -1,6 +1,6 @@
 {
   "name": "simiti",
-  "description": "Client-side Vue application for PrimarySchool.",
+  "description": "Client-side Vue application for Simiti.",
   "author": "IN'TECH",
   "private": true,
   "scripts": {

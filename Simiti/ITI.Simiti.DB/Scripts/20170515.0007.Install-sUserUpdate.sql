@@ -1,16 +1,14 @@
 ﻿create proc iti.sUserUpdate
 (
 	@UserId int,
-	@Pseudo nvarchar(32),
-	@Adress nvarchar(150),
-	@UserPassword nvarchar(150)
+	@Pseudo nvarchar(150),
+	@Email nvarchar(150)
 )
 as
 begin
 	update iti.tUser
 	set Pseudo = @Pseudo,
-		Adress = @Adress,
-		UserPassword =@UserPassword
+		Email = @Email
 	where UserId = @UserId
 	return 0;
 end;

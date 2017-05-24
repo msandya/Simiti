@@ -7,6 +7,26 @@ import VueRouter from 'vue-router'
 
 import App from './components/App.vue'
 import Home from './components/Home.vue'
+import Login from './components/Login.vue'
+import Logout from './components/Logout.vue'
+import Register from './components/Register.vue'
+
+import UserInscription from './components/UsersFolder/User.vue'
+
+/*import ClassList from './components/classes/ClassList.vue'
+import ClassEdit from './components/classes/ClassEdit.vue'
+import ClassFullView from './components/classes/ClassFullView.vue'
+
+import StudentList from './components/students/StudentList.vue'
+import StudentEdit from './components/students/StudentEdit.vue'
+import StudentAssignClass from './components/students/StudentAssignClass.vue'
+import StudentSearch from './components/students/StudentSearch.vue'
+
+import TeacherList from './components/teachers/TeacherList.vue'
+import TeacherEdit from './components/teachers/TeacherEdit.vue'
+import TeacherAssign from './components/teachers/TeacherAssign.vue'
+
+import FollowingList from './components/github/FollowingList.vue'*/
 
 import AuthService from './services/AuthService'
 
@@ -24,7 +44,6 @@ function requireAuth (to, from, next)  {
       path: '/login',
       query: { redirect: to.fullPath }
     });
-
     return;
   }
 
@@ -44,8 +63,28 @@ const router = new VueRouter({
   mode: 'history',
   base: '/Home',
   routes: [
-    { path: '', component: Home },
+    { path: '/login', component: Login },
+    { path: '/register', component: Register },
+    { path: '/logout', component: Logout, beforeEnter: requireAuth },
 
+    { path: '', component: Home, beforeEnter: requireAuth },
+
+    //{ path: '/users/inscription', component: UserInscription, beforeEnter: requireAuth}
+
+    //{ path: '/classes', component: ClassList, beforeEnter: requireAuth },
+    //{ path: '/classes/:mode([create|edit]+)/:id?', component: ClassEdit, beforeEnter: requireAuth },
+    //{ path: '/classes/vueDetaille/:id', component: ClassFullView, beforeEnter: requireAuth },
+
+    //{ path: '/students', component: StudentList, beforeEnter: requireAuth },
+    //{ path: '/students/:mode([create|edit]+)/:id?', component: StudentEdit, beforeEnter: requireAuth },
+    //{ path: '/students/assignClass/:id', component: StudentAssignClass, beforeEnter: requireAuth },
+    //{ path: '/students/rechercher', component: StudentSearch, beforeEnter: requireAuth },
+
+    //{ path: '/teachers', component: TeacherList, beforeEnter: requireAuth },
+    //{ path: '/teachers/:mode([create|edit]+)/:id?', component: TeacherEdit, beforeEnter: requireAuth },
+    //{ path: '/teachers/assign/:id', component: TeacherAssign, beforeEnter: requireAuth },
+
+    //{ path: '/github/following', component: FollowingList, beforeEnter: requireAuth, meta: { requiredProviders: ['GitHub'] } }
   ]
 })
 
@@ -60,11 +99,11 @@ AuthService.allowedOrigins = ['http://localhost:5000', /* 'http://mywebsite.com'
 AuthService.logoutEndpoint = '/Account/LogOff';
 
 // Allowed providers to log in our application, and the corresponding server-side endpoints
-AuthService.providers = {
-  'Base': {
-    endpoint: '/Account/Login'
-  },
-};
+AuthService.loginEndpoint = '/Account/Login';
+
+// Allowed providers to sign up our application, and the corresponding server-side endpoints
+AuthService.registerEndpoint = '/Account/Register'
+
 
 AuthService.appRedirect = () => router.replace('/');
 

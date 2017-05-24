@@ -4,13 +4,12 @@ using System.Threading.Tasks;
 using ITI.Simiti.DAL;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
-using ITI.Simiti.WebApp.Authentication;
+using ITI.Simiti.WebApp.Authentification;
 
-namespace ITI.Simiti.WebApp.Authentication
+namespace ITI.PrimarySchool.WebApp.Authentication
 {
     public class ExternalAuthenticationEvents
     {
-
         readonly IExternalAuthenticationManager _authenticationManager;
 
         public ExternalAuthenticationEvents( IExternalAuthenticationManager authenticationManager )
@@ -32,7 +31,7 @@ namespace ITI.Simiti.WebApp.Authentication
             List<Claim> claims = new List<Claim>
             {
                 new Claim( ClaimTypes.NameIdentifier, user.UserId.ToString(), ClaimValueTypes.String ),
-                new Claim( ClaimTypes.Email, user.Adress )
+                new Claim( ClaimTypes.Email, user.Email )
             };
             ClaimsPrincipal principal = new ClaimsPrincipal( new ClaimsIdentity( claims, CookieAuthentication.AuthenticationType, ClaimTypes.Email, string.Empty ) );
             return principal;

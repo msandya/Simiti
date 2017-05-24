@@ -2,7 +2,7 @@
 (
 
 	@Name nvarchar(32),
-	@Project xml,
+	@Project nvarchar(32),
 	@UserId int
 )
 as 

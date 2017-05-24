@@ -5,18 +5,16 @@
     IEnumerable<string> providers = (IEnumerable<string>)ViewData["Providers"];
     string providerNames = providers == null ? string.Empty : string.Join(",", providers.Select(p => string.Format("'{0}'", p)));
 }
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>SPA</title>
-
+    <title>Simiti Project</title>
     @Html.Partial("_AppStyles")
 </head>
 <body>
     <div id="app"></div>
-
     <script>
         (function () {
             var simiti = (function () {
@@ -37,15 +35,14 @@
             })();
 
             this.ITI = this.ITI || {};
-            this.ITI.Simiti = simiti;
+            this.ITI.simiti = simiti;
         })();
     </script>
-
     @if (token != null && email != null)
     {
         <script>
             (function () {
-                ITI.Simiti.setIdentity({
+                ITI.simiti.setIdentity({
                     bearer: {
                         access_token: '@token.AccessToken',
                         expires_in: @token.ExpiresIn
@@ -56,11 +53,9 @@
             })();
         </script>
     }
-
     <environment names="Development">
         <script type="text/javascript" src="http://localhost:8080/dist/simiti.js"></script>
     </environment>
-
     <environment names="Staging,Production">
         <script type="text/javascript" src="~/dist/simiti.js"></script>
     </environment>

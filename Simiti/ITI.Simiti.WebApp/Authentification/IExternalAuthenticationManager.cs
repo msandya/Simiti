@@ -1,7 +1,7 @@
 ﻿using ITI.Simiti.DAL;
 using Microsoft.AspNetCore.Authentication.OAuth;
 
-namespace ITI.Simiti.WebApp.Authentication
+namespace ITI.PrimarySchool.WebApp.Authentication
 {
     public interface IExternalAuthenticationManager
     {

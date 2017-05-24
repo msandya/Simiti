@@ -12,122 +12,150 @@ namespace ITI.Simiti.DAL
     {
         readonly string _connectionString;
 
-        public UserGateway(string connectionString )
+        public UserGateway( string connectionString )
         {
             _connectionString = connectionString;
         }
 
+        public void CreatePasswordUser( string pseudo, string email, byte[] password )
+        {
+            using (SqlConnection con = new SqlConnection( _connectionString ))
+            {
+                con.Execute(
+                    "iti.sPasswordUserCreate",
+                    new { Pseudo = pseudo, Email = email, Password = password },
+                    commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public IEnumerable<string> GetAuthenticationProviders(string userId)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<string>(
+                    "select p.ProviderName from iti.vAuthenticationProvider p where p.UserId = @UserId",
+                    new { UserId = userId });
+            }
+        }
+
         public IEnumerable<User> GetAll()
         {
-            using(SqlConnection con = new SqlConnection(_connectionString))
+            using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 return con.Query<User>(
-                    @"select t.UserId,
-                             t.Pseudo,
-                             t.Adress,
-                             t.UserPassword
-                     from iti.vUser t;");
+                    @"select u.UserId,
+                             u.Pseudo,
+                             u.Email
+                      from iti.vUser u;");
             }
-
         }
+
         public User FindById( int userId )
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 return con.Query<User>(
-                    @"select t.UserId,
-                             t.Pseudo,
-                             t.Adress,
-                             t.UserPassword
-                     from iti.vUser t
-                     <here t.UserId = @UserId;",
-                new { UserId = userId } )
+                    @"select u.UserId,
+                             u.Pseudo,
+                             u.Email
+                      from iti.vUser u
+                      where UserId = @UserId",
+                    new { UserId = userId })
                     .FirstOrDefault();
-
             }
         }
 
-        public User FindByName ( string pseudo )
+        public User FindByEmail(string email)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 return con.Query<User>(
-                       @"select t.UserId,
-                             t.Pseudo,
-                             t.Adress,
-                             t.UserPassword
-                     from iti.vUser t
-                     <here t.Pseudo = @pseudo;",
+                    @"select u.UserId,
+                             u.Pseudo,
+                             u.Email
+                      from iti.vUser u
+                      where Email = @Email",
+                    new { Email = email })
+                    .FirstOrDefault();
+            }
+        }
+
+        public User FindByPseudo( string pseudo )
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<User>(
+                    @"select u.UserId,
+                             u.Pseudo,
+                             u.Email
+                      from iti.vUser u
+                      where Pseudo = @Pseudo",
                     new { Pseudo = pseudo })
                     .FirstOrDefault();
             }
-
         }
 
-        public void Create (string pseudo, string adress )
+        public User FindUserByProjectId( int projectId )
         {
-            Create(pseudo, adress);
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<User>(
+                    @"select u.UserId,
+                             u.Pseudo,
+                             u.Email
+                      from iti.vUser u
+                      where ProjectId = @ProjectId", 
+                    new { ProjectId = projectId })
+                    .FirstOrDefault();
+            }
         }
 
-        public void Create(string pseudo,string userPassword,string adress)
+        public User FindUserByProjectIdAndName( string name, int projectId )
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<User>(
+                    @"select u.UserId,
+                             u.Pseudo,
+                             u.Email
+                      from iti.vUser u
+                      where ProjectId = @ProjectId and Name = @Name",
+                    new { ProjectId = projectId, Name = name })
+                    .FirstOrDefault();
+            }
+        }
+
+        public void Create( string pseudo, string email )
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Execute(
-                    "iti.sUserCreate",
-                    new { Pseudo = pseudo, Adress = adress, UserPassword = userPassword },
+                    "iti.sUserCreate", 
+                    new { Pseudo = pseudo, Email = email }, 
                     commandType: CommandType.StoredProcedure);
             }
         }
 
-        public void Delete(int userId)
+        public void Delete( int userId )
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Execute(
-                    "iti.sUserDelete",
-                    new { UserId = userId },
+                    "iti.sUserDelete", 
+                    new { UserId = userId }, 
                     commandType: CommandType.StoredProcedure);
             }
         }
 
-        public void Update(int userId, string pseudo, string userpassword,string adress)
+        public void Update( int userId, string pseudo, string userPassword, string email )
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Execute(
                     "iti.sUserUpdate",
-                    new { ClassId = userId, Pseudo = pseudo, Adress = adress },
+                    new { UserId = userId, Pseudo = pseudo, @UserPassword = userPassword, Email = email },
                     commandType: CommandType.StoredProcedure);
             }
-        }
-
-        public User FindUserByProjectIdAndName(string name,int projectId)
-        {
-            using (SqlConnection con = new SqlConnection(_connectionString))
-                return con.Query<User>(
-                      @"select t.UserId,
-                             t.Pseudo,
-                             t.Adress,
-         
-                     from iti.vUser t
-                     <here t.ProjectId= @ProjectId and t.Name = @Name;",
-                   new { ProjectId = projectId, Name = name })
-                   .FirstOrDefault();
-
-        }
-        public User FindByPseudo(string pseudo )
-        {
-            using (SqlConnection con = new SqlConnection(_connectionString))
-                return con.Query<User>(
-                      @"select t.UserId,
-                             t.Pseudo,
-                             t.Adress,
-                     from iti.vUser t
-                     <here t.Pseudo= @Pseudo;",
-                   new { Pseudo = pseudo})
-                   .FirstOrDefault();
-
         }
 
     }

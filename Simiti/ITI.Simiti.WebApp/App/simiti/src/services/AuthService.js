@@ -1,8 +1,9 @@
 class AuthService {
     constructor() {
         this.allowedOrigins = [];
-        this.providers = {};
+        this.loginEndpoint = null;
         this.logoutEndpoint = null;
+        this.registerEndpoint = null;
         this.appRedirect = () => null;
         this.authenticatedCallbacks = [];
         this.signedOutCallbacks = [];
@@ -11,11 +12,11 @@ class AuthService {
     }
 
     get identity() {
-        return ITI.PrimarySchool.getIdentity();
+        return ITI.simiti.getIdentity();
     }
 
     set identity(i) {
-        ITI.PrimarySchool.setIdentity(i);
+        ITI.simiti.setIdentity(i);
     }
 
     get isConnected() {
@@ -60,9 +61,15 @@ class AuthService {
     }
 
     login(selectedProvider) {
-        var provider = this.providers[selectedProvider];
-        
-        var popup = window.open(provider.endpoint, "Connexion à ITI.PrimarySchool", "menubar=no, status=no, scrollbars=no, menubar=no, width=700, height=700");
+        var popup = window.open(this.loginEndpoint, "Connexion à Simiti", "menubar=no, status=no, scrollbars=no, menubar=no, width=700, height=700");
+    }
+
+    logout() {
+        var popup = window.open(this.logoutEndpoint, "Déconnexion de Simiti", "menubar=no, status=no, scrollbars=no, menubar=no, width=700, height=600");        
+    }
+
+    register(){
+        var popup = window.open(this.registerEndpoint, "S'inscrire à Simiti", "menubar=no, status=no, scrollbars=no, menubar=no, width=700, height=600");
     }
 
     registerAuthenticatedCallback(cb) {
@@ -80,11 +87,6 @@ class AuthService {
             cb();
         }
     }
-
-    logout() {
-        var popup = window.open(this.logoutEndpoint, "Déconnexion d'ITI.PrimarySchool", "menubar=no, status=no, scrollbars=no, menubar=no, width=700, height=600");        
-    }
-
     registerSignedOutCallback(cb) {
         this.signedOutCallbacks.push(cb);
     }

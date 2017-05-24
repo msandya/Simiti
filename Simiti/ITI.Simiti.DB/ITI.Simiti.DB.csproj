@@ -6,31 +6,28 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Scripts\20171505.0000.Create-Schema.sql" />
-    <None Remove="Scripts\20171505.0001.Install-tUser.sql" />
-    <None Remove="Scripts\20171505.0002.Install-tProject.sql" />
-    <None Remove="Scripts\20171505.0003.Install-vUser.sql" />
-    <None Remove="Scripts\20171505.0004.Install-vProject.sql" />
-    <None Remove="Scripts\20171505.0005.Install-sUserCreate.sql" />
-    <None Remove="Scripts\20171505.0006.Install-sUserDelete.sql" />
-    <None Remove="Scripts\20171505.0007.Install-sUserUpdate.sql" />
-    <None Remove="Scripts\20171505.0008.Install-sProjectCreate.sql" />
-    <None Remove="Scripts\20171505.0009.Install-sProjectDelete.sql" />
-    <None Remove="Scripts\20171505.0010.Install-sProjectUpdate.sql" />
+    <None Remove="Scripts\20170521.0011.Install-tPasswordUser.sql" />
+    <None Remove="Scripts\20170521.0012.Install-sPasswordUserCreate.sql" />
+    <None Remove="Scripts\20170521.0013.Install-sPasswordUserUpdate.sql" />
+    <None Remove="Scripts\20170521.0014.Install-sUserAddPassword.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\20171505.0000.Create-Schema.sql" />
-    <EmbeddedResource Include="Scripts\20171505.0001.Install-tUser.sql" />
-    <EmbeddedResource Include="Scripts\20171505.0002.Install-tProject.sql" />
-    <EmbeddedResource Include="Scripts\20171505.0003.Install-vUser.sql" />
-    <EmbeddedResource Include="Scripts\20171505.0004.Install-vProject.sql" />
-    <EmbeddedResource Include="Scripts\20171505.0005.Install-sUserCreate.sql" />
-    <EmbeddedResource Include="Scripts\20171505.0006.Install-sUserDelete.sql" />
-    <EmbeddedResource Include="Scripts\20171505.0007.Install-sUserUpdate.sql" />
-    <EmbeddedResource Include="Scripts\20171505.0008.Install-sProjectCreate.sql" />
-    <EmbeddedResource Include="Scripts\20171505.0009.Install-sProjectDelete.sql" />
-    <EmbeddedResource Include="Scripts\20171505.0010.Install-sProjectUpdate.sql" />
+    <EmbeddedResource Include="Scripts\20170515.0000.Create-Schema.sql" />
+    <EmbeddedResource Include="Scripts\20170515.0001.Install-tUser.sql" />
+    <EmbeddedResource Include="Scripts\20170515.0002.Install-tProject.sql" />
+    <EmbeddedResource Include="Scripts\20170515.0003.Install-vUser.sql" />
+    <EmbeddedResource Include="Scripts\20170515.0004.Install-vProject.sql" />
+    <EmbeddedResource Include="Scripts\20170515.0005.Install-sUserCreate.sql" />
+    <EmbeddedResource Include="Scripts\20170515.0006.Install-sUserDelete.sql" />
+    <EmbeddedResource Include="Scripts\20170515.0007.Install-sUserUpdate.sql" />
+    <EmbeddedResource Include="Scripts\20170515.0008.Install-sProjectCreate.sql" />
+    <EmbeddedResource Include="Scripts\20170515.0009.Install-sProjectDelete.sql" />
+    <EmbeddedResource Include="Scripts\20170515.0010.Install-sProjectUpdate.sql" />
+    <EmbeddedResource Include="Scripts\20170521.0011.Install-tPasswordUser.sql" />
+    <EmbeddedResource Include="Scripts\20170521.0012.Install-sPasswordUserCreate.sql" />
+    <EmbeddedResource Include="Scripts\20170521.0013.Install-sPasswordUserUpdate.sql" />
+    <EmbeddedResource Include="Scripts\20170521.0014.Install-sUserAddPassword.sql" />
   </ItemGroup>
 
   <ItemGroup>

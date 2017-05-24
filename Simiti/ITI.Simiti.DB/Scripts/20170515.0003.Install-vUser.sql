@@ -3,7 +3,6 @@ as
 	select
 		UserId = t.UserId,
 		Pseudo = t.Pseudo,
-		Adress = t.Adress,
-		UserPassword = t.UserPassword
+		Email = t.Email
 	from iti.tUser t
 	where t.UserId <> 0;
