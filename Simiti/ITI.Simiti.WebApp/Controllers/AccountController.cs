@@ -83,6 +83,14 @@ namespace ITI.Simiti.WebApp.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        [Authorize(ActiveAuthenticationSchemes = CookieAuthentication.AuthenticationScheme)]
+        public async Task<IActionResult> LogOff()
+        {
+            await HttpContext.Authentication.SignOutAsync(CookieAuthentication.AuthenticationScheme);
+            ViewData["NoLayout"] = true;
+            return View();
+        }
 
         [HttpGet]
         [Authorize(ActiveAuthenticationSchemes = CookieAuthentication.AuthenticationScheme)]
@@ -91,6 +99,7 @@ namespace ITI.Simiti.WebApp.Controllers
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             string email = User.FindFirst(ClaimTypes.Email).Value;
             Token token = _tokenService.GenerateToken(userId, email);
+            ViewData["BreachPadding"] = GetBreachPadding();
             ViewData["Token"] = token;
             ViewData["Email"] = email;
             ViewData["NoLayout"] = true;

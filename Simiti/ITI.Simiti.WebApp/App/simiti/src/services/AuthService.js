@@ -60,7 +60,7 @@ class AuthService {
         else if(data.type == 'signedOut') this.onSignedOut();
     }
 
-    login(selectedProvider) {
+    login() {
         var popup = window.open(this.loginEndpoint, "Connexion à Simiti", "menubar=no, status=no, scrollbars=no, menubar=no, width=700, height=700");
     }
 

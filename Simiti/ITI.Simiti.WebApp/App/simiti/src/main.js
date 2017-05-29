@@ -11,7 +11,7 @@ import Login from './components/Login.vue'
 import Logout from './components/Logout.vue'
 import Register from './components/Register.vue'
 
-import UserInscription from './components/UsersFolder/User.vue'
+import User from './components/User/User.vue'
 
 /*import ClassList from './components/classes/ClassList.vue'
 import ClassEdit from './components/classes/ClassEdit.vue'
@@ -39,6 +39,7 @@ Vue.use(VueRouter)
  * @param {*} next 
  */
 function requireAuth (to, from, next)  {
+  console.log(AuthService.isConnected);
   if (!AuthService.isConnected) {
     next({
       path: '/login',
@@ -64,10 +65,11 @@ const router = new VueRouter({
   base: '/Home',
   routes: [
     { path: '/login', component: Login },
-    { path: '/register', component: Register },
     { path: '/logout', component: Logout, beforeEnter: requireAuth },
 
     { path: '', component: Home, beforeEnter: requireAuth },
+
+    { path: '/userprofile', component: User, beforeEnter: requireAuth },
 
     //{ path: '/users/inscription', component: UserInscription, beforeEnter: requireAuth}
 
