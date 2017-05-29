@@ -41,13 +41,13 @@ namespace ITI.Simiti.WebApp.Services
             return Result.Success(Status.Ok, user);
         }
 
-        public Result<User> UpdateUser( int userId, string pseudo, string password, string email )
+        public Result<User> UpdateUser( int userId, string pseudo,  string email )
         {
             if (!IsPseudoValid(pseudo)) return Result.Failure<User>(Status.BadRequest, "The username is invalid.");
             if (!IsAdressMailValid(email)) return Result.Failure<User>(Status.BadRequest, "Adress Mail is invalid.");
             if (_userGateway.FindById(userId) == null) return Result.Failure<User>(Status.NotFound, "User not found.");
 
-            _userGateway.Update(userId, pseudo, password, email);
+            _userGateway.Update(userId, pseudo, email);
             User user = _userGateway.FindById(userId);
             return Result.Success(Status.Ok, user);
         }
@@ -61,16 +61,29 @@ namespace ITI.Simiti.WebApp.Services
 
         public User FindUserByEmail( string email )
         {
-            if (_userGateway.FindByEmail(email) != null)
-                return _userGateway.FindByEmail(email);
+            User user = _userGateway.FindByEmail(email);
+            if (user != null)
+                return user;
             return null;
         }
 
-        public Result<User> FindUser( int userId )
+        public User FindUserSecret(string email)
         {
-            if (_userGateway.FindById(userId) == null) return Result.Failure<User>(Status.BadRequest, "User not found.");
-            User user = _userGateway.FindById(userId);
-            return Result.Success(Status.Ok, user);
+            User user = _userGateway.FindByEmail(email);
+            user.Password = _userGateway.FindUserPassword(user.UserId).Password;
+            return user;
+        }
+
+        public User FindUser(string email, string password)
+        {
+            User user = _userGateway.FindByEmail(email);
+            user.Password = _userGateway.FindUserPassword(user.UserId).Password;
+            if (user != null && _passwordHasher.VerifyHashedPassword(user.Password, password) == PasswordVerificationResult.Success)
+            {
+                return user;
+            }
+
+            return null;
         }
 
         public Result<int> Delete( int userId )

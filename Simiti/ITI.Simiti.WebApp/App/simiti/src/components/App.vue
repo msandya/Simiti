@@ -13,7 +13,7 @@
               <!-- Collect the nav links, forms, and other content for toggling -->
                       <div class="collapse navbar-collapse" id="iti-navbar-collapse" v-if="auth.isConnected">
                               <ul class="nav navbar-nav">
-                                <li><router-link to="/userprofile">Profile</router-link></li>
+                                <li><router-link :to="`users/${item.email}`">Profile</router-link></li>
                               </ul>
                               <ul class="nav navbar-nav navbar-right">
                                 <li class="dropdown">
@@ -43,13 +43,25 @@
 <script>
 
 import AuthService from '../services/AuthService'
+import UserApiService from '../services/AuthService'
 import { mapGetters, mapActions } from 'vuex'
 import '../directives/requiredProviders'
 
 export default {
+  data() {
+      return {
+        userEmail: null,
+        item: {}
+      }
+    },
+
   computed: {
     ...mapGetters(['isLoading']),
     auth: () => AuthService
+  },
+
+  async mounted(){
+    this.userEmail = AuthService.email();
   }
 }
 </script>

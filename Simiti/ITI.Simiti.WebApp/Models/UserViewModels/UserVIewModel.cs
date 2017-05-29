@@ -7,8 +7,12 @@ namespace ITI.Simiti.WebApp.Models.UserViewModels
 {
     public class UserViewModel
     {
-        public string Email { get; set; }
+        public int UserId { get; set; }
 
         public string Pseudo { get; set; }
+
+        public string Email { get; set; }
+
+        public byte[] Password { get; set; }
     }
 }

@@ -37,9 +37,11 @@ namespace ITI.Simiti.WebApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login( LoginViewModel model )
         {
-            if(ModelState.IsValid)
+            Console.WriteLine("Login");
+            if (ModelState.IsValid)
             {
-                User user = _userService.FindUserByEmail(model.Email);
+                User user = _userService.FindUser(model.Email,model.Password);
+                Console.WriteLine("User is authenticated {0}", user != null);
                 if (user == null)
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");

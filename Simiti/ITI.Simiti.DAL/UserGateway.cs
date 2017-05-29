@@ -80,6 +80,19 @@ namespace ITI.Simiti.DAL
             }
         }
 
+        public User FindUserPassword(int userId)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<User>(
+                    @"select [Password]
+                      from iti.tPasswordUser
+                      where UserId = @UserId",
+                    new { UserId = userId })
+                    .FirstOrDefault();
+            }
+        }
+
         public User FindByPseudo( string pseudo )
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -147,13 +160,13 @@ namespace ITI.Simiti.DAL
             }
         }
 
-        public void Update( int userId, string pseudo, string userPassword, string email )
+        public void Update( int userId, string pseudo, string email )
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Execute(
                     "iti.sUserUpdate",
-                    new { UserId = userId, Pseudo = pseudo, @UserPassword = userPassword, Email = email },
+                    new { UserId = userId, Pseudo = pseudo, Email = email },
                     commandType: CommandType.StoredProcedure);
             }
         }

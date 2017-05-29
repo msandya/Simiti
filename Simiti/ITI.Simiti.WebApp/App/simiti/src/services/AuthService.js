@@ -29,10 +29,19 @@ class AuthService {
         return identity ? identity.bearer.access_token : null;
     }
 
+    emailUser() {
+        var identity = this.identity;
+        return (identity.email);
+    }
+
     get email() {
         var identity = this.identity;
 
         return identity ? identity.email : null;
+    }
+
+    get userInfor(){
+        return identity;
     }
 
     get boundProviders() {
@@ -52,12 +61,18 @@ class AuthService {
     }
 
     onMessage(e) {
+        console.log('Is url allowed ?', !(!e.origin || this.allowedOrigins.indexOf(e.origin) < 0));
         if(!e.origin || this.allowedOrigins.indexOf(e.origin) < 0) return;
 
         var data = typeof e.data == 'string' ? JSON.parse(e.data) : e.data;
-
-        if(data.type == 'authenticated') this.onAuthenticated(data.payload);
-        else if(data.type == 'signedOut') this.onSignedOut();
+        console.log('onMessage()');
+        if(data.type == 'authenticated') {
+            console.log('authenticated');
+            this.onAuthenticated(data.payload);
+        } else if(data.type == 'signedOut') {
+            console.log('signedOut');
+            this.onSignedOut();
+        }
     }
 
     login() {

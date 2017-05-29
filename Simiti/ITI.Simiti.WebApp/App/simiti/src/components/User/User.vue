@@ -1,73 +1,89 @@
 ﻿<template>
-<h1>Profile</h1>
+    <div>
+        <div class="page-header">
+            <h1>Editer un user</h1>
+        </div>
 
+        <form @submit="onSubmit($event)">
+            <div class="alert alert-danger" v-if="errors.length > 0">
+                <b>Les champs suivants semblent invalides : </b>
+                <ul>
+                    <li v-for="e of errors">{{e}}</li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <label>Pseudo: </label>
+                <input type="text" v-model="item.pseudo" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Email: </label>
+                <input type="text" v-model="item.email" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Password: </label>
+                <input type="text" v-model="item.password" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Confirm Password: </label>
+                <input type="text" v-model="item.password" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Sauvegarder</button>
+        </form>
+    </div>
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
-    import StudentApiService from '../../services/StudentApiService'
 
-    export default {
-        data() {
+import { mapGetters, mapActions } from 'vuex'
+import UserApiService from '../../services/UserApiService'
+import AuthService from '../../services/AuthService'
+
+export default {
+  data() {
             return {
                 item: {},
-                mode: null,
-                id: null,
+                emailUser: null,
                 errors: []
             }
         },
+  
+  async mounted() {
+    await this.refreshList();
+  },
 
-        async mounted() {
-            this.mode = this.$route.params.mode;
-            this.id = this.$route.params.id;
+  methods: {
+            ...mapActions(['notifyLoading', 'notifyError']),
 
-            if (this.mode == 'edit') {
+            async refreshList() {
                 try {
-                    // Here, we use "executeAsyncRequest" action. When an exception is thrown, it is not catched: you have to catch it.
-                    // It is useful when we have to know if an error occurred, in order to adapt the user experience.
-                    //this.item = await this.executeAsyncRequest(() => StudentApiService.getStudentAsync(this.id));
                     this.notifyLoading(true);
-                    this.item = await StudentApiService.getStudentAsync(this.id);
+                    this.emailUser = AuthService.emailUser();
+                    this.item = await UserApiService.getUserAsync(emailUser);
                 }
                 catch (error) {
-                    // So if an exception occurred, we redirect the user to the students list.
                     this.notifyError(error);
-                    this.$router.replace('/students');
                 }
                 finally {
-                    // Three: in all cases, we reset the "loading" state to false.
                     this.notifyLoading(false);
                 }
-            }
-        },
-
-        methods: {
-            ...mapActions(['notifyLoading', 'notifyError']),
+            },
 
             async onSubmit(e) {
                 e.preventDefault();
 
                 var errors = [];
 
-                if (!this.item.lastName) errors.push("Nom")
-                if (!this.item.firstName) errors.push("Prénom")
-                if (!this.item.birthDate) errors.push("Date de naissance")
-
+                if (!this.item.pseudo) errors.push("Pseudo")
+                if (!this.item.email) errors.push("Email")
                 this.errors = errors;
 
                 if (errors.length == 0) {
                     try {
-                        if (this.mode == 'create') {
-                            await StudentApiService.createStudentAsync(this.item);
+                            await UserApiService.updateUserAsync(this.item);
                         }
-                        else {
-                            await StudentApiService.updateStudentAsync(this.item);
-                        }
-
-                        this.$router.replace('/students');
-                    }
                     catch (error) {
                         this.notifyError(error);
+                        this.$router.replace('/');
                         // Custom error management here.
                         // In our application, errors throwed when executing a request are managed globally via the "executeAsyncRequest" action: errors are added to the 'app.errors' state.
                         // A custom component should react to this state when a new error is added, and make an action, like showing an alert message, or something else.
@@ -79,5 +95,5 @@
                 }
             }
         }
-    }
+}
 </script>

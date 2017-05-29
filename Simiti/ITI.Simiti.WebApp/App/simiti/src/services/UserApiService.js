@@ -16,19 +16,21 @@ class UserApiService {
 
     async getStudentByNameAsync(firstName, lastName) {
         return await getAsync(`${endpoint}/RechercherName/${firstName}/${lastName}`);
+    }*/
+
+    async getUserAsync(emailUser) {
+        return await getAsync(`${endpoint}/users/${emailUser}`);
     }
 
-    async getStudentAsync(studentId) {
-        return await getAsync(`${endpoint}/${studentId}`);
+    async updateUserAsync(model) {
+        return await putAsync(`${endpoint}/${model.userId}`, model);
     }
 
-    async createStudentAsync(model) {
+    /*async createStudentAsync(model) {
         return await postAsync(endpoint, model);
     }
 
-    async updateStudentAsync(model) {
-        return await putAsync(`${endpoint}/${model.studentId}`, model);
-    }
+    
 
     async deleteStudentAsync(studentId) {
         return await deleteAsync(`${endpoint}/${studentId}`);

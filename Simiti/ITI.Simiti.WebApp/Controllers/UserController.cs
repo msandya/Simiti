@@ -32,5 +32,22 @@ namespace ITI.Simiti.WebApp.Controllers
                 o.ToViewModel = x => x.Select(s => s.ToUserViewModel());
             });
         }
+
+        [HttpGet("users/{emailUser}")]
+        public User GetStudentByEmail(string emailUser)
+        {
+            User user = _userService.FindUserSecret(emailUser);
+            return user;
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateStudent(int id, [FromBody] UserViewModel model)
+        {
+            Result<User> result = _userService.UpdateUser(id, model.Pseudo, model.Email);
+            return this.CreateResult<User, UserViewModel>(result, o =>
+            {
+                o.ToViewModel = s => s.ToUserViewModel();
+            });
+        }
     }
 }
