@@ -69,7 +69,7 @@ const router = new VueRouter({
 
     { path: '', component: Home, beforeEnter: requireAuth },
 
-    { path: '/userprofile', component: User, beforeEnter: requireAuth },
+    { path: '/userprofile/:id', component: User, beforeEnter: requireAuth },
 
     //{ path: '/users/inscription', component: UserInscription, beforeEnter: requireAuth}
 
