@@ -171,5 +171,16 @@ namespace ITI.Simiti.DAL
             }
         }
 
+        public void UpdatePassword( int userId, byte[] password )
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                con.Execute(
+                    "iti.sPasswordUserUpdate",
+                    new { UserId = userId, Password = password },
+                    commandType: CommandType.StoredProcedure);
+            }
+        }
+
     }
 }

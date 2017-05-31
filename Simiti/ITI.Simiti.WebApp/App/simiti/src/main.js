@@ -12,6 +12,7 @@ import Logout from './components/Logout.vue'
 import Register from './components/Register.vue'
 
 import User from './components/User/User.vue'
+import UserModificationMP from './components/User/UserEditPassword.vue'
 
 /*import ClassList from './components/classes/ClassList.vue'
 import ClassEdit from './components/classes/ClassEdit.vue'
@@ -69,7 +70,8 @@ const router = new VueRouter({
 
     { path: '', component: Home, beforeEnter: requireAuth },
 
-    { path: '/users', component: User, beforeEnter: requireAuth }
+    { path: '/users/:emailUser', component: User, beforeEnter: requireAuth },
+    { path: '/users/users/modiMP', component: UserModificationMP, beforeEnter: requireAuth },
 
     //{ path: '/users/inscription', component: UserInscription, beforeEnter: requireAuth}
 
@@ -105,6 +107,8 @@ AuthService.loginEndpoint = '/Account/Login';
 
 // Allowed providers to sign up our application, and the corresponding server-side endpoints
 AuthService.registerEndpoint = '/Account/Register'
+
+AuthService.modifyPasswordEndpoint = '/Account/ModifyPassword'
 
 
 AuthService.appRedirect = () => router.replace('/');

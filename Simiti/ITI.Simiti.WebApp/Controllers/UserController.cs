@@ -33,21 +33,30 @@ namespace ITI.Simiti.WebApp.Controllers
             });
         }
 
-        [HttpGet("users/{emailUser}")]
-        public User GetStudentByEmail(string emailUser)
+        [HttpGet("{emailUser}")]
+        public User GetUserByEmail(string emailUser)
         {
             User user = _userService.FindUserSecret(emailUser);
             return user;
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateStudent(int id, [FromBody] UserViewModel model)
+        public IActionResult UpdateUser(int id, [FromBody] UserViewModel model)
         {
             Result<User> result = _userService.UpdateUser(id, model.Pseudo, model.Email);
             return this.CreateResult<User, UserViewModel>(result, o =>
             {
                 o.ToViewModel = s => s.ToUserViewModel();
             });
+        }
+
+        [HttpPut("{email}")]
+        public bool VerifyUserPassword(string email, string password)
+        {
+            User user = _userService.FindUser(email, password);
+            if (user != null) return true;
+            return false;
+            
         }
     }
 }

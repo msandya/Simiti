@@ -28,6 +28,38 @@ namespace ITI.Simiti.WebApp.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        public IActionResult ModifyPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ModifyPassword(ModifyPasswordViewModel model)
+        {
+            Console.WriteLine("Modify Password");
+            if (ModelState.IsValid)
+            {
+                User user = _userService.FindUser(model.Email, model.OldPassword);
+                Console.WriteLine("User is authenticated {0}", user != null);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid email or password attempt.");
+                    return View(model);
+                }
+                if (model.NewPassword != model.NewPasswordConfirm)
+                {
+                    ModelState.AddModelError(string.Empty, "New passwords are not match.");
+                    return View(model);
+                }
+                _userService.UpdateUserPassword(user.UserId, model.NewPassword);
+                return RedirectToAction(nameof(Authenticated));
+            }
+            return View();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();

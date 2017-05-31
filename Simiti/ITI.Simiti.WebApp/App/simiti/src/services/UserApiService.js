@@ -18,8 +18,12 @@ class UserApiService {
         return await getAsync(`${endpoint}/RechercherName/${firstName}/${lastName}`);
     }*/
 
+    async verifyPasswordAsync(email, password){
+        return await getAsync(`${endpoint}/${email}/${password}`);
+    }
+
     async getUserAsync(emailUser) {
-        return await getAsync(`${endpoint}/users/${emailUser}`);
+        return await getAsync(`${endpoint}/${emailUser}`);
     }
 
     async updateUserAsync(model) {
@@ -29,8 +33,6 @@ class UserApiService {
     /*async createStudentAsync(model) {
         return await postAsync(endpoint, model);
     }
-
-    
 
     async deleteStudentAsync(studentId) {
         return await deleteAsync(`${endpoint}/${studentId}`);

@@ -1,4 +1,4 @@
-﻿<template>
+<template>
     <div>
         <div class="page-header">
             <h1>Editer un user</h1>
@@ -12,21 +12,23 @@
                 </ul>
             </div>
             <div class="form-group">
-                <label>Pseudo: </label>
-                <input type="text" v-model="item.pseudo" class="form-control">
+                <label>Mot de passe ancien: </label>
+                <input type="text" v-model="mdpa" class="form-control">
             </div>
             <div class="form-group">
-                <label>Email: </label>
-                <input type="text" v-model="item.email" class="form-control">
+                <label>Nouveau mot de passe: </label>
+                <input type="text" v-model="nmdp1" class="form-control">
             </div>
-            <button type="button" @click="modifyPassword()" class="btn btn-primary">Modifier mot de passe</button>
+            <div class="form-group">
+                <label>Modifier mot de passe: </label>
+                <input type="text" v-model="nmdp2" class="form-control">
+            </div>
             <button type="submit" class="btn btn-primary">Sauvegarder</button>
         </form>
     </div>
 </template>
 
 <script>
-
 import { mapGetters, mapActions } from 'vuex'
 import UserApiService from '../../services/UserApiService'
 import AuthService from '../../services/AuthService'
@@ -35,53 +37,29 @@ export default {
     data() {
         return {
             item: {},
-            errors: []
+            errors: [],
+            model: {
+                mdpa: '',
+                nmdp1: '',
+                nmdp2: ''
+            },
         }
     },
 
-    computed: {
-    ...mapGetters(['isLoading']),
-    auth: () => AuthService
-    },
-  
     async mounted() {
         var userEmail = AuthService.emailUser();
         this.item = await UserApiService.getUserAsync(userEmail);
     },
 
     methods: {
-            ...mapActions(['notifyLoading', 'notifyError']),
-
-            async refreshList() {
-                try {
-                    this.notifyLoading(true);
-                }
-                catch (error) {
-                    this.notifyError(error);
-                }
-                finally {
-                    this.notifyLoading(false);
-                }
-            },
-
-            modifyPassword(){
-                AuthService.modifyPassword();
-            },
-
             async onSubmit(e) {
                 e.preventDefault();
 
                 var errors = [];
-
-                if (!this.item.pseudo) errors.push("Pseudo")
-                if (!this.item.email) errors.push("Email")
                 this.errors = errors;
 
                 if (errors.length == 0) {
                     try {
-                            await UserApiService.updateUserAsync(this.item);
-                            AuthService.onSignedOut();
-                            AuthService.logout();
                             this.$router.replace('/');
                         }
                     catch (error) {
@@ -98,6 +76,11 @@ export default {
                     }
                 }
             }
-        }
+        },
+
+    computed: {
+    ...mapGetters(['isLoading']),
+    auth: () => AuthService
+    }
 }
 </script>

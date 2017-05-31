@@ -52,6 +52,13 @@ namespace ITI.Simiti.WebApp.Services
             return Result.Success(Status.Ok, user);
         }
 
+        public Result<User> UpdateUserPassword( int userId, string password )
+        {
+            _userGateway.UpdatePassword(userId, _passwordHasher.HashPassword(password));
+            User user = _userGateway.FindById(userId);
+            return Result.Success(Status.Ok, user);
+        }
+
         public User FindUserByPseudo( string pseudo )
         {
             if (_userGateway.FindByPseudo(pseudo) != null)
@@ -62,6 +69,7 @@ namespace ITI.Simiti.WebApp.Services
         public User FindUserByEmail( string email )
         {
             User user = _userGateway.FindByEmail(email);
+            user.Password = _userGateway.FindUserPassword(user.UserId).Password;
             if (user != null)
                 return user;
             return null;

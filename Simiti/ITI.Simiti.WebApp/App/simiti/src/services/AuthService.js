@@ -4,6 +4,7 @@ class AuthService {
         this.loginEndpoint = null;
         this.logoutEndpoint = null;
         this.registerEndpoint = null;
+        this.modifyPasswordEndpoint = null;
         this.appRedirect = () => null;
         this.authenticatedCallbacks = [];
         this.signedOutCallbacks = [];
@@ -31,17 +32,12 @@ class AuthService {
 
     emailUser() {
         var identity = this.identity;
-        return (identity.email);
+        return identity.email ? identity.email : null;
     }
 
     get email() {
         var identity = this.identity;
-
         return identity ? identity.email : null;
-    }
-
-    get userInfor(){
-        return identity;
     }
 
     get boundProviders() {
@@ -74,6 +70,10 @@ class AuthService {
             this.onSignedOut();
         }
     }
+    
+    modifyPassword(){
+        var popup = window.open(this.modifyPasswordEndpoint, "Modifier mot de passe", "menubar=no, status=no, scrollbars=no, menubar=no, width=700, height=700");
+    }
 
     login() {
         var popup = window.open(this.loginEndpoint, "Connexion à Simiti", "menubar=no, status=no, scrollbars=no, menubar=no, width=700, height=700");
@@ -97,7 +97,6 @@ class AuthService {
 
     onAuthenticated(i) {
         this.identity = i;
-
         for(var cb of this.authenticatedCallbacks) {
             cb();
         }

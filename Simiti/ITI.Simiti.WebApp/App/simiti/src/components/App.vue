@@ -13,9 +13,9 @@
               <!-- Collect the nav links, forms, and other content for toggling -->
                       <div class="collapse navbar-collapse" id="iti-navbar-collapse" v-if="auth.isConnected">
                               <ul class="nav navbar-nav">
-                                <li><router-link :to="`users/${item.email}`">Profile</router-link></li>
+                                <li><router-link :to="`users/${userEmail}`">Profile</router-link></li>
                               </ul>
-                              <ul class="nav navbar-nav navbar-right">
+                              <ul class="nav navbar-nav navbar-right"> 
                                 <li class="dropdown">
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ auth.email }} <span class="caret"></span></a>
                                   <ul class="dropdown-menu">
@@ -48,11 +48,10 @@ import { mapGetters, mapActions } from 'vuex'
 import '../directives/requiredProviders'
 
 export default {
-  data() {
-      return {
-        userEmail: null,
-        item: {}
-      }
+    data() {
+            return {
+                userEmail: null
+            }
     },
 
   computed: {
@@ -61,7 +60,7 @@ export default {
   },
 
   async mounted(){
-    this.userEmail = AuthService.email();
+    this.userEmail = AuthService.emailUser();
   }
 }
 </script>
