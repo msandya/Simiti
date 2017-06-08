@@ -182,6 +182,22 @@ function check(o) {
 	{
 		simulation();
 	}
+	else if (o.which == 32) // 32 = space
+	{
+		var s = null;
+		if (canvas.getActiveObject() != null)
+		{
+			for (var i = 0; s == null && i < tab_workstation.length; i++)
+			{
+				if (canvas.getActiveObject() == tab_workstation[i].obj)
+					s = tab_workstation[i];
+			}
+		}
+		else
+			s = tab_workstation[0];
+
+		simulate(s);
+	}
 }
 
 canvas.on('selection:created',function(o){

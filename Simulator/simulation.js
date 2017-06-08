@@ -23,15 +23,16 @@ function create_and_move_package(start_left, start_top, destionation_left, desti
 	var rect = new fabric.Rect({
 		width: PORT_SIZE,
 		height: PORT_SIZE,
-		left: start_left,
-		top: start_top,
-		fill: 'black',
+		left: start_left + 20,
+		top: start_top + 25,
+		fill: 'blue',
+		stroke: 'red',
 		selectable: false
 	});
 	canvas.add(rect);
 
 	var animateBtn = document.getElementById('animate');
-	movement_package(rect, destionation_left, destination_top);
+	movement_package(rect, destionation_left + 20, destination_top + 25);
 };
 
 //-----------------------------------------------------------------------------------------------------------------------------------------
@@ -86,11 +87,11 @@ function determine_workStation_level(work_station) {
 							//alert("This station is not in tab_created");
 							tab_workstation_level[i + 1].push(work_station_dertermine);
 							tab_created.push(work_station_dertermine.id);
-							//alert("pushed successfully in lv " + (i + 1));
+							//alert("ed successfully in lv " + (i + 1));
 							//station_information(work_station_dertermine);
 						} /*else {
 							//alert("This station is in tab_created");
-							//alert("pushed unsuccessfully in lv " + (i + 1));
+							//alert("ed unsuccessfully in lv " + (i + 1));
 						}*/
 					}
 				}
@@ -173,7 +174,6 @@ function list_workStation_level(){
 	}
 }
 
-
 function simulation()
 {
 	//Verify information of ports
@@ -228,3 +228,122 @@ function simulation()
 	//send_package_from_station(tab_workstation[0]);
 	//	(tab_workstation[start]);
 }
+
+// look if x is in tab
+function is_in(x, tab)
+{
+	for (var i = 0; i < tab.length; i++)
+	{
+		if (x == tab[i])
+			return true;
+	}
+	return false;
+}
+
+// create the circle
+function create_request(left, top)
+{
+	return new fabric.Circle({
+		radius: PORT_SIZE / 2,
+		top: top,
+		left: left,
+		fill: 'blue',
+		stroke: 'red',
+		selectable: false
+	});
+}
+
+// send the request from port_1 to port_2
+function send_request(port_1_left, port_1_top, port_2_left, port_2_top)
+{
+	var request = create_request(port_1_left, port_1_top);
+	canvas.add(request);
+
+	var animation = document.getElementById('animate');
+
+	request.animate('left',
+		port_2_left, {
+			onChange: canvas.renderAll.bind(canvas),
+			duration: 1000,
+			onComplete: function () {
+				request.remove();
+			},
+			easing: fabric.util.ease.easeInQuand
+		});
+	request.animate('top',
+		port_2_top, {
+			onChange: canvas.renderAll.bind(canvas),
+			duration: 1000,
+			onComplete: function () {
+				request.remove();
+			},
+			easing: fabric.util.ease.easeInQuand
+		});
+}
+
+//parcour largeur
+function simulate(s)		// s, sommet selectionné
+{
+	var h = 0;
+	var f = [];				// f, file des sommet à traité
+	f.push(s);
+	var marked = [];	    // marked, tableau des sommet déjà vu
+	marked.push(s);
+	var next = null;
+
+	var tab_vect = [];
+
+	while (f.length != 0)
+	{
+		s = f.shift();		// On traite le sommet
+		for (var i = 0; i < s.ports.length; i++)
+		{
+			if (s.ports[i].used)					// Si un port est utilisé
+			{
+				next = get_linked_port(s, i);		// On regarde a qui il est relié
+				if (!is_in(next.obj, marked))		// On vérifie que le voisin n'est pas marqué
+				{
+					// On envoi la requète
+					var vect =
+					{
+						'h': h,
+						'x1': s.obj.left + s.ports[i].rect.left + 26, 
+						'y1': s.obj.top + s.ports[i].rect.top + 26,
+						'x2': next.obj.obj.left + next.port.rect.left + 26,
+						'y2': next.obj.obj.top + next.port.rect.top + 26
+					};
+					tab_vect.push(vect);
+
+					f.push(next.obj);				// On ajoute le voisin dans les sommet a traiter
+					marked.push(next.obj);
+				}
+			}
+		}
+		h++;
+	}
+
+	var aux = 0;
+	for(var i = 0; i < tab_vect.length; i++)
+	{
+		//if (tab_vect[i].h != aux)
+		//{
+			sleep(1000);
+		//	aux++;
+		//}
+		send_request(tab_vect[i].x1, tab_vect[i].y1, tab_vect[i].x2, tab_vect[i].y2);
+	}
+}
+
+/*
+ ParcoursLargeur(Graphe G, Sommet s):
+       f = CreerFile();
+       f.enfiler(s);
+       marquer(s);
+       tant que la file est non vide
+                s = f.defiler();
+                afficher(s);
+                pour tout voisin t de s dans G
+                         si t non marqué
+                                 f.enfiler(t);
+                                 marquer(t);
+*/
