@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <!--link rel="stylesheet" href="simulateur.css" /-->
+
+		<script src="jQuery.js"></script>
+		<script src="fabric.js"></script>
+		<script type="text/javascript" src="struct.js"></script>
+		<script type="text/javascript" src="simulation.js"></script>
+		<style>
+			.menu {
+				position: absolute;
+			}
+			.config {
+				display: none;
+				position: absolute;
+				left: 50px;
+				top: 50px;
+				height: 500px;
+				width: 1200px;
+				border-style: solid;
+				border-width: 1px;
+				border-color: black;
+				background-color: white;
+			}
+		</style>
+
+
+        <title>Simiti</title>
+	</head>
+	
+	<body>
+		<!-- <div id="bd-wrapper" ng-controller="CanvasControls">
+		<h2>Simiti</h2> -->
+		<input type="button" id="un" value="Fichier" /> <input type="button" id="deux" value="Mode" /> 
+		<input type="button" onclick="document.getElementById('config').style.display = 'block'" value="Parametrage" /> 
+		
+		<canvas id="c" width="1500" height="650" style="border:1px solid #ccc">
+			Canvas n'est pas implémenté dans ce navigateur.
+		</canvas>
+		<div id="config" class="config">
+			<input type="button" onclick="document.getElementById('config').style.display = 'none'" value="X" style="position: relative; float: right;" />
+			<input type="text" id="mavar" style="position: relative; right: -45%; top: 45%; " />
+			<input type="button" onclick="document.getElementById('config').style.display = 'none'; text = document.getElementById('mavar').value;" 
+			value="Valider" style="position: relative; right: -36%; top: 95%;" />
+		</div>
+		<script type="text/javascript" src="simulateur.js"></script>
+		
+	</body>
+
+</html>
+
+
