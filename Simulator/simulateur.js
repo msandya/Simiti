@@ -111,6 +111,8 @@ var start = 0;
 var nb_workstation = 0;
 var y = 0;
 
+var WorkStationType = 0;
+
 //Create rectangle
 function rectangle(x, y, color)
 {
@@ -181,6 +183,11 @@ function check(o) {
 	else if (o.which == 13) // 13 = enter
 	{
 		simulation();
+	}
+	else if (o.which == 67) // 67 = c 
+	{
+		WorkStationType = (WorkStationType + 1) %3;
+		//tab_workstation[0].type = "switch";
 	}
 	else if (o.which == 32) // 32 = space
 	{
@@ -390,7 +397,14 @@ canvas.on('mouse:down', function(o){
   } 
   else if (selected == 2)
   {
-	create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, "post");
+	  var type = "post";
+
+	  if( WorkStationType == 0)
+		  type = "switch";
+	  else if(WorkStationType == 1)
+		  type = "hub";
+
+	create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, type);
 	nb_workstation++;
   }
 });
@@ -399,6 +413,25 @@ canvas.on('mouse:move', function(o){
 	
   //if (!isDown) return;
   var pointer = canvas.getPointer(o.e);
+
+  for( var i =0; i< tab_workstation.length; i++)
+   {
+	   switch (tab_workstation[i].type)
+	   {
+		   case "switch":
+		   tab_workstation[i].obj.set({fill: 'blue'});
+		   break;
+		   
+		   case "post":
+		   tab_workstation[i].obj.set({fill: 'green'});
+		   break;
+
+		   case "hub":
+		   tab_workstation[i].obj.set({fill: 'red'});
+		   break;
+	   }
+
+   }
 
   for (var i = 0; i < tab_workstation.length; i++)
   {
