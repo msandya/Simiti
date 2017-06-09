@@ -28,25 +28,18 @@ function create_ports(obj, nb) {
 	}
 }
 
-function get_linked_port(work_station, port_nb)
-{
-	for (var i = 0; i < tab_cable.length; i++)
-	{
-		if (tab_cable[i].object_1 == work_station && port_nb == tab_cable[i].obj_1_port_nb)
-		{
-			var res =
-			{
-				'port': tab_cable[i].object_2.ports[tab_cable[i].obj_2_port_nb], 
+function get_linked_port(work_station, port_nb) {
+	for (var i = 0; i < tab_cable.length; i++) {
+		if (tab_cable[i].object_1 == work_station && port_nb == tab_cable[i].obj_1_port_nb) {
+			var res = {
+				'port': tab_cable[i].object_2.ports[tab_cable[i].obj_2_port_nb],
 				'obj': tab_cable[i].object_2,
 				'cable': tab_cable[i]
 			};
 			return res;
-		}
-		else if (tab_cable[i].object_2 == work_station && port_nb == tab_cable[i].obj_2_port_nb)
-		{
-			var res =
-			{
-				'port': tab_cable[i].object_1.ports[tab_cable[i].obj_1_port_nb], 
+		} else if (tab_cable[i].object_2 == work_station && port_nb == tab_cable[i].obj_2_port_nb) {
+			var res = {
+				'port': tab_cable[i].object_1.ports[tab_cable[i].obj_1_port_nb],
 				'obj': tab_cable[i].object_1,
 				'cable': tab_cable[i]
 			};
@@ -58,11 +51,9 @@ function get_linked_port(work_station, port_nb)
 }
 
 //Create cable linked with 2 ports of 2 WorkStations
-function create_cable(l, object_1, object_2, obj_1_port_nb, obj_2_port_nb, type)
-{
-	var cable =
-	{
-		'l': l, 
+function create_cable(l, object_1, object_2, obj_1_port_nb, obj_2_port_nb, type) {
+	var cable = {
+		'l': l,
 		'object_1': object_1,
 		'object_2': object_2,
 		'obj_1_port_nb': obj_1_port_nb,
@@ -72,22 +63,16 @@ function create_cable(l, object_1, object_2, obj_1_port_nb, obj_2_port_nb, type)
 
 	//Checking if you clicked in a port which already linked with another port,
 	//it will delete the previous line port
-	if (object_2.ports[obj_2_port_nb].used == true)
-	{
-		for (var i = 0; i < tab_cable.length; i++)
-		{
-			if (tab_cable[i].object_1 == object_2)
-			{
-				if (tab_cable[i].obj_1_port_nb == obj_2_port_nb)
-				{
+	if (object_2.ports[obj_2_port_nb].used == true) {
+		for (var i = 0; i < tab_cable.length; i++) {
+			if (tab_cable[i].object_1 == object_2) {
+				if (tab_cable[i].obj_1_port_nb == obj_2_port_nb) {
 					delete_cable(tab_cable[i]);
 				}
 			}
 
-			if (tab_cable[i].object_2 == object_2)
-			{
-				if (tab_cable[i].obj_2_port_nb == obj_2_port_nb)
-				{
+			if (tab_cable[i].object_2 == object_2) {
+				if (tab_cable[i].obj_2_port_nb == obj_2_port_nb) {
 					delete_cable(tab_cable[i]);
 					//tab_cable.splice(i, 1);
 				}
@@ -101,8 +86,7 @@ function create_cable(l, object_1, object_2, obj_1_port_nb, obj_2_port_nb, type)
 }
 
 //Delete Cable
-function delete_cable(cable)
-{
+function delete_cable(cable) {
 	cable.l.remove();
 	cable.object_1.ports[cable.obj_1_port_nb].used = false;
 	cable.object_2.ports[cable.obj_2_port_nb].used = false;

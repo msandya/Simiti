@@ -89,7 +89,8 @@ function determine_workStation_level(work_station) {
 							tab_created.push(work_station_dertermine.id);
 							//alert("ed successfully in lv " + (i + 1));
 							//station_information(work_station_dertermine);
-						} /*else {
+						}
+						/*else {
 							//alert("This station is in tab_created");
 							//alert("ed unsuccessfully in lv " + (i + 1));
 						}*/
@@ -148,7 +149,7 @@ function send_package_from_station(current_Station) {
 	for (var i = 0; i < current_Station.nb_port; i++) {
 		if (current_Station.ports[i].used == true) {
 			var current_Station_2 = determine_station_from_port(i, current_Station);
-			if(current_Station_2.package_received == false){
+			if (current_Station_2.package_received == false) {
 				create_and_move_package(current_Station.obj.left, current_Station.obj.top, current_Station_2.obj.left, current_Station_2.obj.top);
 				current_Station_2.package_received = true;
 			}
@@ -165,17 +166,16 @@ function verfify_workstation_created(workstation_id) {
 	return false;
 }
 
-function list_workStation_level(){
-	for(var i = 0; i < tab_workstation_level.length - 1; i++){
+function list_workStation_level() {
+	for (var i = 0; i < tab_workstation_level.length - 1; i++) {
 		alert("We are in level: " + i);
-		for(var j = 0; j < tab_workstation_level[i].length; j++){
+		for (var j = 0; j < tab_workstation_level[i].length; j++) {
 			station_information(tab_workstation_level[i][j]);
 		}
 	}
 }
 
-function simulation()
-{
+function simulation() {
 	//Verify information of ports
 	/*for (var i = 0; i < tab_cable.length; i++) {
 		txt1 = "Cable number: " + i + "\n";
@@ -216,7 +216,7 @@ function simulation()
 			alert(current_station_test.id);
 		}
 	}*/
-	for(var i = 0; i < tab_workstation.length; i++){
+	for (var i = 0; i < tab_workstation.length; i++) {
 		tab_workstation[i].package_received = false;
 	}
 	tab_workstation[y].package_received = true;
@@ -230,8 +230,7 @@ function simulation()
 }
 
 // create the circle
-function create_request(left, top)
-{
+function create_request(left, top) {
 	return new fabric.Circle({
 		radius: PORT_SIZE / 2,
 		top: top,
@@ -243,8 +242,7 @@ function create_request(left, top)
 }
 
 // send the request from port_1 to port_2
-function send_request(port_1_left, port_1_top, port_2_left, port_2_top)
-{
+function send_request(port_1_left, port_1_top, port_2_left, port_2_top) {
 	var request = create_request(port_1_left, port_1_top);
 	canvas.add(request);
 
@@ -271,29 +269,26 @@ function send_request(port_1_left, port_1_top, port_2_left, port_2_top)
 }
 
 
-function rec_simulation(s, h, marked, tab_vect)
-{
+function rec_simulation(s, h, marked, tab_vect) {
 	marked.push(s);
 	var next = null;
 
-	for (var i = 0; i < s.ports.length; i++)
-	{
-		if (s.ports[i].used)					// Si un port est utilisé
+	for (var i = 0; i < s.ports.length; i++) {
+		if (s.ports[i].used) // Si un port est utilisé
 		{
-			next = get_linked_port(s, i);		// On regarde a qui il est relié
-			if (!is_in(next.obj, marked ) && good_cable(s.type,next.obj.type, next.cable.type))	// On vérifie que le voisin n'est pas marqué
+			next = get_linked_port(s, i); // On regarde a qui il est relié
+			if (!is_in(next.obj, marked) && good_cable(s.type, next.obj.type, next.cable.type)) // On vérifie que le voisin n'est pas marqué
 			{
 				// On envoi la requète
-				var vect =
-				{
+				var vect = {
 					'h': h,
-					'x1': s.obj.left + s.ports[i].rect.left + 26, 
+					'x1': s.obj.left + s.ports[i].rect.left + 26,
 					'y1': s.obj.top + s.ports[i].rect.top + 26,
 					'x2': next.obj.obj.left + next.port.rect.left + 26,
 					'y2': next.obj.obj.top + next.port.rect.top + 26
 				};
 				tab_vect.push(vect);
-				
+
 				rec_simulation(next.obj, h + 1, marked, tab_vect);
 			}
 		}
@@ -302,10 +297,10 @@ function rec_simulation(s, h, marked, tab_vect)
 
 
 //parcour largeur
-function simulate(s)		// s, sommet selectionné
+function simulate(s) // s, sommet selectionné
 {
 	var h = 0;
-	var marked = [];	    // marked, tableau des sommet déjà vu
+	var marked = []; // marked, tableau des sommet déjà vu
 	var next = null;
 
 	var tab_vect = [];
@@ -313,10 +308,8 @@ function simulate(s)		// s, sommet selectionné
 	rec_simulation(s, h, marked, tab_vect);
 
 	var aux = 0;
-	for(var i = 0; i < tab_vect.length; i++)
-	{
-		if (tab_vect[i].h != aux)
-		{
+	for (var i = 0; i < tab_vect.length; i++) {
+		if (tab_vect[i].h != aux) {
 			sleep(100);
 			aux++;
 		}
