@@ -161,13 +161,6 @@ function get_image(nameImage) {
 	}
 }
 
-
-//Checking if the mouse is inside of the Port or not
-function is_inside(x, y, port, station) {
-	return (x >= station.obj.left + port.rect.left + 25 && x <= station.obj.left + port.rect.left + PORT_SIZE + 25 &&
-		y >= station.obj.top + port.rect.top + 25 && y <= station.obj.top + port.rect.top + PORT_SIZE + 25);
-}
-
 //Create 3 big rectangles to create the WorkStation
 function init() {
 	var mousepointerbutton = new fabric.Image.fromURL('mousepointerbutton.png', function (img) {
@@ -254,11 +247,12 @@ function check(o) {
 	} else if (o.which == 13) // 13 = enter
 	{
 		simulation();
-	} else if (o.which == 67) // 67 = c 
+	} 
+	else if (o.which == 67) // 67 = c 
 	{
-		WorkStationType = (WorkStationType + 1) % 3;
-		//tab_workstation[0].type = "switch";
-	} else if (o.which == 32) // 32 = space
+		alert('don t press c scrub');
+	}
+	 else if (o.which == 32) // 32 = space
 	{
 		var s = null;
 		if (canvas.getActiveObject() != null) {
@@ -287,24 +281,29 @@ canvas.on('mouse:down', function (o) {
 	var points = [pointer.x, pointer.y, pointer.x, pointer.y];
 
 	if (pointer.x >= 10 && pointer.x <= 110 && pointer.y <= 60 && pointer.y >= 10) {
-		rectangle(10, 10, 'black');
+		/*rectangle(10, 10, 'black');
 		rectangle(120, 10, 'white');
-		rectangle(230, 10, 'white');
+		rectangle(230, 10, 'white');*/
 		selected = 0;
 		canvas.selection = false;
-	} else if (pointer.x >= 120 && pointer.x <= 220 && pointer.y <= 60 && pointer.y >= 10) {
-		rectangle(10, 10, 'white');
-		rectangle(120, 10, 'black');
-		rectangle(230, 10, 'white');
+	}
+	else if (pointer.x >= 120 && pointer.x <= 220 && pointer.y <= 60 && pointer.y >= 10) {
 		selected = 1;
 		canvas.selection = false;
-	} else if (pointer.x >= 230 && pointer.x <= 330 && pointer.y <= 60 && pointer.y >= 10) {
-		rectangle(10, 10, 'white');
-		rectangle(120, 10, 'white');
-		rectangle(230, 10, 'black');
+	}
+	else if (pointer.x >= 230 && pointer.x <= 330 && pointer.y <= 60 && pointer.y >= 10) {
 		selected = 2;
 		canvas.selection = false;
-	} else if (selected == 0) {
+	}
+	else if (pointer.x >= 340 && pointer.x <= 440 && pointer.y <= 60 && pointer.y >= 10) {
+		selected = 3;
+		canvas.selection = false;
+	}
+	else if (pointer.x >= 450 && pointer.x <= 550 && pointer.y <= 60 && pointer.y >= 10) {
+		selected = 4;
+		canvas.selection = false;
+	}
+	else if (selected == 0) {
 		var pointer = canvas.getPointer(o.e);
 
 		for (var i = 0; i < tab_workstation.length; i++) {
@@ -430,15 +429,14 @@ canvas.on('mouse:down', function (o) {
 			}
 		}
 	} else if (selected == 2) {
-		var type = "post";
-
-		if (WorkStationType == 0)
-			type = "switch";
-		else if (WorkStationType == 1)
-			type = "hub";
-
-		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, type);
-		nb_workstation++;
+		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, "post");
+		nb_workstation++;	
+	} else if (selected == 3) {
+		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, "hub");
+		nb_workstation++;	
+	} else if (selected == 4) {
+		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, "switch");
+		nb_workstation++;	
 	}
 });
 
