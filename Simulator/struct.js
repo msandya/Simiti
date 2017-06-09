@@ -109,7 +109,7 @@ function delete_cable(cable)
 }
 
 //Create a Workstation
-function create_work_station(id, x, y, nb_port, package_received) {
+function create_work_station(id, x, y, nb_port, package_received, type) {
 	//Create a big rectangle outside
 	big_rect = new fabric.Rect({
 		width: 50,
@@ -131,7 +131,8 @@ function create_work_station(id, x, y, nb_port, package_received) {
 		'obj': station,
 		'nb_port': nb_port,
 		'ports': [],
-		'package_received': package_received
+		'package_received': package_received,
+		'type': type
 	};
 
 	//Create a port in order to add in a GroupStation
@@ -144,13 +145,4 @@ function create_work_station(id, x, y, nb_port, package_received) {
 
 	tab_workstation.push(work_station);
 	canvas.add(station);
-}
-
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
 }

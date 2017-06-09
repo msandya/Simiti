@@ -390,7 +390,7 @@ canvas.on('mouse:down', function(o){
   } 
   else if (selected == 2)
   {
-	create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false);
+	create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, "post");
 	nb_workstation++;
   }
 });
