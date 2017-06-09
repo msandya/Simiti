@@ -281,7 +281,7 @@ function rec_simulation(s, h, marked, tab_vect)
 		if (s.ports[i].used)					// Si un port est utilisé
 		{
 			next = get_linked_port(s, i);		// On regarde a qui il est relié
-			if (!is_in(next.obj, marked))		// On vérifie que le voisin n'est pas marqué
+			if (!is_in(next.obj, marked ) && good_cable(s.type,next.obj.type, next.cable.type))	// On vérifie que le voisin n'est pas marqué
 			{
 				// On envoi la requète
 				var vect =
