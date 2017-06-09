@@ -28,28 +28,6 @@ function create_ports(obj, nb) {
 	}
 }
 
-function get_linked_port(work_station, port_nb) {
-	for (var i = 0; i < tab_cable.length; i++) {
-		if (tab_cable[i].object_1 == work_station && port_nb == tab_cable[i].obj_1_port_nb) {
-			var res = {
-				'port': tab_cable[i].object_2.ports[tab_cable[i].obj_2_port_nb],
-				'obj': tab_cable[i].object_2,
-				'cable': tab_cable[i]
-			};
-			return res;
-		} else if (tab_cable[i].object_2 == work_station && port_nb == tab_cable[i].obj_2_port_nb) {
-			var res = {
-				'port': tab_cable[i].object_1.ports[tab_cable[i].obj_1_port_nb],
-				'obj': tab_cable[i].object_1,
-				'cable': tab_cable[i]
-			};
-			return res;
-		}
-	}
-	alert('port not linked');
-	return null;
-}
-
 //Create cable linked with 2 ports of 2 WorkStations
 function create_cable(l, object_1, object_2, obj_1_port_nb, obj_2_port_nb, type) {
 	var cable = {

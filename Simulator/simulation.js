@@ -268,7 +268,6 @@ function send_request(port_1_left, port_1_top, port_2_left, port_2_top) {
 		});
 }
 
-
 function rec_simulation(s, h, marked, tab_vect) {
 	marked.push(s);
 	var next = null;
@@ -295,7 +294,6 @@ function rec_simulation(s, h, marked, tab_vect) {
 	}
 }
 
-
 //parcour largeur
 function simulate(s) // s, sommet selectionné
 {
@@ -316,17 +314,3 @@ function simulate(s) // s, sommet selectionné
 		send_request(tab_vect[i].x1, tab_vect[i].y1, tab_vect[i].x2, tab_vect[i].y2);
 	}
 }
-
-/*
- ParcoursLargeur(Graphe G, Sommet s):
-       f = CreerFile();
-       f.enfiler(s);
-       marquer(s);
-       tant que la file est non vide
-                s = f.defiler();
-                afficher(s);
-                pour tout voisin t de s dans G
-                         si t non marqué
-                                 f.enfiler(t);
-                                 marquer(t);
-*/
