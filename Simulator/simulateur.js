@@ -465,7 +465,6 @@ canvas.on('mouse:move', function (o) {
 				});
 				break;
 		}
-
 	}
 
 	for (var i = 0; i < tab_workstation.length; i++) {
@@ -513,28 +512,13 @@ canvas.on('mouse:move', function (o) {
 			});
 			switch (tab_cable[i].type) {
 				case 0:
-					tab_cable[i].l.set({
-						stroke: color_0
-					});
-					tab_cable[i].l.set({
-						strokeDashArray: [1, 0]
-					});
+					tab_cable[i].l.set({stroke: color_0, strokeDashArray: [1, 0]});
 					break;
 				case 1:
-					tab_cable[i].l.set({
-						stroke: color_1
-					});
-					tab_cable[i].l.set({
-						strokeDashArray: [2, 5]
-					});
+					tab_cable[i].l.set({stroke: color_1, strokeDashArray: [2, 5]});
 					break;
 				default:
-					tab_cable[i].l.set({
-						stroke: color_2
-					});
-					tab_cable[i].l.set({
-						strokeDashArray: [10, 5]
-					});
+					tab_cable[i].l.set({stroke: color_2, strokeDashArray: [10, 5]});
 					break;
 			}
 		}
