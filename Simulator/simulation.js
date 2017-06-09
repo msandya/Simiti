@@ -229,17 +229,6 @@ function simulation()
 	//	(tab_workstation[start]);
 }
 
-// look if x is in tab
-function is_in(x, tab)
-{
-	for (var i = 0; i < tab.length; i++)
-	{
-		if (x == tab[i])
-			return true;
-	}
-	return false;
-}
-
 // create the circle
 function create_request(left, top)
 {
@@ -327,7 +316,7 @@ function simulate(s)		// s, sommet selectionné
 	{
 		//if (tab_vect[i].h != aux)
 		//{
-			sleep(1000);
+		//	sleep(1000);
 		//	aux++;
 		//}
 		send_request(tab_vect[i].x1, tab_vect[i].y1, tab_vect[i].x2, tab_vect[i].y2);
