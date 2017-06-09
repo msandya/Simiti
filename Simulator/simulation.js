@@ -270,55 +270,56 @@ function send_request(port_1_left, port_1_top, port_2_left, port_2_top)
 		});
 }
 
+
+function rec_simulation(s, h, marked, tab_vect)
+{
+	marked.push(s);
+	var next = null;
+
+	for (var i = 0; i < s.ports.length; i++)
+	{
+		if (s.ports[i].used)					// Si un port est utilisé
+		{
+			next = get_linked_port(s, i);		// On regarde a qui il est relié
+			if (!is_in(next.obj, marked))		// On vérifie que le voisin n'est pas marqué
+			{
+				// On envoi la requète
+				var vect =
+				{
+					'h': h,
+					'x1': s.obj.left + s.ports[i].rect.left + 26, 
+					'y1': s.obj.top + s.ports[i].rect.top + 26,
+					'x2': next.obj.obj.left + next.port.rect.left + 26,
+					'y2': next.obj.obj.top + next.port.rect.top + 26
+				};
+				tab_vect.push(vect);
+				
+				rec_simulation(next.obj, h + 1, marked, tab_vect);
+			}
+		}
+	}
+}
+
+
 //parcour largeur
 function simulate(s)		// s, sommet selectionné
 {
 	var h = 0;
-	var f = [];				// f, file des sommet à traité
-	f.push(s);
 	var marked = [];	    // marked, tableau des sommet déjà vu
-	marked.push(s);
 	var next = null;
 
 	var tab_vect = [];
 
-	while (f.length != 0)
-	{
-		s = f.shift();		// On traite le sommet
-		for (var i = 0; i < s.ports.length; i++)
-		{
-			if (s.ports[i].used)					// Si un port est utilisé
-			{
-				next = get_linked_port(s, i);		// On regarde a qui il est relié
-				if (!is_in(next.obj, marked))		// On vérifie que le voisin n'est pas marqué
-				{
-					// On envoi la requète
-					var vect =
-					{
-						'h': h,
-						'x1': s.obj.left + s.ports[i].rect.left + 26, 
-						'y1': s.obj.top + s.ports[i].rect.top + 26,
-						'x2': next.obj.obj.left + next.port.rect.left + 26,
-						'y2': next.obj.obj.top + next.port.rect.top + 26
-					};
-					tab_vect.push(vect);
-
-					f.push(next.obj);				// On ajoute le voisin dans les sommet a traiter
-					marked.push(next.obj);
-				}
-			}
-		}
-		h++;
-	}
+	rec_simulation(s, h, marked, tab_vect);
 
 	var aux = 0;
 	for(var i = 0; i < tab_vect.length; i++)
 	{
-		//if (tab_vect[i].h != aux)
-		//{
-		//	sleep(1000);
-		//	aux++;
-		//}
+		if (tab_vect[i].h != aux)
+		{
+			sleep(100);
+			aux++;
+		}
 		send_request(tab_vect[i].x1, tab_vect[i].y1, tab_vect[i].x2, tab_vect[i].y2);
 	}
 }
