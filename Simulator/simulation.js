@@ -175,17 +175,18 @@ function list_workStation_level() {
 	}
 }
 
-function simulation() {
-	//Verify information of ports
-	/*for (var i = 0; i < tab_cable.length; i++) {
+function cables_information() {
+	for (var i = 0; i < tab_cable.length; i++) {
 		txt1 = "Cable number: " + i + "\n";
 		txt2 = "Object 1 Id: " + tab_cable[i].object_1.id + "\n" + "Object 2 Id: " + tab_cable[i].object_2.id;
 		txt3 = "Port number of Object 1: " + tab_cable[i].obj_1_port_nb + "\n" + "Port number of Object 2: " + tab_cable[i].obj_2_port_nb;
 		txt4 = txt1 + "\n-----------------\n" + txt2 + "\n-----------------\n" + txt3 + "\n-----------------\n";
 		alert(txt4);
-	}*/
-	//Verify information of stations
-	/*for (var i = 0; i < tab_workstation.length; i++) {
+	}
+}
+
+function stations_information() {
+	for (var i = 0; i < tab_workstation.length; i++) {
 		txt1 = "WorkStation \n _Id: " + tab_workstation[i].id + "\n _Number of ports: " + tab_workstation[i].nb_port;
 		txt2 = "";
 		for (var j = 0; j < tab_workstation[i].nb_port; j++) {
@@ -197,7 +198,13 @@ function simulation() {
 		}
 		txt3 = txt1 + "\n-----------------\n" + txt2;
 		alert(txt3);
-	}*/
+	}
+}
+
+function simulation() {
+
+	//cables_information();
+	//stations_information();
 
 	tab_workstation_level = [];
 	tab_created = [];
@@ -220,13 +227,29 @@ function simulation() {
 		tab_workstation[i].package_received = false;
 	}
 	tab_workstation[y].package_received = true;
-	for (var i = 0; i < tab_workstation_level.length - 1; i++) {
+
+	var i = 0;
+
+	function myLoop() {
+		setTimeout(function () {
+			for (var j = 0; j < tab_workstation_level[i].length; j++) {
+				send_package_from_station(tab_workstation_level[i][j]);
+			}
+			i++;
+			if (i < tab_workstation_level.length - 1) {
+				myLoop();
+			}
+		}, 2000)
+	}
+
+	myLoop();
+
+	/*for (var i = 0; i < tab_workstation_level.length - 1; i++) {
 		for (var j = 0; j < tab_workstation_level[i].length; j++) {
 			send_package_from_station(tab_workstation_level[i][j]);
 		}
-	}
+	}*/
 	//send_package_from_station(tab_workstation[0]);
-	//	(tab_workstation[start]);
 }
 
 // create the circle

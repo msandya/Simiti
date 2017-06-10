@@ -161,58 +161,49 @@ function get_image(nameImage) {
 	}
 }
 
-//Create 3 big rectangles to create the WorkStation
-function init() {
-	var mousepointerbutton = new fabric.Image.fromURL('mousepointerbutton.png', function (img) {
-		img.setWidth(100);
-		img.setHeight(50);
-		img.left = 10;
-		img.top = 10;
-		img.filters.push(new fabric.Image.filters.Grayscale());
-		img.selectable = false;
-		canvas.add(img);
-	});
-	add_image("mousepointerbutton", mousepointerbutton);
-	var cablebutton = new fabric.Image.fromURL('cablebutton.png', function (img) {
-		img.setWidth(100);
-		img.setHeight(50);
-		img.left = 120;
-		img.top = 10;
-		img.filters.push(new fabric.Image.filters.Grayscale());
-		img.selectable = false;
-		canvas.add(img);
-	});
-	add_image("cablebutton", cablebutton);
-	var postbutton = new fabric.Image.fromURL('postbutton.png', function (img) {
-		img.setWidth(100);
-		img.setHeight(50);
-		img.left = 230;
-		img.top = 10;
-		img.filters.push(new fabric.Image.filters.Grayscale());
-		img.selectable = false;
-		canvas.add(img);
-	});
-	add_image("postbutton", postbutton);
-	var switchbutton = new fabric.Image.fromURL('switchbutton.png', function (img) {
-		img.setWidth(100);
-		img.setHeight(50);
-		img.left = 340;
-		img.top = 10;
-		img.selectable = false;
-		canvas.add(img);
-	});
-	add_image("switchbutton", switchbutton);
-	var hubbutton = new fabric.Image.fromURL('hubbutton.png', function (img) {
-		img.setWidth(100);
-		img.setHeight(50);
-		img.left = 450;
-		img.top = 10;
-		img.selectable = false;
-		canvas.add(img);
-	});
-	add_image("hubbutton", hubbutton);
+var tab_buttons = [];
+
+function add_button(buttonImage, nameButton) {
+	var button_add = {
+		'button_image': buttonImage,
+		'name_button': nameButton
+	}
+	tab_buttons.push(button_add);
 }
 
+function create_button(image, x, y) {
+	var button = new fabric.Image.fromURL(image, function (img) {
+		img.setWidth(100);
+		img.setHeight(50);
+		img.left = x;
+		img.top = y;
+		img.selectable = false;
+		canvas.add(img);
+	});
+	//add_button(button, buttonName);
+}
+
+function remove_button(image) {
+	var button = new fabric.Image.fromURL(image, function (img) {
+		canvas.remove(img);
+	});
+	/*for (var i = 0; i < tab_buttons.length; i++) {
+		if (buttonName == tab_buttons[i].name_button) {
+			canvas.remove(tab_buttons[i].button_image);
+			return 1;
+		}
+	}*/
+}
+
+//Create 3 big rectangles to create the WorkStation
+function init() {
+	create_button('mousepointerbutton.png', 10, 10);
+	remove_button('mousepointerbutton.png');
+	create_button('cablebutton.png', 120, 10);
+	create_button('postbutton.png', 230, 10);
+	create_button('switchbutton.png', 340, 10);
+	create_button('hubbutton.png', 450, 10);
+}
 //------------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------Main()--------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -247,12 +238,10 @@ function check(o) {
 	} else if (o.which == 13) // 13 = enter
 	{
 		simulation();
-	} 
-	else if (o.which == 67) // 67 = c 
+	} else if (o.which == 67) // 67 = c 
 	{
 		alert('don t press c scrub');
-	}
-	 else if (o.which == 32) // 32 = space
+	} else if (o.which == 32) // 32 = space
 	{
 		var s = null;
 		if (canvas.getActiveObject() != null) {
@@ -284,26 +273,26 @@ canvas.on('mouse:down', function (o) {
 		/*rectangle(10, 10, 'black');
 		rectangle(120, 10, 'white');
 		rectangle(230, 10, 'white');*/
+		create_button('mousepointerbutton_clicked.png', 10, 10);
 		selected = 0;
 		canvas.selection = false;
-	}
-	else if (pointer.x >= 120 && pointer.x <= 220 && pointer.y <= 60 && pointer.y >= 10) {
+	} else if (pointer.x >= 120 && pointer.x <= 220 && pointer.y <= 60 && pointer.y >= 10) {
+		create_button('cablebutton_clicked.png', 120, 10);
 		selected = 1;
 		canvas.selection = false;
-	}
-	else if (pointer.x >= 230 && pointer.x <= 330 && pointer.y <= 60 && pointer.y >= 10) {
+	} else if (pointer.x >= 230 && pointer.x <= 330 && pointer.y <= 60 && pointer.y >= 10) {
+		create_button('postbutton_clicked.png', 230, 10);
 		selected = 2;
 		canvas.selection = false;
-	}
-	else if (pointer.x >= 340 && pointer.x <= 440 && pointer.y <= 60 && pointer.y >= 10) {
+	} else if (pointer.x >= 340 && pointer.x <= 440 && pointer.y <= 60 && pointer.y >= 10) {
+		create_button('switchbutton_clicked.png', 340, 10);
 		selected = 3;
 		canvas.selection = false;
-	}
-	else if (pointer.x >= 450 && pointer.x <= 550 && pointer.y <= 60 && pointer.y >= 10) {
+	} else if (pointer.x >= 450 && pointer.x <= 550 && pointer.y <= 60 && pointer.y >= 10) {
+		create_button('hubbutton_clicked.png', 450, 10);
 		selected = 4;
 		canvas.selection = false;
-	}
-	else if (selected == 0) {
+	} else if (selected == 0) {
 		var pointer = canvas.getPointer(o.e);
 
 		for (var i = 0; i < tab_workstation.length; i++) {
@@ -430,13 +419,13 @@ canvas.on('mouse:down', function (o) {
 		}
 	} else if (selected == 2) {
 		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, "post");
-		nb_workstation++;	
+		nb_workstation++;
 	} else if (selected == 3) {
 		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, "hub");
-		nb_workstation++;	
+		nb_workstation++;
 	} else if (selected == 4) {
 		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, "switch");
-		nb_workstation++;	
+		nb_workstation++;
 	}
 });
 
@@ -512,13 +501,22 @@ canvas.on('mouse:move', function (o) {
 			});
 			switch (tab_cable[i].type) {
 				case 0:
-					tab_cable[i].l.set({stroke: color_0, strokeDashArray: [1, 0]});
+					tab_cable[i].l.set({
+						stroke: color_0,
+						strokeDashArray: [1, 0]
+					});
 					break;
 				case 1:
-					tab_cable[i].l.set({stroke: color_1, strokeDashArray: [2, 5]});
+					tab_cable[i].l.set({
+						stroke: color_1,
+						strokeDashArray: [2, 5]
+					});
 					break;
 				default:
-					tab_cable[i].l.set({stroke: color_2, strokeDashArray: [10, 5]});
+					tab_cable[i].l.set({
+						stroke: color_2,
+						strokeDashArray: [10, 5]
+					});
 					break;
 			}
 		}
