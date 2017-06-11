@@ -105,11 +105,16 @@ var color_0 = 'black';
 var color_1 = 'red';
 var color_2 = 'green';
 
+var buttons = [];
+var buttons_selected = [];
+
 var start = 0;
 var nb_workstation = 0;
 var y = 0;
 
 var WorkStationType = 0;
+
+var tab_buttons = [];
 
 //Create rectangle
 function rectangle(x, y, color) {
@@ -161,8 +166,6 @@ function get_image(nameImage) {
 	}
 }
 
-var tab_buttons = [];
-
 function add_button(buttonImage, nameButton) {
 	var button_add = {
 		'button_image': buttonImage,
@@ -171,7 +174,7 @@ function add_button(buttonImage, nameButton) {
 	tab_buttons.push(button_add);
 }
 
-function create_button(image, x, y) {
+function create_button(image, x, y, normal_button) {
 	var button = new fabric.Image.fromURL(image, function (img) {
 		img.setWidth(100);
 		img.setHeight(50);
@@ -179,8 +182,12 @@ function create_button(image, x, y) {
 		img.top = y;
 		img.selectable = false;
 		canvas.add(img);
+
+		if (normal_button)
+			buttons.push(img);
+		else
+			buttons_selected.push(img);
 	});
-	//add_button(button, buttonName);
 }
 
 function remove_button(image) {
@@ -195,14 +202,30 @@ function remove_button(image) {
 	}*/
 }
 
+function bring_front_buttons()
+{
+	for(var i = 0; i < buttons.length; i++)
+	{
+		canvas.bringToFront(buttons[i]);
+	}
+}
+
 //Create 3 big rectangles to create the WorkStation
 function init() {
-	create_button('mousepointerbutton.png', 10, 10);
-	remove_button('mousepointerbutton.png');
-	create_button('cablebutton.png', 120, 10);
-	create_button('postbutton.png', 230, 10);
-	create_button('switchbutton.png', 340, 10);
-	create_button('hubbutton.png', 450, 10);
+	create_button('mousepointerbutton_clicked.png', 10, 10, false);
+	create_button('mousepointerbutton.png', 10, 10, true);
+
+	create_button('cablebutton_clicked.png', 120, 10, false);
+	create_button('cablebutton.png', 120, 10, true);
+
+	create_button('postbutton_clicked.png', 230, 10, false);
+	create_button('postbutton.png', 230, 10, true);
+
+	create_button('switchbutton_clicked.png', 340, 10, false);
+	create_button('switchbutton.png', 340, 10, true);
+
+	create_button('hubbutton_clicked.png', 450, 10, false);
+	create_button('hubbutton.png', 450, 10, true);
 }
 //------------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------Main()--------------------------------------------------------------------
@@ -273,23 +296,28 @@ canvas.on('mouse:down', function (o) {
 		/*rectangle(10, 10, 'black');
 		rectangle(120, 10, 'white');
 		rectangle(230, 10, 'white');*/
-		create_button('mousepointerbutton_clicked.png', 10, 10);
+		bring_front_buttons();
+		canvas.bringToFront(buttons_selected[0]);
 		selected = 0;
 		canvas.selection = false;
 	} else if (pointer.x >= 120 && pointer.x <= 220 && pointer.y <= 60 && pointer.y >= 10) {
-		create_button('cablebutton_clicked.png', 120, 10);
+		bring_front_buttons();
+		canvas.bringToFront(buttons_selected[1]);
 		selected = 1;
 		canvas.selection = false;
 	} else if (pointer.x >= 230 && pointer.x <= 330 && pointer.y <= 60 && pointer.y >= 10) {
-		create_button('postbutton_clicked.png', 230, 10);
+		bring_front_buttons();
+		canvas.bringToFront(buttons_selected[2]);
 		selected = 2;
 		canvas.selection = false;
 	} else if (pointer.x >= 340 && pointer.x <= 440 && pointer.y <= 60 && pointer.y >= 10) {
-		create_button('switchbutton_clicked.png', 340, 10);
+		bring_front_buttons();
+		canvas.bringToFront(buttons_selected[3]);
 		selected = 3;
 		canvas.selection = false;
 	} else if (pointer.x >= 450 && pointer.x <= 550 && pointer.y <= 60 && pointer.y >= 10) {
-		create_button('hubbutton_clicked.png', 450, 10);
+		bring_front_buttons();
+		canvas.bringToFront(buttons_selected[4]);
 		selected = 4;
 		canvas.selection = false;
 	} else if (selected == 0) {
