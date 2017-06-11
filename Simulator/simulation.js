@@ -328,12 +328,14 @@ function simulate(s) // s, sommet selectionné
 
 	rec_simulation(s, h, marked, tab_vect);
 
-	var aux = 0;
-	for (var i = 0; i < tab_vect.length; i++) {
-		if (tab_vect[i].h != aux) {
-			sleep(100);
-			aux++;
-		}
-		send_request(tab_vect[i].x1, tab_vect[i].y1, tab_vect[i].x2, tab_vect[i].y2);
+	for (var i = 0; i < tab_vect.length; i++) {	
+		send_req(tab_vect[i]);
 	}
+}
+
+function send_req(obj)
+{
+	setTimeout(function () {
+		send_request(obj.x1, obj.y1, obj.x2, obj.y2);
+	}, obj.h * 1000)
 }
