@@ -4,6 +4,7 @@
 
 menu_selected = 0;
 text = "";
+
 /*
 document.oncontextmenu = function() {
 	alert(text);
@@ -109,6 +110,7 @@ var last_object;
 var last_object_port_nb;
 var line_creation = 0;
 var tab_images = [];
+var current;
 
 var color_0 = 'black';
 var color_1 = 'red';
@@ -272,6 +274,7 @@ function check(o) {
 		alert('don t press c scrub');
 	} else if (o.which == 32) // 32 = space
 	{
+		o.preventDefault();
 		var s = null;
 		if (canvas.getActiveObject() != null) {
 			for (var i = 0; s == null && i < tab_workstation.length; i++) {
@@ -281,7 +284,24 @@ function check(o) {
 		} else
 			s = tab_workstation[0];
 
-		simulate(s);
+		var options = document.getElementById("options");
+		options.style = "left: 500px; top: 200px; display: block;";
+		
+		var inter = setInterval(function() {
+			if(options.style.display == "none")
+			{
+				simulate(current);
+				clearInterval(inter);
+				current = null;
+			}
+			else
+			{
+				if(current == null)
+				{
+					current = s;
+				}
+			}
+		}, 100);
 	}
 }
 
@@ -361,12 +381,18 @@ canvas.on('mouse:down', function (o) {
 								if (j == tab_cable[cab].obj_1_port_nb) {
 									tab_cable[cab].type = tab_workstation[i].ports[j].type;
 									tab_cable[cab].object_2.ports[tab_cable[cab].obj_2_port_nb].type = tab_workstation[i].ports[j].type;
+									apply_color(tab_cable[cab].l, tab_cable[cab].type, true);
+									apply_color(tab_cable[cab].object_2.ports[tab_cable[cab].obj_2_port_nb].rect, tab_cable[cab].type, false);
+									apply_color(tab_cable[cab].object_1.ports[tab_cable[cab].obj_1_port_nb].rect, tab_cable[cab].type, false);
 								}
 							}
 							if (tab_cable[cab].object_2 == tab_workstation[i]) {
 								if (j == tab_cable[cab].obj_2_port_nb) {
 									tab_cable[cab].type = tab_workstation[i].ports[j].type;
 									tab_cable[cab].object_1.ports[tab_cable[cab].obj_1_port_nb].type = tab_workstation[i].ports[j].type;
+									apply_color(tab_cable[cab].l, tab_cable[cab].type, true);
+									apply_color(tab_cable[cab].object_2.ports[tab_cable[cab].obj_2_port_nb].rect, tab_cable[cab].type, false);
+									apply_color(tab_cable[cab].object_1.ports[tab_cable[cab].obj_1_port_nb].rect, tab_cable[cab].type, false);
 								}
 							}
 						}
@@ -417,23 +443,7 @@ canvas.on('mouse:down', function (o) {
 					selectable: false
 				});
 
-				switch (actual_obj.ports[last_object_port_nb].type) {
-					case 0:
-						line.set({
-							stroke: color_0
-						});
-						break;
-					case 1:
-						line.set({
-							stroke: color_1
-						});
-						break;
-					default:
-						line.set({
-							stroke: color_2
-						});
-						break;
-				}
+				apply_color(line, actual_obj.ports[last_object_port_nb].type, true); // true if it's for line
 
 				canvas.add(line);
 				line_creation = 1;
@@ -482,34 +492,13 @@ canvas.on('mouse:down', function (o) {
 		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, "switch");
 		nb_workstation++;
 	}
+	canvas.renderAll();
 });
 
 canvas.on('mouse:move', function (o) {
 
 	//if (!isDown) return;
 	var pointer = canvas.getPointer(o.e);
-
-	for (var i = 0; i < tab_workstation.length; i++) {
-		switch (tab_workstation[i].type) {
-			case "switch":
-				tab_workstation[i].obj.set({
-					fill: 'blue'
-				});
-				break;
-
-			case "post":
-				tab_workstation[i].obj.set({
-					fill: 'green'
-				});
-				break;
-
-			case "hub":
-				tab_workstation[i].obj.set({
-					fill: 'red'
-				});
-				break;
-		}
-	}
 
 	for (var i = 0; i < tab_workstation.length; i++) {
 		for (var j = 0; j < tab_workstation[i].ports.length; j++) {
@@ -554,26 +543,8 @@ canvas.on('mouse:move', function (o) {
 				x2: tab_cable[i].object_2.obj.left + tab_cable[i].object_2.ports[tab_cable[i].obj_2_port_nb].rect.left + 26 + PORT_SIZE / 2,
 				y2: tab_cable[i].object_2.obj.top + tab_cable[i].object_2.ports[tab_cable[i].obj_2_port_nb].rect.top + 26 + PORT_SIZE / 2
 			});
-			switch (tab_cable[i].type) {
-				case 0:
-					tab_cable[i].l.set({
-						stroke: color_0,
-						strokeDashArray: [1, 0]
-					});
-					break;
-				case 1:
-					tab_cable[i].l.set({
-						stroke: color_1,
-						strokeDashArray: [2, 5]
-					});
-					break;
-				default:
-					tab_cable[i].l.set({
-						stroke: color_2,
-						strokeDashArray: [10, 5]
-					});
-					break;
-			}
+
+			apply_color(tab_cable[i].l, tab_cable[i].type, true); // true if it's for line
 		}
 	}
 
@@ -583,12 +554,3 @@ canvas.on('mouse:move', function (o) {
 canvas.on('mouse:up', function (o) {
 	isDown = false;
 });
-
-
-			 function Get_information()
- {
-	 for(var i =0; i< tab_workstation.length; i++)
-	 {
-		alert(tab_workstation[i].id);
-	 }
- }

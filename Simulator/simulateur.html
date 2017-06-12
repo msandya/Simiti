@@ -94,6 +94,7 @@
 		<input type="button" id="un" value="Fichier" /> <input type="button" id="deux" value="Mode" /> 
 		<input type="button" onclick="document.getElementById('config').style.display = 'block'" value="Parametrage" /> 
 		-->
+
 	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
@@ -151,8 +152,10 @@
 		Canvas n'est pas implémenté dans ce navigateur.
 	</canvas>
 
-
-
+	<div id="options" class="options">
+			<input type="button" onclick="document.getElementById('options').style.display = 'none';" value="Unicast" />
+			<input type="button" onclick="document.getElementById('options').style.display = 'none';" value="Broadcast" />
+	</div>
 
 	<div id="config" class="config">
 		<input type="button" onclick="document.getElementById('config').style.display = 'none'" value="X" style="position: relative; float: right;"
