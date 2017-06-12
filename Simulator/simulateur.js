@@ -214,18 +214,15 @@ function bring_front_buttons()
 //Create 3 big rectangles to create the WorkStation
 function init() {
 	create_button('Images/mousepointerbutton_clicked.png', 10, 10, false);
-	create_button('Images/mousepointerbutton.png', 10, 10, true);
-
 	create_button('Images/cablebutton_clicked.png', 120, 10, false);
-	create_button('Images/cablebutton.png', 120, 10, true);
-
 	create_button('Images/postbutton_clicked.png', 230, 10, false);
-	create_button('Images/postbutton.png', 230, 10, true);
-
 	create_button('Images/switchbutton_clicked.png', 340, 10, false);
-	create_button('Images/switchbutton.png', 340, 10, true);
-
 	create_button('Images/hubbutton_clicked.png', 450, 10, false);
+
+	create_button('Images/mousepointerbutton.png', 10, 10, true);	
+	create_button('Images/cablebutton.png', 120, 10, true);	
+	create_button('Images/postbutton.png', 230, 10, true);	
+	create_button('Images/switchbutton.png', 340, 10, true);	
 	create_button('Images/hubbutton.png', 450, 10, true);
 }
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -313,27 +310,48 @@ canvas.on('mouse:down', function (o) {
 
 	if (pointer.x >= 10 && pointer.x <= 110 && pointer.y <= 60 && pointer.y >= 10) {
 		bring_front_buttons();
-		canvas.bringToFront(buttons_selected[0]);
+		for(var i = 0; i < buttons_selected.length; i++)
+		{
+			if (buttons_selected[i].left == 10)
+				canvas.bringToFront(buttons_selected[i]);
+		}
 		selected = 0;
 		canvas.selection = false;
 	} else if (pointer.x >= 120 && pointer.x <= 220 && pointer.y <= 60 && pointer.y >= 10) {
 		bring_front_buttons();
-		canvas.bringToFront(buttons_selected[1]);
+				for(var i = 0; i < buttons_selected.length; i++)
+		{
+			if (buttons_selected[i].left == 120)
+				canvas.bringToFront(buttons_selected[i]);
+		}
 		selected = 1;
 		canvas.selection = false;
 	} else if (pointer.x >= 230 && pointer.x <= 330 && pointer.y <= 60 && pointer.y >= 10) {
 		bring_front_buttons();
-		canvas.bringToFront(buttons_selected[2]);
+		for(var i = 0; i < buttons_selected.length; i++)
+		{
+			if (buttons_selected[i].left == 230)
+				canvas.bringToFront(buttons_selected[i]);
+		}
+		//canvas.bringToFront(buttons_selected[2]);
 		selected = 2;
 		canvas.selection = false;
 	} else if (pointer.x >= 340 && pointer.x <= 440 && pointer.y <= 60 && pointer.y >= 10) {
 		bring_front_buttons();
-		canvas.bringToFront(buttons_selected[3]);
+		for(var i = 0; i < buttons_selected.length; i++)
+		{
+			if (buttons_selected[i].left == 340)
+				canvas.bringToFront(buttons_selected[i]);
+		}
 		selected = 3;
 		canvas.selection = false;
 	} else if (pointer.x >= 450 && pointer.x <= 550 && pointer.y <= 60 && pointer.y >= 10) {
 		bring_front_buttons();
-		canvas.bringToFront(buttons_selected[4]);
+		for(var i = 0; i < buttons_selected.length; i++)
+		{
+			if (buttons_selected[i].left == 450)
+				canvas.bringToFront(buttons_selected[i]);
+		}
 		selected = 4;
 		canvas.selection = false;
 	} else if (selected == 0) {
