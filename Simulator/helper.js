@@ -60,30 +60,3 @@ function get_linked_port(work_station, port_nb) {
 	alert('port not linked');
 	return null;
 }
-
-function apply_color(obj, type, is_line)
-{
-		switch (type) {
-				case 0:
-						if (is_line)
-							obj.set({	stroke: color_0,
-												strokeDashArray: [1, 0]});
-						else
-							obj.set({	fill: color_0 });
-						break;
-				case 1:
-						if (is_line)
-							obj.set({ stroke: color_1,
-												strokeDashArray: [2, 5]});
-						else
-							obj.set({	fill: color_1 });
-						break;
-				default:
-						if (is_line)
-							obj.set({	stroke: color_2,
-												strokeDashArray: [10, 5]});
-						else
-							obj.set({	fill: color_2 });
-						break;
-		}
-}
