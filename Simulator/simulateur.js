@@ -212,20 +212,20 @@ function bring_front_buttons()
 
 //Create 3 big rectangles to create the WorkStation
 function init() {
-	create_button('mousepointerbutton_clicked.png', 10, 10, false);
-	create_button('mousepointerbutton.png', 10, 10, true);
+	create_button('Images/mousepointerbutton_clicked.png', 10, 10, false);
+	create_button('Images/mousepointerbutton.png', 10, 10, true);
 
-	create_button('cablebutton_clicked.png', 120, 10, false);
-	create_button('cablebutton.png', 120, 10, true);
+	create_button('Images/cablebutton_clicked.png', 120, 10, false);
+	create_button('Images/cablebutton.png', 120, 10, true);
 
-	create_button('postbutton_clicked.png', 230, 10, false);
-	create_button('postbutton.png', 230, 10, true);
+	create_button('Images/postbutton_clicked.png', 230, 10, false);
+	create_button('Images/postbutton.png', 230, 10, true);
 
-	create_button('switchbutton_clicked.png', 340, 10, false);
-	create_button('switchbutton.png', 340, 10, true);
+	create_button('Images/switchbutton_clicked.png', 340, 10, false);
+	create_button('Images/switchbutton.png', 340, 10, true);
 
-	create_button('hubbutton_clicked.png', 450, 10, false);
-	create_button('hubbutton.png', 450, 10, true);
+	create_button('Images/hubbutton_clicked.png', 450, 10, false);
+	create_button('Images/hubbutton.png', 450, 10, true);
 }
 //------------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------Main()--------------------------------------------------------------------
