@@ -100,6 +100,7 @@ var last_object;
 var last_object_port_nb;
 var line_creation = 0;
 var tab_images = [];
+var current;
 
 var color_0 = 'black';
 var color_1 = 'red';
@@ -266,6 +267,7 @@ function check(o) {
 		alert('don t press c scrub');
 	} else if (o.which == 32) // 32 = space
 	{
+		o.preventDefault();
 		var s = null;
 		if (canvas.getActiveObject() != null) {
 			for (var i = 0; s == null && i < tab_workstation.length; i++) {
@@ -275,7 +277,24 @@ function check(o) {
 		} else
 			s = tab_workstation[0];
 
-		simulate(s);
+		var options = document.getElementById("options");
+		options.style = "left: 500px; top: 200px; display: block;";
+		
+		var inter = setInterval(function() {
+			if(options.style.display == "none")
+			{
+				simulate(current);
+				clearInterval(inter);
+				current = null;
+			}
+			else
+			{
+				if(current == null)
+				{
+					current = s;
+				}
+			}
+		}, 100);
 	}
 }
 

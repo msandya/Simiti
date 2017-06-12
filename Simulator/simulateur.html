@@ -25,6 +25,15 @@
 				border-color: black;
 				background-color: white;
 			}
+			.options {
+				display: none;
+				position: absolute;
+				width: 140px;
+				border-style: solid;
+				border-width: 1px;
+				border-color: black;
+				background-color: white;
+			}
 		</style>
 
 
@@ -40,6 +49,12 @@
 		<canvas id="c" width="1500" height="650" style="border:1px solid #ccc">
 			Canvas n'est pas implémenté dans ce navigateur.
 		</canvas>
+		
+		<div id="options" class="options">
+			<input type="button" onclick="document.getElementById('options').style.display = 'none';" value="Unicast" />
+			<input type="button" onclick="document.getElementById('options').style.display = 'none';" value="Broadcast" />
+		</div>
+		
 		<div id="config" class="config">
 			<input type="button" onclick="document.getElementById('config').style.display = 'none'" value="X" style="position: relative; float: right;" />
 			<input type="text" id="mavar" style="position: relative; right: -45%; top: 45%; " />
