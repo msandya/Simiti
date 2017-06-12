@@ -320,7 +320,6 @@ function rec_simulation(s, h, marked, tab_vect) {
 //parcour largeur
 function simulate(s) // s, sommet selectionné
 {
-	console.log(s);
 	var h = 0;
 	var marked = []; // marked, tableau des sommet déjà vu
 	var next = null;

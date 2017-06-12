@@ -66,15 +66,10 @@ function create_cable(l, object_1, object_2, obj_1_port_nb, obj_2_port_nb, type)
 //Delete Cable
 function delete_cable(cable) {
 	cable.l.remove();
-	cable.object_2.ports[cable.obj_2_port_nb].rect.set({fill: 'white'});
-	cable.object_1.ports[cable.obj_1_port_nb].rect.set({fill: 'white'});
-	
 	cable.object_1.ports[cable.obj_1_port_nb].used = false;
 	cable.object_2.ports[cable.obj_2_port_nb].used = false;
 	cable.object_1 = null;
 	cable.object_2 = null;
-
-	canvas.renderAll();
 }
 
 //Create a Workstation
@@ -84,26 +79,9 @@ function create_work_station(id, x, y, nb_port, package_received, type) {
 		width: 50,
 		height: 50,
 		stroke: 'black',
-		strokeWidth: 1
+		strokeWidth: 1,
+		fill: 'white'
 	});
-
-	switch (type) {
-		case "switch":
-			big_rect.set({
-				fill: 'blue'
-			});
-			break;
-		case "post":
-			big_rect.set({
-				fill: 'green'
-			});
-			break;
-		case "hub":
-			big_rect.set({
-				fill: 'red'
-			});
-			break;
-	}
 
 	//Create a GroupStation graphic
 	station = new fabric.Group([big_rect], {
