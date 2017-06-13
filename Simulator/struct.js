@@ -118,7 +118,9 @@ function create_work_station(id, x, y, nb_port, package_received, type) {
 		'nb_port': nb_port,
 		'ports': [],
 		'package_received': package_received,
-		'type': type
+		'type': type,
+		'ip': '',
+		'masque': ''
 	};
 
 	//Create a port in order to add in a GroupStation

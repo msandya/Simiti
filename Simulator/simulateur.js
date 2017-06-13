@@ -287,21 +287,38 @@ function check(o) {
 		var options = document.getElementById("options");
 		options.style = "left: 500px; top: 200px; display: block;";
 		
-		var inter = setInterval(function() {
-			if(options.style.display == "none")
-			{
-				simulate(current);
-				clearInterval(inter);
-				current = null;
+		function useful() {
+			simulate(s)
+			document.getElementById("unicast").removeEventListener("click", useful);
+			document.getElementById("broadcast").removeEventListener("click", useful);
+		}
+		
+		document.getElementById("unicast").addEventListener("click", useful);
+		document.getElementById("broadcast").addEventListener("click", useful);
+	} else if (o.which == 65) // 65 = a
+	{
+		o.preventDefault();
+		
+		var s = null;
+		if (canvas.getActiveObject() != null) {
+			for (var i = 0; s == null && i < tab_workstation.length; i++) {
+				if (canvas.getActiveObject() == tab_workstation[i].obj)
+					s = tab_workstation[i];
 			}
-			else
-			{
-				if(current == null)
-				{
-					current = s;
-				}
-			}
-		}, 100);
+		} else
+		s = tab_workstation[0];
+	
+		document.getElementById("ipconfig").style.display = "block";
+		document.getElementById("mavar2").value = s.ip;
+		document.getElementById("mavar3").value = s.masque;
+		
+		function useful2() {
+			s.ip = document.getElementById("mavar2").value;
+			s.masque = document.getElementById("mavar3").value;
+			document.getElementById("saveip").removeEventListener("click", useful2);
+		}
+		
+		document.getElementById("saveip").addEventListener("click", useful2);
 	}
 }
 

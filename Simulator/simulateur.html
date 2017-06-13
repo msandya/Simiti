@@ -89,8 +89,8 @@
 	</canvas>
 
 	<div id="options" class="options">
-			<input type="button" onclick="document.getElementById('options').style.display = 'none';" value="Unicast" />
-			<input type="button" onclick="document.getElementById('options').style.display = 'none';" value="Broadcast" />
+			<input type="button" id="unicast" onclick="document.getElementById('options').style.display = 'none';" value="Unicast" />
+			<input type="button" id="broadcast" onclick="document.getElementById('options').style.display = 'none';" value="Broadcast" />
 	</div>
 
 	<div id="config" class="config">
@@ -99,6 +99,13 @@
 		<input type="text" id="mavar" style="position: relative; right: -45%; top: 45%; " />
 		<input type="button" onclick="document.getElementById('config').style.display = 'none'; text = document.getElementById('mavar').value;"
 		 value="Valider" style="position: relative; right: -36%; top: 95%;" />
+	</div>
+	
+	<div id="ipconfig" class="ipconfig">
+		<input type="button" onclick="document.getElementById('ipconfig').style.display = 'none'" value="X" style="position: relative; float: right;" />
+		<input type="text" id="mavar2" style="position: relative; right: -25%; top: 30%; " />
+		<input type="text" id="mavar3" style="position: relative; right: -25%; top: 40%; " />
+		<input type="button" onclick="document.getElementById('ipconfig').style.display = 'none';" value="Valider" id="saveip" style="position: relative; right: 5%; top: 65%;" />
 	</div>
 
 	<div id="noeud" class="noeud">
