@@ -59,6 +59,8 @@ function create_cable(l, object_1, object_2, obj_1_port_nb, obj_2_port_nb, type)
 	}
 	object_1.ports[obj_1_port_nb].used = true;
 	object_2.ports[obj_2_port_nb].used = true;
+	apply_color(object_1.ports[obj_1_port_nb].rect, object_1.ports[obj_1_port_nb].type, false);
+	apply_color(object_2.ports[obj_2_port_nb].rect, object_2.ports[obj_2_port_nb].type, false);
 
 	tab_cable.push(cable);
 }

@@ -88,10 +88,3 @@ function apply_color(obj, type, is_line)
 		}
 }
 
-function Get_information()
- {
-	 for(var i =0; i< tab_workstation.length; i++)
-	 {
-		alert(tab_workstation[i].id);
-	 }
- }
