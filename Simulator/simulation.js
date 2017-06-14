@@ -359,16 +359,6 @@ function simulate(s, target) // s, sommet selectionné
 
 	if (target != null)
 	{
-		if (path != null)
-		{
-			for (var i = path.length; i != 0; i--)
-			{
-				console.log(path[i - 1]);
-			}
-		}
-		else
-			console.log("path null");
-
 		tab_vect = [];
 		rec_simulation(s, h, [], tab_vect, null, path);
 	}

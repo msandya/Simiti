@@ -300,20 +300,30 @@ function check(o) {
 		options.style = "left: " + s.obj.left + "px; top: " + s.obj.top + "px;";
 		document.body.appendChild(options);
 		
-		var uni = document.createElement("button");
-		uni.className = "btn btn-primary btn-xs";
-		uni.innerHTML = "Unicast";
-		uni.addEventListener("click", useful);
-		options.appendChild(uni);
-		
 		var broad = document.createElement("button");
 		broad.className = "btn btn-primary btn-xs";
 		broad.innerHTML = "Broadcast";
-		broad.addEventListener("click", useful);
+		broad.addEventListener("click", broadcast);
 		options.appendChild(broad);
 		
-		function useful() {
+		var uni = document.createElement("button");
+		uni.className = "btn btn-primary btn-xs";
+		uni.innerHTML = "Unicast";
+		uni.addEventListener("click", unicast);
+		options.appendChild(uni);
+		
+		function broadcast() {
 			simulate(s, null)
+			options.remove();
+		}
+		
+		function unicast() {
+			var targetid = prompt("Select target id");
+			if(targetid != "")
+			{
+				simulate(s, targetid);
+				console.log(targetid);
+			}
 			options.remove();
 		}
 		
@@ -334,13 +344,13 @@ function check(o) {
 		document.getElementById("mavar2").value = s.ip;
 		document.getElementById("mavar3").value = s.masque;
 		
-		function useful2() {
+		function saveip() {
 			s.ip = document.getElementById("mavar2").value;
 			s.masque = document.getElementById("mavar3").value;
-			document.getElementById("saveip").removeEventListener("click", useful2);
+			document.getElementById("saveip").removeEventListener("click", saveip);
 		}
 		
-		document.getElementById("saveip").addEventListener("click", useful2);
+		document.getElementById("saveip").addEventListener("click", saveip);
 	}
 }
 
