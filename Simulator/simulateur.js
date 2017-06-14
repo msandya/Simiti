@@ -286,7 +286,7 @@ function check(o) {
 		simulation();
 	} else if (o.which == 67) // 67 = c 
 	{
-
+		alert('don t press c scrub');
 	} else if (o.which == 32) // 32 = space
 	{
 		o.preventDefault();
@@ -299,17 +299,38 @@ function check(o) {
 		} else
 			s = tab_workstation[0];
 
-		var options = document.getElementById("options");
-		options.style = "left: 500px; top: 200px; display: block;";
+		var options = document.createElement("div");
+		options.className = "options";
+		options.style = "left: " + s.obj.left + "px; top: " + s.obj.top + "px;";
+		document.body.appendChild(options);
 		
-		function useful() {
-			simulate(s)
-			document.getElementById("unicast").removeEventListener("click", useful);
-			document.getElementById("broadcast").removeEventListener("click", useful);
+		var broad = document.createElement("button");
+		broad.className = "btn btn-primary btn-xs";
+		broad.innerHTML = "Broadcast";
+		broad.addEventListener("click", broadcast);
+		options.appendChild(broad);
+		
+		var uni = document.createElement("button");
+		uni.className = "btn btn-primary btn-xs";
+		uni.innerHTML = "Unicast";
+		uni.addEventListener("click", unicast);
+		options.appendChild(uni);
+		
+		function broadcast() {
+			simulate(s, null)
+			options.remove();
 		}
 		
-		document.getElementById("unicast").addEventListener("click", useful);
-		document.getElementById("broadcast").addEventListener("click", useful);
+		function unicast() {
+			var targetid = prompt("Select target id");
+			if(targetid != "")
+			{
+				simulate(s, targetid);
+				console.log(targetid);
+			}
+			options.remove();
+		}
+		
 	} else if (o.which == 65) // 65 = a
 	{
 		o.preventDefault();
@@ -327,13 +348,13 @@ function check(o) {
 		document.getElementById("mavar2").value = s.ip;
 		document.getElementById("mavar3").value = s.masque;
 		
-		function useful2() {
+		function saveip() {
 			s.ip = document.getElementById("mavar2").value;
 			s.masque = document.getElementById("mavar3").value;
-			document.getElementById("saveip").removeEventListener("click", useful2);
+			document.getElementById("saveip").removeEventListener("click", saveip);
 		}
 		
-		document.getElementById("saveip").addEventListener("click", useful2);
+		document.getElementById("saveip").addEventListener("click", saveip);
 	}
 }
 
