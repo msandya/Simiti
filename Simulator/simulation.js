@@ -357,7 +357,7 @@ function simulate(s, target) // s, sommet selectionné
 		}
 	}
 
-	if (target != null)
+	if (target != null && path.length != 0)
 	{
 		tab_vect = [];
 		rec_simulation(s, h, [], tab_vect, null, path);
