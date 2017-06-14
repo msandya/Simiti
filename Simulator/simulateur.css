@@ -14,7 +14,6 @@
 			border-color: black;
 			background-color: white;
 		}
-		
 		.ipconfig {
 			display: none;
 			position: absolute;
@@ -29,13 +28,11 @@
 		}
 
 		.options {
-			display: none;
-			position: absolute;
-			width: 140px;
-			background-color: white;
-		}
+ 				position: absolute;
+ 				background-color: white;
+ 			}
 
-		.noeud {
+        		.noeud {
 			display: none;
 			position: absolute;
 			left: 50px;

@@ -235,7 +235,7 @@ function init() {
 	create_button('Images/switchbutton.png', 340, 10, true);	
 	create_button('Images/hubbutton.png', 450, 10, true);
 
-	bring_front_buttons();	
+	bring_front_buttons();
 }
 //------------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------Main()--------------------------------------------------------------------
@@ -246,6 +246,15 @@ init();
 function check(o) {
 	if (o.which == 46) // 46 = suppr
 	{
+		var s;
+			if (canvas.getActiveObject() != null) {
+			for (var i = 0; s == null && i < tab_workstation.length; i++) {
+				if (canvas.getActiveObject() == tab_workstation[i].obj)
+					s = tab_workstation[i];
+			}
+		}	
+		delete_workStation(s);
+
 		for (var i = 0; i < tab_cable.length; i++) {
 			if (tab_cable[i].object_1 != null && tab_cable[i].object_2 != null) {
 				if (canvas.getActiveObject() == tab_cable[i].object_1.obj || canvas.getActiveObject() == tab_cable[i].object_2.obj) {
@@ -286,35 +295,52 @@ function check(o) {
 		} else
 			s = tab_workstation[0];
 
-		var options = document.getElementById("options");
-		options.style = "left: 500px; top: 200px; display: block;";
+		var options = document.createElement("div");
+		options.className = "options";
+		options.style = "left: " + s.obj.left + "px; top: " + s.obj.top + "px;";
+		document.body.appendChild(options);
 		
-		var inter = setInterval(function() {
-			if(options.style.display == "none")
-			{
-				if (options.value == "unicast")
-				{
-					options.value = "null";
-					alert("unicast");
-					simulate(current, 4);
-				}
-				else if (options.value == "broadcast")
-				{
-					options.value = "null";
-					alert("brodcast");
-					simulate(current, null);
-				}
-				clearInterval(inter);
-				current = null;
+		var uni = document.createElement("button");
+		uni.className = "btn btn-primary btn-xs";
+		uni.innerHTML = "Unicast";
+		uni.addEventListener("click", useful);
+		options.appendChild(uni);
+		
+		var broad = document.createElement("button");
+		broad.className = "btn btn-primary btn-xs";
+		broad.innerHTML = "Broadcast";
+		broad.addEventListener("click", useful);
+		options.appendChild(broad);
+		
+		function useful() {
+			simulate(s, null)
+			options.remove();
+		}
+		
+	} else if (o.which == 65) // 65 = a
+	{
+		o.preventDefault();
+		
+		var s = null;
+		if (canvas.getActiveObject() != null) {
+			for (var i = 0; s == null && i < tab_workstation.length; i++) {
+				if (canvas.getActiveObject() == tab_workstation[i].obj)
+					s = tab_workstation[i];
 			}
-			else
-			{
-				if(current == null)
-				{
-					current = s;
-				}
-			}
-		}, 100);
+		} else
+		s = tab_workstation[0];
+	
+		document.getElementById("ipconfig").style.display = "block";
+		document.getElementById("mavar2").value = s.ip;
+		document.getElementById("mavar3").value = s.masque;
+		
+		function useful2() {
+			s.ip = document.getElementById("mavar2").value;
+			s.masque = document.getElementById("mavar3").value;
+			document.getElementById("saveip").removeEventListener("click", useful2);
+		}
+		
+		document.getElementById("saveip").addEventListener("click", useful2);
 	}
 }
 
@@ -561,9 +587,39 @@ canvas.on('mouse:move', function (o) {
 		}
 	}
 
+	var WorkStation = []; 
+	for (var j = 0; j< tab_workstation.length; j++)
+	{
+		var aux = {id : tab_workstation[j].id, type: tab_workstation[j].type};
+		WorkStation.push( aux);
+	}
+
+
+          displayArrayObjects(WorkStation);
+	
+
 	canvas.renderAll();
 });
 
 canvas.on('mouse:up', function (o) {
 	isDown = false;
 });
+
+function displayArrayObjects(tab_workstation) {
+        var len = tab_workstation.length, text = "";
+		var id_checkbox = 0;
+
+        for (var i = 0; i < len; i++) {
+            var myObject = tab_workstation[i];
+			id_checkbox++;
+            
+            for (var x in myObject) {
+                text += ( x + ": " + myObject[x] + " ");
+            }
+		var checkbox = '<input type="checkbox" value="ok" id="checkbox'+ id_checkbox +'"/>'
+            text += checkbox  + "<br/>";
+
+        }
+        document.getElementById("message").innerHTML = text;
+    }
+

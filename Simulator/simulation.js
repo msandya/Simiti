@@ -343,8 +343,6 @@ function simulate(s, target) // s, sommet selectionné
 
 	rec_simulation(s, h, marked, tab_vect, null, null);
 
-	console.log("");
-
 	for (var i = 0; i < tab_vect.length; i++) {	
 		if (tab_vect[i].obj2.id == target)
 		{
