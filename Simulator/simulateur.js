@@ -294,17 +294,28 @@ function check(o) {
 		} else
 			s = tab_workstation[0];
 
-		var options = document.getElementById("options");
-		options.style = "left: 500px; top: 200px; display: block;";
+		var options = document.createElement("div");
+		options.className = "options";
+		options.style = "left: " + s.obj.left + "px; top: " + s.obj.top + "px;";
+		document.body.appendChild(options);
+		
+		var uni = document.createElement("button");
+		uni.className = "btn btn-primary btn-xs";
+		uni.innerHTML = "Unicast";
+		uni.addEventListener("click", useful);
+		options.appendChild(uni);
+		
+		var broad = document.createElement("button");
+		broad.className = "btn btn-primary btn-xs";
+		broad.innerHTML = "Broadcast";
+		broad.addEventListener("click", useful);
+		options.appendChild(broad);
 		
 		function useful() {
 			simulate(s)
-			document.getElementById("unicast").removeEventListener("click", useful);
-			document.getElementById("broadcast").removeEventListener("click", useful);
+			options.remove();
 		}
 		
-		document.getElementById("unicast").addEventListener("click", useful);
-		document.getElementById("broadcast").addEventListener("click", useful);
 	} else if (o.which == 65) // 65 = a
 	{
 		o.preventDefault();
