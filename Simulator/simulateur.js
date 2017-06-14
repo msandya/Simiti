@@ -273,15 +273,7 @@ function check(o) {
 		simulation();
 	} else if (o.which == 67) // 67 = c 
 	{
-			var WorkStation = []; 
-	for (var j = 0; j< tab_workstation.length; j++)
-	{
-		var aux = {id : tab_workstation[j].id, type: tab_workstation[j].type};
-		WorkStation.push( aux);
-	}
 
-
-          displayArrayObjects(WorkStation);
 	} else if (o.which == 32) // 32 = space
 	{
 		o.preventDefault();
@@ -575,6 +567,17 @@ canvas.on('mouse:move', function (o) {
 		}
 	}
 
+	var WorkStation = []; 
+	for (var j = 0; j< tab_workstation.length; j++)
+	{
+		var aux = {id : tab_workstation[j].id, type: tab_workstation[j].type};
+		WorkStation.push( aux);
+	}
+
+
+          displayArrayObjects(WorkStation);
+	
+
 	canvas.renderAll();
 });
 
@@ -584,14 +587,17 @@ canvas.on('mouse:up', function (o) {
 
 function displayArrayObjects(tab_workstation) {
         var len = tab_workstation.length, text = "";
+		var checkbox = '<input type="checkbox"/>'
+		var id_checkbox = 0;
 
         for (var i = 0; i < len; i++) {
             var myObject = tab_workstation[i];
+			id_checkbox++;
             
             for (var x in myObject) {
                 text += ( x + ": " + myObject[x] + " ");
             }
-            text += "<br/>";
+            text += checkbox + id_checkbox+ "<br/>";
         }
 
         document.getElementById("message").innerHTML = text;

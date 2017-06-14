@@ -30,7 +30,6 @@
 		<input type="button" id="un" value="Fichier" /> <input type="button" id="deux" value="Mode" /> 
 		<input type="button" onclick="document.getElementById('config').style.display = 'block'" value="Parametrage" /> 
 		-->
-<h4 id="message"></h4>
 	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
@@ -113,15 +112,7 @@
 
 	<div id="noeud" class="noeud">
 		<h1> Choisissez les stations </h1> 
-		<script>
-			 function Get_information()
- {
-	 for(var i =0; i< tab_workstation.length; i++)
-	 {
-		alert(tab_workstation[i].id);
-	 }
- }
-		</script>
+		<h4 id="message"></h4>
 		<input type="button" onclick="document.getElementById('noeud').style.display = 'none'; text = document.getElementById('mavar').value;"
 		 value="Valider" style="position: relative; right: -36%; top: 95%;" />
 	</div>
