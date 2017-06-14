@@ -235,7 +235,7 @@ function init() {
 	create_button('Images/switchbutton.png', 340, 10, true);	
 	create_button('Images/hubbutton.png', 450, 10, true);
 
-	bring_front_buttons();
+	bring_front_buttons();	
 }
 //------------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------Main()--------------------------------------------------------------------
@@ -273,15 +273,7 @@ function check(o) {
 		simulation();
 	} else if (o.which == 67) // 67 = c 
 	{
-			var WorkStation = []; 
-	for (var j = 0; j< tab_workstation.length; j++)
-	{
-		var aux = {id : tab_workstation[j].id, type: tab_workstation[j].type};
-		WorkStation.push( aux);
-	}
-
-
-          displayArrayObjects(WorkStation);
+		alert('don t press c scrub');
 	} else if (o.which == 32) // 32 = space
 	{
 		o.preventDefault();
@@ -297,38 +289,32 @@ function check(o) {
 		var options = document.getElementById("options");
 		options.style = "left: 500px; top: 200px; display: block;";
 		
-		function useful() {
-			simulate(s)
-			document.getElementById("unicast").removeEventListener("click", useful);
-			document.getElementById("broadcast").removeEventListener("click", useful);
-		}
-		
-		document.getElementById("unicast").addEventListener("click", useful);
-		document.getElementById("broadcast").addEventListener("click", useful);
-	} else if (o.which == 65) // 65 = a
-	{
-		o.preventDefault();
-		
-		var s = null;
-		if (canvas.getActiveObject() != null) {
-			for (var i = 0; s == null && i < tab_workstation.length; i++) {
-				if (canvas.getActiveObject() == tab_workstation[i].obj)
-					s = tab_workstation[i];
+		var inter = setInterval(function() {
+			if(options.style.display == "none")
+			{
+				if (options.value == "unicast")
+				{
+					options.value = "null";
+					alert("unicast");
+					simulate(current, 4);
+				}
+				else if (options.value == "broadcast")
+				{
+					options.value = "null";
+					alert("brodcast");
+					simulate(current, null);
+				}
+				clearInterval(inter);
+				current = null;
 			}
-		} else
-		s = tab_workstation[0];
-	
-		document.getElementById("ipconfig").style.display = "block";
-		document.getElementById("mavar2").value = s.ip;
-		document.getElementById("mavar3").value = s.masque;
-		
-		function useful2() {
-			s.ip = document.getElementById("mavar2").value;
-			s.masque = document.getElementById("mavar3").value;
-			document.getElementById("saveip").removeEventListener("click", useful2);
-		}
-		
-		document.getElementById("saveip").addEventListener("click", useful2);
+			else
+			{
+				if(current == null)
+				{
+					current = s;
+				}
+			}
+		}, 100);
 	}
 }
 
@@ -581,19 +567,3 @@ canvas.on('mouse:move', function (o) {
 canvas.on('mouse:up', function (o) {
 	isDown = false;
 });
-
-function displayArrayObjects(tab_workstation) {
-        var len = tab_workstation.length, text = "";
-
-        for (var i = 0; i < len; i++) {
-            var myObject = tab_workstation[i];
-            
-            for (var x in myObject) {
-                text += ( x + ": " + myObject[x] + " ");
-            }
-            text += "<br/>";
-        }
-
-        document.getElementById("message").innerHTML = text;
-    }
-

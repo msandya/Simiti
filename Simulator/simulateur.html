@@ -88,11 +88,13 @@
 		Canvas n'est pas implémenté dans ce navigateur.
 	</canvas>
 
-	<div id="options" class="options">
+	<div id="options" class="options" value="">
 		<div class="ui-group-buttons">
-			<button type="button" class="btn btn-primary btn-xs" id="unicast" onclick="document.getElementById('options').style.display = 'none';">Unicast</button>
+			<button type="button" class="btn btn-primary btn-xs" id="unicast" onclick="document.getElementById('options').style.display = 'none';
+																					   document.getElementById('options').value ='unicast';">Unicast</button>
 			<div class="or or-xs"></div>
-			<button type="button" class="btn btn-success btn-xs" id="broadcast" onclick="document.getElementById('options').style.display = 'none';">Broadcast</button>
+			<button type="button" class="btn btn-success btn-xs" id="broadcast" onclick="document.getElementById('options').style.display = 'none';
+																						 document.getElementById('options').value = 'broadcast';">Broadcast</button>
 		</div>
 	</div>
 
