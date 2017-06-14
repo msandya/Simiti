@@ -291,7 +291,17 @@ function send_request(port_1_left, port_1_top, port_2_left, port_2_top) {
 		});
 }
 
-function rec_simulation(s, h, marked, tab_vect) {
+function good_path(s, next, path)
+{
+	if (path != null && s.type == "switch")
+	{
+		if (!is_in(s.id, path) || !is_in(next.id, path))
+			return false;
+	}
+	return true;
+}
+
+function rec_simulation(s, h, marked, tab_vect, father, path) {
 	marked.push(s);
 	var next = null;
 
@@ -299,11 +309,14 @@ function rec_simulation(s, h, marked, tab_vect) {
 		if (s.ports[i].used) // Si un port est utilisé
 		{
 			next = get_linked_port(s, i); // On regarde a qui il est relié
-			if (!is_in(next.obj, marked) && good_cable(s.type, next.obj.type, next.cable.type)) // On vérifie que le voisin n'est pas marqué
+			if (!is_in(next.obj, marked) && good_cable(s.type, next.obj.type, next.cable.type) && good_path(s, next.obj, path)) // On vérifie que le voisin n'est pas marqué
 			{
 				// On envoi la requète
 				var vect = {
 					'h': h,
+					'father': father,
+					'obj1': s,
+					'obj2': next.obj,
 					'x1': s.obj.left + s.ports[i].rect.left + 26,
 					'y1': s.obj.top + s.ports[i].rect.top + 26,
 					'x2': next.obj.obj.left + next.port.rect.left + 26,
@@ -311,14 +324,14 @@ function rec_simulation(s, h, marked, tab_vect) {
 				};
 				tab_vect.push(vect);
 
-				rec_simulation(next.obj, h + 1, marked, tab_vect);
+				rec_simulation(next.obj, h + 1, marked, tab_vect, vect, path);
 			}
 		}
 	}
 }
 
 //parcour largeur
-function simulate(s) // s, sommet selectionné
+function simulate(s, target) // s, sommet selectionné
 {
 	var h = 0;
 	var marked = []; // marked, tableau des sommet déjà vu
@@ -326,9 +339,43 @@ function simulate(s) // s, sommet selectionné
 
 	var tab_vect = [];
 
-	rec_simulation(s, h, marked, tab_vect);
+	var path = [];
+
+	rec_simulation(s, h, marked, tab_vect, null, null);
+
+	console.log("");
 
 	for (var i = 0; i < tab_vect.length; i++) {	
+		if (tab_vect[i].obj2.id == target)
+		{
+			var vect = tab_vect[i];
+			while (vect.father != null)
+			{
+				path.push(vect.obj2.id);
+				vect = vect.father;
+			}
+			path.push(vect.obj2.id);
+			path.push(vect.obj1.id);
+		}
+	}
+
+	if (target != null)
+	{
+		if (path != null)
+		{
+			for (var i = path.length; i != 0; i--)
+			{
+				console.log(path[i - 1]);
+			}
+		}
+		else
+			console.log("path null");
+
+		tab_vect = [];
+		rec_simulation(s, h, [], tab_vect, null, path);
+	}
+
+	for (var i = 0; i < tab_vect.length; i++) {
 		send_req(tab_vect[i]);
 	}
 }
