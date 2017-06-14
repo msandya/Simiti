@@ -136,3 +136,11 @@ function create_work_station(id, x, y, nb_port, package_received, type) {
 	tab_workstation.push(work_station);
 	canvas.add(station);
 }
+
+function delete_workStation(work_station)
+ {
+	for(var i = 0; i<tab_workstation.length; i++)
+	{
+		tab_workstation.splice(i,1);
+	}
+ }
