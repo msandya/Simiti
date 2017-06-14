@@ -246,14 +246,18 @@ init();
 function check(o) {
 	if (o.which == 46) // 46 = suppr
 	{
-		var s;
-			if (canvas.getActiveObject() != null) {
+		var s = null;
+		if (canvas.getActiveObject() != null) {
 			for (var i = 0; s == null && i < tab_workstation.length; i++) {
 				if (canvas.getActiveObject() == tab_workstation[i].obj)
 					s = tab_workstation[i];
 			}
+			delete_workStation(s);
 		}	
-		delete_workStation(s);
+
+		for (var i = 0;i < tab_workstation.length; i++) {
+			console.log(tab_workstation[i].id);
+		} 
 
 		for (var i = 0; i < tab_cable.length; i++) {
 			if (tab_cable[i].object_1 != null && tab_cable[i].object_2 != null) {
@@ -596,7 +600,7 @@ canvas.on('mouse:up', function (o) {
 
 function displayArrayObjects(tab_workstation) {
         var len = tab_workstation.length, text = "";
-		var id_checkbox = 0;
+		var id_checkbox = -1;
 
         for (var i = 0; i < len; i++) {
             var myObject = tab_workstation[i];
@@ -605,10 +609,17 @@ function displayArrayObjects(tab_workstation) {
             for (var x in myObject) {
                 text += ( x + ": " + myObject[x] + " ");
             }
-		var checkbox = '<input type="checkbox" value="ok" id="checkbox'+ id_checkbox +'"/>'
+		var checkbox = '<input type="checkbox" id="'+ id_checkbox +'"/>'
             text += checkbox  + "<br/>";
 
-        }
+		var check = document.getElementById(id_checkbox);
+		if (check != null && check.checked)
+			alert('station choisi:' + tab_workstation[i].id);
+      
+	}
+		
         document.getElementById("message").innerHTML = text;
     }
+
+
 

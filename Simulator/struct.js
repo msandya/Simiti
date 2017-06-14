@@ -137,10 +137,11 @@ function create_work_station(id, x, y, nb_port, package_received, type) {
 	canvas.add(station);
 }
 
-function delete_workStation(work_station)
+function delete_workStation(station)
  {
-	for(var i = 0; i<tab_workstation.length; i++)
+	for(var i = 0; i < tab_workstation.length; i++)
 	{
-		tab_workstation.splice(i,1);
+		if(tab_workstation[i] == station)
+			tab_workstation.splice(i,1);
 	}
  }
