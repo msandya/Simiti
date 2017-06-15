@@ -79,6 +79,22 @@ function delete_cable(cable) {
 	canvas.renderAll();
 }
 
+//Create the name of the workstation
+function create_name(obj)
+{
+	var text = new fabric.Text(obj.type + "\n" + obj.id, {
+    fontSize: 13,
+    left: obj.obj.left + 4,
+    top: obj.obj.top,
+    //lineHeight: 1,
+    //originX: 'left',
+    fontFamily: 'Helvetica',
+	fill: 'white'
+    //statefullCache: true
+  });
+  obj.obj.addWithUpdate(text);
+}
+
 //Create a Workstation
 function create_work_station(id, x, y, nb_port, package_received, type) {
 	//Create a big rectangle outside
@@ -88,6 +104,9 @@ function create_work_station(id, x, y, nb_port, package_received, type) {
 		stroke: 'black',
 		strokeWidth: 1
 	});
+
+	if (nb_port > 3)
+		big_rect.set({width: 50 + (nb_port - 3) * (PORT_SIZE + 3)});
 
 	switch (type) {
 		case "switch":
@@ -127,6 +146,8 @@ function create_work_station(id, x, y, nb_port, package_received, type) {
 
 	//Create a port in order to add in a GroupStation
 	create_ports(work_station, nb_port);
+
+	create_name(work_station);
 
 	//Giving permission not to resize, rotate... object selected
 	station.hasControls = false;

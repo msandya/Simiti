@@ -536,13 +536,13 @@ canvas.on('mouse:down', function (o) {
 			}
 		}
 	} else if (selected == 2) {
-		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, "post");
+		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 1, false, "post");
 		nb_workstation++;
 	} else if (selected == 3) {
 		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, "hub");
 		nb_workstation++;
 	} else if (selected == 4) {
-		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, "switch");
+		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 6, false, "switch");
 		nb_workstation++;
 	}
 	canvas.renderAll();
