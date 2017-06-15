@@ -255,10 +255,6 @@ function check(o) {
 			delete_workStation(s);
 		}	
 
-		for (var i = 0;i < tab_workstation.length; i++) {
-			console.log(tab_workstation[i].id);
-		} 
-
 		for (var i = 0; i < tab_cable.length; i++) {
 			if (tab_cable[i].object_1 != null && tab_cable[i].object_2 != null) {
 				if (canvas.getActiveObject() == tab_cable[i].object_1.obj || canvas.getActiveObject() == tab_cable[i].object_2.obj) {
@@ -326,7 +322,6 @@ function check(o) {
 			if(targetid != "")
 			{
 				simulate(s, targetid);
-				console.log(targetid);
 			}
 			options.remove();
 		}
@@ -480,7 +475,11 @@ canvas.on('mouse:down', function (o) {
 						}
 					}
 
-					points_line = [actual_obj.obj.left + actual_obj.ports[j].rect.left + 26 + PORT_SIZE / 2,
+					var aux = 26;
+					if (actual_obj.ports.length > 3)
+						aux = ((50 + ((actual_obj.ports.length - 3) * (PORT_SIZE + 3))) / 2) + 1;
+
+					points_line = [actual_obj.obj.left + actual_obj.ports[j].rect.left + aux + PORT_SIZE / 2,
 						actual_obj.obj.top + actual_obj.ports[j].rect.top + 26 + PORT_SIZE / 2, pointer.x, pointer.y
 					];
 					last_object_port_nb = j;
@@ -517,8 +516,14 @@ canvas.on('mouse:down', function (o) {
 
 				for (var j = 0; !matched && j < actual_obj.ports.length; j++) {
 					if (is_inside(pointer.x, pointer.y, actual_obj.ports[j], actual_obj)) {
+						var aux = 26;
+						if (actual_obj.ports.length > 3)
+						{
+							aux = ((50 + ((actual_obj.ports.length - 3) * (PORT_SIZE + 3))) / 2) + 1;
+						}
+
 						line.set({
-							x2: actual_obj.obj.left + actual_obj.ports[j].rect.left + 26 + PORT_SIZE / 2,
+							x2: actual_obj.obj.left + actual_obj.ports[j].rect.left + aux + PORT_SIZE / 2,
 							y2: actual_obj.obj.top + actual_obj.ports[j].rect.top + 26 + PORT_SIZE / 2
 						});
 						object_port_nb = j;
@@ -590,10 +595,17 @@ canvas.on('mouse:move', function (o) {
 
 	for (var i = 0; i < tab_cable.length; i++) {
 		if (tab_cable[i].object_1 != null) {
+			var aux1 = 26;
+			if (tab_cable[i].object_1.ports.length > 3)
+				aux1 = ((50 + ((tab_cable[i].object_1.ports.length - 3) * (PORT_SIZE + 3))) / 2) + 1;
+			var aux2 = 26
+			if (tab_cable[i].object_2.ports.length > 3)
+				aux2 = ((50 + ((tab_cable[i].object_2.ports.length - 3) * (PORT_SIZE + 3))) / 2) + 1;
+			
 			tab_cable[i].l.set({
-				x1: tab_cable[i].object_1.obj.left + tab_cable[i].object_1.ports[tab_cable[i].obj_1_port_nb].rect.left + 26 + PORT_SIZE / 2,
+				x1: tab_cable[i].object_1.obj.left + tab_cable[i].object_1.ports[tab_cable[i].obj_1_port_nb].rect.left + aux1 + PORT_SIZE / 2,
 				y1: tab_cable[i].object_1.obj.top + tab_cable[i].object_1.ports[tab_cable[i].obj_1_port_nb].rect.top + 26 + PORT_SIZE / 2,
-				x2: tab_cable[i].object_2.obj.left + tab_cable[i].object_2.ports[tab_cable[i].obj_2_port_nb].rect.left + 26 + PORT_SIZE / 2,
+				x2: tab_cable[i].object_2.obj.left + tab_cable[i].object_2.ports[tab_cable[i].obj_2_port_nb].rect.left + aux2 + PORT_SIZE / 2,
 				y2: tab_cable[i].object_2.obj.top + tab_cable[i].object_2.ports[tab_cable[i].obj_2_port_nb].rect.top + 26 + PORT_SIZE / 2
 			});
 

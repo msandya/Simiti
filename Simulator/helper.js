@@ -11,7 +11,12 @@ function is_in(x, tab)
 
 //Checking if the mouse is inside of the Port or not
 function is_inside(x, y, port, station) {
-	return (x >= station.obj.left + port.rect.left + 25 && x <= station.obj.left + port.rect.left + PORT_SIZE + 25 &&
+	var aux = 25;
+	if (station.ports.length > 3)
+	{
+				aux = (50 + ((station.ports.length - 3) * (PORT_SIZE + 3))) / 2;
+	}
+	return (x >= station.obj.left + port.rect.left + aux && x <= station.obj.left + port.rect.left + PORT_SIZE + aux &&
 		y >= station.obj.top + port.rect.top + 25 && y <= station.obj.top + port.rect.top + PORT_SIZE + 25);
 }
 
