@@ -11,13 +11,10 @@ document.oncontextmenu = function() {
 	return false;
 }
 
-
 //document.getElementById('un').addEventListener("click", menu, false);
 //document.getElementById('deux').addEventListener("click", menu, false);
 
 document.getElementById('Ethernet').addEventListener("click", menu, false);
-
-
 
 function menu(e) {
 	var select = this;
@@ -34,43 +31,51 @@ function menu(e) {
 	document.getElementsByTagName('body')[0].appendChild(menu);
 
 	if (select.id == "un") {
+
 		var bt1 = document.createElement('button');
 		bt1.name = "1";
 		bt1.innerHTML = "Nouveau";
 		menu.appendChild(bt1);
 		menu.appendChild(document.createElement('br'));
 		bt1.addEventListener("click", click, false);
+
 		var bt2 = document.createElement('button');
 		bt2.name = "2";
 		bt2.innerHTML = "2";
 		menu.appendChild(bt2);
 		menu.appendChild(document.createElement('br'));
 		bt2.addEventListener("click", click, false);
+
 		var bt3 = document.createElement('button');
 		bt3.name = "3";
 		bt3.innerHTML = "3";
 		menu.appendChild(bt3);
 		menu.appendChild(document.createElement('br'));
 		bt3.addEventListener("click", click, false);
+
 	} else if (select.id == "deux") {
+
 		var bt1 = document.createElement('button');
 		bt1.name = "4";
 		bt1.innerHTML = "Conception";
 		menu.appendChild(bt1);
 		menu.appendChild(document.createElement('br'));
 		bt1.addEventListener("click", click, false);
+
 		var bt2 = document.createElement('button');
 		bt2.name = "5";
 		bt2.innerHTML = "Ethernet";
 		menu.appendChild(bt2);
 		menu.appendChild(document.createElement('br'));
 		bt2.addEventListener("click", click, false);
+
 		var bt3 = document.createElement('button');
 		bt3.name = "6";
 		bt3.innerHTML = "IP";
 		menu.appendChild(bt3);
 		menu.appendChild(document.createElement('br'));
 		bt3.addEventListener("click", click, false);
+
 		var bt4 = document.createElement('button');
 		bt4.name = "7";
 		bt4.innerHTML = "Transport";
@@ -81,8 +86,6 @@ function menu(e) {
 }
 
 */
-	
-
 
 function click(e) {
 	var select = this;
@@ -209,14 +212,12 @@ function remove_button(image) {
 		if (buttonName == tab_buttons[i].name_button) {
 			canvas.remove(tab_buttons[i].button_image);
 			return 1;
-		}
+		} 
 	}*/
 }
 
-function bring_front_buttons()
-{
-	for(var i = 0; i < buttons.length; i++)
-	{
+function bring_front_buttons() {
+	for (var i = 0; i < buttons.length; i++) {
 		canvas.bringToFront(buttons[i]);
 	}
 }
@@ -229,13 +230,11 @@ function init() {
 	create_button('Images/switchbutton_clicked.png', 340, 10, false);
 	create_button('Images/hubbutton_clicked.png', 450, 10, false);
 
-	create_button('Images/mousepointerbutton.png', 10, 10, true);	
-	create_button('Images/cablebutton.png', 120, 10, true);	
-	create_button('Images/postbutton.png', 230, 10, true);	
-	create_button('Images/switchbutton.png', 340, 10, true);	
+	create_button('Images/mousepointerbutton.png', 10, 10, true);
+	create_button('Images/cablebutton.png', 120, 10, true);
+	create_button('Images/postbutton.png', 230, 10, true);
+	create_button('Images/switchbutton.png', 340, 10, true);
 	create_button('Images/hubbutton.png', 450, 10, true);
-
-	bring_front_buttons();
 }
 //------------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------Main()--------------------------------------------------------------------
@@ -246,15 +245,6 @@ init();
 function check(o) {
 	if (o.which == 46) // 46 = suppr
 	{
-		var s = null;
-		if (canvas.getActiveObject() != null) {
-			for (var i = 0; s == null && i < tab_workstation.length; i++) {
-				if (canvas.getActiveObject() == tab_workstation[i].obj)
-					s = tab_workstation[i];
-			}
-			delete_workStation(s);
-		}	
-
 		for (var i = 0; i < tab_cable.length; i++) {
 			if (tab_cable[i].object_1 != null && tab_cable[i].object_2 != null) {
 				if (canvas.getActiveObject() == tab_cable[i].object_1.obj || canvas.getActiveObject() == tab_cable[i].object_2.obj) {
@@ -295,61 +285,20 @@ function check(o) {
 		} else
 			s = tab_workstation[0];
 
-		var options = document.createElement("div");
-		options.className = "options";
-		options.style = "left: " + s.obj.left + "px; top: " + s.obj.top + "px;";
-		document.body.appendChild(options);
-		
-		var broad = document.createElement("button");
-		broad.className = "btn btn-primary btn-xs";
-		broad.innerHTML = "Broadcast";
-		broad.addEventListener("click", broadcast);
-		options.appendChild(broad);
-		
-		var uni = document.createElement("button");
-		uni.className = "btn btn-primary btn-xs";
-		uni.innerHTML = "Unicast";
-		uni.addEventListener("click", unicast);
-		options.appendChild(uni);
-		
-		function broadcast() {
-			simulate(s, null)
-			options.remove();
-		}
-		
-		function unicast() {
-			var targetid = prompt("Select target id");
-			if(targetid != "")
-			{
-				simulate(s, targetid);
+		var options = document.getElementById("options");
+		options.style = "left: 500px; top: 200px; display: block;";
+
+		var inter = setInterval(function () {
+			if (options.style.display == "none") {
+				simulate(current);
+				clearInterval(inter);
+				current = null;
+			} else {
+				if (current == null) {
+					current = s;
+				}
 			}
-			options.remove();
-		}
-		
-	} else if (o.which == 65) // 65 = a
-	{
-		o.preventDefault();
-		
-		var s = null;
-		if (canvas.getActiveObject() != null) {
-			for (var i = 0; s == null && i < tab_workstation.length; i++) {
-				if (canvas.getActiveObject() == tab_workstation[i].obj)
-					s = tab_workstation[i];
-			}
-		} else
-		s = tab_workstation[0];
-	
-		document.getElementById("ipconfig").style.display = "block";
-		document.getElementById("mavar2").value = s.ip;
-		document.getElementById("mavar3").value = s.masque;
-		
-		function saveip() {
-			s.ip = document.getElementById("mavar2").value;
-			s.masque = document.getElementById("mavar3").value;
-			document.getElementById("saveip").removeEventListener("click", saveip);
-		}
-		
-		document.getElementById("saveip").addEventListener("click", saveip);
+		}, 100);
 	}
 }
 
@@ -371,8 +320,7 @@ canvas.on('mouse:down', function (o) {
 		rectangle(120, 10, 'white');
 		rectangle(230, 10, 'white');*/
 		bring_front_buttons();
-		for(var i = 0; i < buttons_selected.length; i++)
-		{
+		for (var i = 0; i < buttons_selected.length; i++) {
 			if (buttons_selected[i].left == 10)
 				canvas.bringToFront(buttons_selected[i]);
 		}
@@ -380,8 +328,7 @@ canvas.on('mouse:down', function (o) {
 		canvas.selection = false;
 	} else if (pointer.x >= 120 && pointer.x <= 220 && pointer.y <= 60 && pointer.y >= 10) {
 		bring_front_buttons();
-				for(var i = 0; i < buttons_selected.length; i++)
-		{
+		for (var i = 0; i < buttons_selected.length; i++) {
 			if (buttons_selected[i].left == 120)
 				canvas.bringToFront(buttons_selected[i]);
 		}
@@ -389,8 +336,7 @@ canvas.on('mouse:down', function (o) {
 		canvas.selection = false;
 	} else if (pointer.x >= 230 && pointer.x <= 330 && pointer.y <= 60 && pointer.y >= 10) {
 		bring_front_buttons();
-		for(var i = 0; i < buttons_selected.length; i++)
-		{
+		for (var i = 0; i < buttons_selected.length; i++) {
 			if (buttons_selected[i].left == 230)
 				canvas.bringToFront(buttons_selected[i]);
 		}
@@ -399,8 +345,7 @@ canvas.on('mouse:down', function (o) {
 		canvas.selection = false;
 	} else if (pointer.x >= 340 && pointer.x <= 440 && pointer.y <= 60 && pointer.y >= 10) {
 		bring_front_buttons();
-		for(var i = 0; i < buttons_selected.length; i++)
-		{
+		for (var i = 0; i < buttons_selected.length; i++) {
 			if (buttons_selected[i].left == 340)
 				canvas.bringToFront(buttons_selected[i]);
 		}
@@ -408,8 +353,7 @@ canvas.on('mouse:down', function (o) {
 		canvas.selection = false;
 	} else if (pointer.x >= 450 && pointer.x <= 550 && pointer.y <= 60 && pointer.y >= 10) {
 		bring_front_buttons();
-		for(var i = 0; i < buttons_selected.length; i++)
-		{
+		for (var i = 0; i < buttons_selected.length; i++) {
 			if (buttons_selected[i].left == 450)
 				canvas.bringToFront(buttons_selected[i]);
 		}
@@ -475,11 +419,7 @@ canvas.on('mouse:down', function (o) {
 						}
 					}
 
-					var aux = 26;
-					if (actual_obj.ports.length > 3)
-						aux = ((50 + ((actual_obj.ports.length - 3) * (PORT_SIZE + 3))) / 2) + 1;
-
-					points_line = [actual_obj.obj.left + actual_obj.ports[j].rect.left + aux + PORT_SIZE / 2,
+					points_line = [actual_obj.obj.left + actual_obj.ports[j].rect.left + 26 + PORT_SIZE / 2,
 						actual_obj.obj.top + actual_obj.ports[j].rect.top + 26 + PORT_SIZE / 2, pointer.x, pointer.y
 					];
 					last_object_port_nb = j;
@@ -516,14 +456,8 @@ canvas.on('mouse:down', function (o) {
 
 				for (var j = 0; !matched && j < actual_obj.ports.length; j++) {
 					if (is_inside(pointer.x, pointer.y, actual_obj.ports[j], actual_obj)) {
-						var aux = 26;
-						if (actual_obj.ports.length > 3)
-						{
-							aux = ((50 + ((actual_obj.ports.length - 3) * (PORT_SIZE + 3))) / 2) + 1;
-						}
-
 						line.set({
-							x2: actual_obj.obj.left + actual_obj.ports[j].rect.left + aux + PORT_SIZE / 2,
+							x2: actual_obj.obj.left + actual_obj.ports[j].rect.left + 26 + PORT_SIZE / 2,
 							y2: actual_obj.obj.top + actual_obj.ports[j].rect.top + 26 + PORT_SIZE / 2
 						});
 						object_port_nb = j;
@@ -541,13 +475,13 @@ canvas.on('mouse:down', function (o) {
 			}
 		}
 	} else if (selected == 2) {
-		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 1, false, "post");
+		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, "post");
 		nb_workstation++;
 	} else if (selected == 3) {
 		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, "hub");
 		nb_workstation++;
 	} else if (selected == 4) {
-		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 6, false, "switch");
+		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, "switch");
 		nb_workstation++;
 	}
 	canvas.renderAll();
@@ -595,17 +529,10 @@ canvas.on('mouse:move', function (o) {
 
 	for (var i = 0; i < tab_cable.length; i++) {
 		if (tab_cable[i].object_1 != null) {
-			var aux1 = 26;
-			if (tab_cable[i].object_1.ports.length > 3)
-				aux1 = ((50 + ((tab_cable[i].object_1.ports.length - 3) * (PORT_SIZE + 3))) / 2) + 1;
-			var aux2 = 26
-			if (tab_cable[i].object_2.ports.length > 3)
-				aux2 = ((50 + ((tab_cable[i].object_2.ports.length - 3) * (PORT_SIZE + 3))) / 2) + 1;
-			
 			tab_cable[i].l.set({
-				x1: tab_cable[i].object_1.obj.left + tab_cable[i].object_1.ports[tab_cable[i].obj_1_port_nb].rect.left + aux1 + PORT_SIZE / 2,
+				x1: tab_cable[i].object_1.obj.left + tab_cable[i].object_1.ports[tab_cable[i].obj_1_port_nb].rect.left + 26 + PORT_SIZE / 2,
 				y1: tab_cable[i].object_1.obj.top + tab_cable[i].object_1.ports[tab_cable[i].obj_1_port_nb].rect.top + 26 + PORT_SIZE / 2,
-				x2: tab_cable[i].object_2.obj.left + tab_cable[i].object_2.ports[tab_cable[i].obj_2_port_nb].rect.left + aux2 + PORT_SIZE / 2,
+				x2: tab_cable[i].object_2.obj.left + tab_cable[i].object_2.ports[tab_cable[i].obj_2_port_nb].rect.left + 26 + PORT_SIZE / 2,
 				y2: tab_cable[i].object_2.obj.top + tab_cable[i].object_2.ports[tab_cable[i].obj_2_port_nb].rect.top + 26 + PORT_SIZE / 2
 			});
 
@@ -613,46 +540,9 @@ canvas.on('mouse:move', function (o) {
 		}
 	}
 
-	var WorkStation = []; 
-	for (var j = 0; j< tab_workstation.length; j++)
-	{
-		var aux = {id : tab_workstation[j].id, type: tab_workstation[j].type};
-		WorkStation.push( aux);
-	}
-
-
-          displayArrayObjects(WorkStation);
-	
-
 	canvas.renderAll();
 });
 
 canvas.on('mouse:up', function (o) {
 	isDown = false;
 });
-
-function displayArrayObjects(tab_workstation) {
-        var len = tab_workstation.length, text = "";
-		var id_checkbox = -1;
-
-        for (var i = 0; i < len; i++) {
-            var myObject = tab_workstation[i];
-			id_checkbox++;
-            
-            for (var x in myObject) {
-                text += ( x + ": " + myObject[x] + " ");
-            }
-		var checkbox = '<input type="checkbox" id="'+ id_checkbox +'"/>'
-            text += checkbox  + "<br/>";
-
-		var check = document.getElementById(id_checkbox);
-		if (check != null && check.checked)
-			alert('station choisi:' + tab_workstation[i].id);
-      
-	}
-		
-        document.getElementById("message").innerHTML = text;
-    }
-
-
-
