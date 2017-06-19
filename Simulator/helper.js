@@ -11,7 +11,12 @@ function is_in(x, tab)
 
 //Checking if the mouse is inside of the Port or not
 function is_inside(x, y, port, station) {
-	return (x >= station.obj.left + port.rect.left + 25 && x <= station.obj.left + port.rect.left + PORT_SIZE + 25 &&
+	var aux = 25;
+	if (station.ports.length > 3)
+	{
+				aux = (50 + ((station.ports.length - 3) * (PORT_SIZE + 3))) / 2;
+	}
+	return (x >= station.obj.left + port.rect.left + aux && x <= station.obj.left + port.rect.left + PORT_SIZE + aux &&
 		y >= station.obj.top + port.rect.top + 25 && y <= station.obj.top + port.rect.top + PORT_SIZE + 25);
 }
 
@@ -45,14 +50,16 @@ function get_linked_port(work_station, port_nb) {
 			var res = {
 				'port': tab_cable[i].object_2.ports[tab_cable[i].obj_2_port_nb],
 				'obj': tab_cable[i].object_2,
-				'cable': tab_cable[i]
+				'cable': tab_cable[i],
+				'nb_port': tab_cable[i].obj_2_port_nb
 			};
 			return res;
 		} else if (tab_cable[i].object_2 == work_station && port_nb == tab_cable[i].obj_2_port_nb) {
 			var res = {
 				'port': tab_cable[i].object_1.ports[tab_cable[i].obj_1_port_nb],
 				'obj': tab_cable[i].object_1,
-				'cable': tab_cable[i]
+				'cable': tab_cable[i],
+				'nb_port': tab_cable[i].obj_1_port_nb
 			};
 			return res;
 		}
@@ -88,10 +95,3 @@ function apply_color(obj, type, is_line)
 		}
 }
 
-function Get_information()
- {
-	 for(var i =0; i< tab_workstation.length; i++)
-	 {
-		alert(tab_workstation[i].id);
-	 }
- }
