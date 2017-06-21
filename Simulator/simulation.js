@@ -162,14 +162,29 @@ function station_progress(portOriginal, postIdOriginal, tabVect, workstationType
 			}, true);
 			//x.appendChild(t);
 
-			var list_bg = document.createElement("div")
+			var list_bg = document.createElement("div");
+			list_bg.style.overflow = "auto";
 			list_bg.style.position = "absolute";
 			list_bg.id = "listBg";
 			list_bg.style.left = "10px";
 			list_bg.style.top = "115px";
 			list_bg.style.width = "200px";
-			list_bg.style.height = "50px";
+			list_bg.style.height = "60px";
 			list_bg.style.background = "black";
+
+			for (var i = 0; i < 10; i++) {
+				var text_add = "station" + i;
+				var text = document.createTextNode(text_add);
+				var text_bg = document.createElement("div");
+				text_bg.style.position = "absolute";
+				text_bg.style.left = "10px";
+				text_bg.style.top = i * 20 + "px";
+				text_bg.style.width = "190px";
+				text_bg.style.height = "10px";
+				text_bg.style.background = "black";
+				text_bg.appendChild(text);
+				list_bg.appendChild(text_bg);
+			}
 
 			var z = document.createElement("div");
 			z.style.position = "absolute";
@@ -321,7 +336,7 @@ function station_progress(portOriginal, postIdOriginal, tabVect, workstationType
 
 						//Add space for list
 						if ((progress_list_index == 2 || progress_list_index == 3) && workstation_type == "Switch") {
-							x.style.height = "180px";
+							x.style.height = "190px";
 							x.appendChild(list_bg);
 
 						} else {
@@ -447,7 +462,7 @@ function station_progress(portOriginal, postIdOriginal, tabVect, workstationType
 
 						//Add space for list
 						if ((progress_list_index == 2 || progress_list_index == 3) && workstation_type == "Switch") {
-							x.style.height = "180px";
+							x.style.height = "190px";
 							x.appendChild(list_bg);
 						} else {
 							if (document.getElementById("listBg") != null) {
@@ -790,6 +805,7 @@ function station_progress(portOriginal, postIdOriginal, tabVect, workstationType
 						var detail = document.createTextNode(progress_detail_list[progress_detail_list_index]);
 						detail_info.appendChild(detail);
 
+						x.appendChild(listElm);
 						x.appendChild(detail_info);
 						x.appendChild(progress_text);
 					}
