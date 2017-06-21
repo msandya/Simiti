@@ -141,6 +141,7 @@ function create_work_station(id, x, y, nb_port, package_received, type) {
 		'ports': [],
 		'package_received': package_received,
 		'type': type,
+		'TTL': [], 
 		'ip': '',
 		'masque': ''
 	};

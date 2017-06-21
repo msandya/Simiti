@@ -1144,6 +1144,8 @@ function simulate(s, target) // s, sommet selectionné
 		rec_simulation(s, h, [], tab_vect, null, path);
 	}
 
+	set_ttl(s, tab_vect);
+
 	searche_and_send_from_station(s.id, s.id, tab_vect);
 
 	/*for (var i = 0; i < tab_vect.length; i++) {
@@ -1180,4 +1182,42 @@ function searche_and_send_from_station(postIdOriginal, stationId, tabVect) {
 
 function send_req_2(portOriginal, postIdOriginal, tabVect, vectType, obj, vectId) {
 	send_request(portOriginal, postIdOriginal, tabVect, vectType, vectId, obj.x1, obj.y1, obj.x2, obj.y2);
+}
+
+function set_ttl(s, tab_vect)
+{
+	var ok = false;
+	for (var i = 0; i < tab_vect.length; i++)
+	{
+		if (tab_vect[i].obj2.type == 'switch')
+		{
+			alert('switch ' + tab_vect[i].obj2.id);
+			for (var j = 0; j < tab_vect[i].obj2.TTL.length; j++)
+			{
+				if (tab_vect[i].obj2.TTL[j].id == s.id)
+				{
+					tab_vect[i].obj2.TTL[j].status = 0;
+					ok = true;
+				}
+				else
+				{
+					tab_vect[i].obj2.TTL[j].status++;
+					if (tab_vect[i].obj2.TTL[j].status > 4)
+						tab_vect[i].obj2.TTL.splice(j, 1);
+				}
+			}
+			if (!ok)
+			{
+				var pair = {
+					'id': s.id,
+					'status': 0
+				}
+				tab_vect[i].obj2.TTL.push(pair);
+			}
+
+			console.log("id:" + tab_vect[i].obj2.id + " length :" + tab_vect[i].obj2.TTL.length);
+			for (var j = 0; j < tab_vect[i].obj2.TTL.length; j++)
+				console.log("id: " + tab_vect[i].obj2.TTL[j].id + "   status: " + tab_vect[i].obj2.TTL[j].status);
+		}
+	}
 }
