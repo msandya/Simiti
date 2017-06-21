@@ -30,6 +30,12 @@
 		<input type="button" id="un" value="Fichier" /> <input type="button" id="deux" value="Mode" /> 
 		<input type="button" onclick="document.getElementById('config').style.display = 'block'" value="Parametrage" /> 
 		-->
+	<div class="legend">
+		<img src="images/sample_black.png" /> Paires torsadées droites<br />
+		<img src="images/sample_red.png" /> Paires torsadées croisées<br />
+		<img src="images/sample_green.png" /> Cable coaxial
+	</div>
+	
 	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
@@ -63,6 +69,15 @@
 						</ul>
 					</li>
 					<li class=""><a href="#" onclick="document.getElementById('config').style.display = 'block'">Parametrage</a></li>
+					<li class="">
+						<span style="color:#A4A4A4">Type de trame :</span><br />
+						<select name="trame_type" onchange="trame_type = this.selectedIndex">
+							<option value="0" selected>Pas a pas</option>
+							<option value="1">Automatique</option>
+							<option value="2">Manuelle</option>
+							<option value="3">Trame reelle</option>
+						</select>
+					</li>
 
 
 					<ul class="nav navbar-nav navbar-right hidden-xs">

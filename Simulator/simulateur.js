@@ -4,17 +4,17 @@
 
 menu_selected = 0;
 text = "";
+trame_type = 0;
 
-/*
 document.oncontextmenu = function() {
-	alert(text);
+	alert(trame_type);
 	return false;
 }
 
 
 //document.getElementById('un').addEventListener("click", menu, false);
 //document.getElementById('deux').addEventListener("click", menu, false);
-
+/*
 document.getElementById('Ethernet').addEventListener("click", menu, false);
 
 
