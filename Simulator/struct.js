@@ -143,7 +143,8 @@ function create_work_station(id, x, y, nb_port, package_received, type) {
 		'type': type,
 		'TTL': [], 
 		'ip': '',
-		'masque': ''
+		'masque': '',
+		'checked':false
 	};
 
 	//Create a port in order to add in a GroupStation

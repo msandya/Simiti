@@ -280,7 +280,12 @@ function check(o) {
 		simulation();
 	} else if (o.which == 67) // 67 = c 
 	{
-		alert('don t press c scrub');
+
+		for (var i = 0; i < tab_workstation.length; i++) {
+			console.log("id: "+tab_workstation[i].id + " checked:" + tab_workstation[i].checked);
+					//tab_workstation[i].checked = 1;
+
+		}
 	} else if (o.which == 32) // 32 = space
 	{
 		o.preventDefault();
@@ -621,24 +626,39 @@ canvas.on('mouse:up', function (o) {
 	isDown = false;
 });
 
-function displayArrayObjects(tab_workstation) {
-	var len = tab_workstation.length,
+function displayArrayObjects(WorkStation) {
+	var len = WorkStation.length,
 		text = "";
-	var id_checkbox = -1;
 
 	for (var i = 0; i < len; i++) {
-		var myObject = tab_workstation[i];
-		id_checkbox++;
+		var myObject = WorkStation[i];
 
 		for (var x in myObject) {
 			text += (x + ": " + myObject[x] + " ");
 		}
-		var checkbox = '<input type="checkbox" id="' + id_checkbox + '"/>'
-		text += checkbox + "<br/>";
+		
+		if(tab_workstation[i].checked == true)
+		{
+			var checkbox = '<input type="checkbox" id="' + WorkStation[i].id + '"checked/>';
+		}
+		else
+			var checkbox = '<input type="checkbox" id="' + WorkStation[i].id  + '"/>';
 
-		var check = document.getElementById(id_checkbox);
-		if (check != null && check.checked)
-			alert('station choisi:' + tab_workstation[i].id);
+
+		text += checkbox + "<br/>";
+		
+
+		var check = document.getElementById(WorkStation[i].id );
+
+		if (check != null)
+		{
+			if (check.checked)
+			tab_workstation[i].checked = true;
+			/*
+			else
+			tab_workstation[i].checked = false;
+			*/
+		}
 
 	}
 
