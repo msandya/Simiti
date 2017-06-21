@@ -35,6 +35,28 @@ function create_and_move_package(start_left, start_top, destionation_left, desti
 	movement_package(rect, destionation_left + 20, destination_top + 25);
 };
 
+function TTL_status(id) {
+	var status;
+	switch (id) {
+		case 0:
+			status = "Maximum";
+			break;
+		case 1:
+			status = "Élevé";
+			break;
+		case 2:
+			status = "Moyen";
+			break;
+		case 3:
+			status = "Faible";
+			break;
+		case 4:
+			status = "Nul";
+			break;
+	}
+	return status;
+}
+
 //-----------------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------In progress-----------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------------------
@@ -52,7 +74,7 @@ function station_progress(portOriginal, postIdOriginal, tabVect, workstationType
 	var port_used_id = portOriginal;
 	var dest_text = "BCAST";
 	var post_text = "p-" + postIdOriginal;
-
+	var count = 0;
 	var myScript = "qfytqsgkudhflqjisdkfjqhsdifnvqhsidufnvhqlsidfmvqlskjvdmfosq";
 
 	var list_test = [
@@ -171,19 +193,40 @@ function station_progress(portOriginal, postIdOriginal, tabVect, workstationType
 			list_bg.style.width = "200px";
 			list_bg.style.height = "60px";
 			list_bg.style.background = "black";
+			
+			for (var j = 0; j < tab_workstation[x.id].TTL.length; j++) {
 
-			for (var i = 0; i < 10; i++) {
-				var text_add = "station" + i;
-				var text = document.createTextNode(text_add);
-				var text_bg = document.createElement("div");
-				text_bg.style.position = "absolute";
-				text_bg.style.left = "10px";
-				text_bg.style.top = i * 20 + "px";
-				text_bg.style.width = "190px";
-				text_bg.style.height = "10px";
-				text_bg.style.background = "black";
-				text_bg.appendChild(text);
-				list_bg.appendChild(text_bg);
+				var post_list = document.createTextNode("p-" + tab_workstation[x.id].TTL[j].id);
+				var post_bg_list = document.createElement("div");
+				post_bg_list.style.position = "absolute";
+				post_bg_list.style.left = "0px";
+				post_bg_list.style.width = "30px";
+				post_bg_list.style.height = "10px";
+				post_bg_list.style.background = "black";
+				post_bg_list.style.fontSize = "13px";
+				post_bg_list.appendChild(post_list);
+
+				var TTL_text = document.createTextNode(TTL_status(tab_workstation[x.id].TTL[j].status));
+				var TTL_bg_list = document.createElement("div");
+				TTL_bg_list.style.position = "absolute";
+				TTL_bg_list.style.left = "100px";
+				TTL_bg_list.style.height = "10px";
+				TTL_bg_list.style.background = "black";
+				TTL_bg_list.style.fontSize = "13px";
+				TTL_bg_list.appendChild(TTL_text);
+
+				var Element_bg_list = document.createElement("div");
+				Element_bg_list.style.position = "absolute";
+				Element_bg_list.style.left = "10px";
+				Element_bg_list.style.top = count * 20 + "px";
+				Element_bg_list.style.height = "10px";
+				Element_bg_list.style.background = "black";
+
+				Element_bg_list.appendChild(post_bg_list);
+				Element_bg_list.appendChild(TTL_bg_list);
+
+				list_bg.appendChild(Element_bg_list);
+				count++;
 			}
 
 			var z = document.createElement("div");
@@ -336,6 +379,7 @@ function station_progress(portOriginal, postIdOriginal, tabVect, workstationType
 
 						//Add space for list
 						if ((progress_list_index == 2 || progress_list_index == 3) && workstation_type == "Switch") {
+							count = 0;
 							x.style.height = "190px";
 							x.appendChild(list_bg);
 
@@ -463,6 +507,7 @@ function station_progress(portOriginal, postIdOriginal, tabVect, workstationType
 						//Add space for list
 						if ((progress_list_index == 2 || progress_list_index == 3) && workstation_type == "Switch") {
 							x.style.height = "190px";
+							count = 0;
 							x.appendChild(list_bg);
 						} else {
 							if (document.getElementById("listBg") != null) {
@@ -805,7 +850,6 @@ function station_progress(portOriginal, postIdOriginal, tabVect, workstationType
 						var detail = document.createTextNode(progress_detail_list[progress_detail_list_index]);
 						detail_info.appendChild(detail);
 
-						x.appendChild(listElm);
 						x.appendChild(detail_info);
 						x.appendChild(progress_text);
 					}
@@ -1200,30 +1244,22 @@ function send_req_2(portOriginal, postIdOriginal, tabVect, vectType, obj, vectId
 	send_request(portOriginal, postIdOriginal, tabVect, vectType, vectId, obj.x1, obj.y1, obj.x2, obj.y2);
 }
 
-function set_ttl(s, tab_vect)
-{
+function set_ttl(s, tab_vect) {
 	var ok = false;
-	for (var i = 0; i < tab_vect.length; i++)
-	{
-		if (tab_vect[i].obj2.type == 'switch')
-		{
+	for (var i = 0; i < tab_vect.length; i++) {
+		if (tab_vect[i].obj2.type == 'switch') {
 			//alert('switch ' + tab_vect[i].obj2.id);
-			for (var j = 0; j < tab_vect[i].obj2.TTL.length; j++)
-			{
-				if (tab_vect[i].obj2.TTL[j].id == s.id)
-				{
+			for (var j = 0; j < tab_vect[i].obj2.TTL.length; j++) {
+				if (tab_vect[i].obj2.TTL[j].id == s.id) {
 					tab_vect[i].obj2.TTL[j].status = 0;
 					ok = true;
-				}
-				else
-				{
+				} else {
 					tab_vect[i].obj2.TTL[j].status++;
 					if (tab_vect[i].obj2.TTL[j].status > 4)
 						tab_vect[i].obj2.TTL.splice(j, 1);
 				}
 			}
-			if (!ok)
-			{
+			if (!ok) {
 				var pair = {
 					'id': s.id,
 					'status': 0
