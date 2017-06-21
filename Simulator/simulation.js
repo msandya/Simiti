@@ -145,6 +145,7 @@ function station_progress(workStationChecked, portOriginal, postIdOriginal, tabV
 	}
 	if (workStationChecked == true) {
 		if (workstation_type == "Switch" || workstation_type == "Hub") {
+			var color_background = "";
 			setTimeout(function () {
 				var x = document.createElement("div");
 				x.id = workstationId;
@@ -153,7 +154,13 @@ function station_progress(workStationChecked, portOriginal, postIdOriginal, tabV
 				x.style.height = "115px";
 				x.style.left = left;
 				x.style.top = top;
-				x.style.background = "blue";
+				if (workstation_type == "Switch") {
+					color_background = "blue";
+				} else {
+					color_background = "red";
+				}
+				x.style.background = color_background;
+
 				//color text in box
 				x.style.color = "white";
 
@@ -279,14 +286,14 @@ function station_progress(workStationChecked, portOriginal, postIdOriginal, tabV
 				wall1.style.left = "50px";
 				wall1.style.width = "3px";
 				wall1.style.height = "20px";
-				wall1.style.background = "blue";
+				wall1.style.background = color_background;
 
 				var wall2 = document.createElement("div");
 				wall2.style.position = "absolute";
 				wall2.style.left = "110px";
 				wall2.style.width = "3px";
 				wall2.style.height = "20px";
-				wall2.style.background = "blue";
+				wall2.style.background = color_background;
 
 				//create Port background
 				var port = document.createTextNode("Port:");
