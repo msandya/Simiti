@@ -304,7 +304,7 @@ function check(o) {
 		options.className = "options";
 		options.style = "left: " + s.obj.left + "px; top: " + s.obj.top + "px;";
 		document.body.appendChild(options);
-
+		
 		var broad = document.createElement("button");
 		broad.className = "btn btn-primary btn-xs";
 		broad.innerHTML = "Broadcast";
@@ -316,9 +316,21 @@ function check(o) {
 		uni.innerHTML = "Unicast";
 		uni.addEventListener("click", unicast);
 		options.appendChild(uni);
+		
+		if(trame_type == 3)
+		{
+			br = document.createElement("br");
+			options.appendChild(br);
+			var input = document.createElement("input");
+			input.type = "text";
+			input.placeholder = "Taille de la trame";
+			input.id = "trameSize";
+			options.appendChild(input);
+		}
 
 		function broadcast() {
-			simulate(s, null)
+			simulate(s, null);
+			alert(document.getElementById("trameSize").value);
 			options.remove();
 		}
 
@@ -327,6 +339,7 @@ function check(o) {
 			if (targetid != "") {
 				simulate(s, targetid);
 			}
+			alert(document.getElementById("trameSize").value);
 			options.remove();
 		}
 
