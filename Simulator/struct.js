@@ -1,5 +1,5 @@
 //Create a port
-function create_port(obj, left) {
+function create_port(portId, obj, left) {
 	port_rect = new fabric.Rect({
 		width: PORT_SIZE,
 		height: PORT_SIZE,
@@ -11,6 +11,7 @@ function create_port(obj, left) {
 	});
 
 	var port = {
+		'id': portId + 1,
 		'rect': port_rect,
 		'used': false,
 		'type': 0
@@ -24,7 +25,7 @@ function create_port(obj, left) {
 function create_ports(obj, nb) {
 	for (var i = 0; i < nb; i++) {
 		var left = obj.obj.left + 4 + i * (PORT_SIZE + 3);
-		create_port(obj, left);
+		create_port(i, obj, left);
 	}
 }
 
@@ -79,6 +80,22 @@ function delete_cable(cable) {
 	canvas.renderAll();
 }
 
+//Create the name of the workstation
+function create_name(obj)
+{
+	var text = new fabric.Text(obj.type + "\n" + obj.id, {
+    fontSize: 13,
+    left: obj.obj.left + 4,
+    top: obj.obj.top,
+    //lineHeight: 1,
+    //originX: 'left',
+    fontFamily: 'Helvetica',
+	fill: 'white'
+    //statefullCache: true
+  });
+  obj.obj.addWithUpdate(text);
+}
+
 //Create a Workstation
 function create_work_station(id, x, y, nb_port, package_received, type) {
 	//Create a big rectangle outside
@@ -88,6 +105,9 @@ function create_work_station(id, x, y, nb_port, package_received, type) {
 		stroke: 'black',
 		strokeWidth: 1
 	});
+
+	if (nb_port > 3)
+		big_rect.set({width: 50 + (nb_port - 3) * (PORT_SIZE + 3)});
 
 	switch (type) {
 		case "switch":
@@ -121,12 +141,15 @@ function create_work_station(id, x, y, nb_port, package_received, type) {
 		'ports': [],
 		'package_received': package_received,
 		'type': type,
+		'TTL': [], 
 		'ip': '',
 		'masque': ''
 	};
 
 	//Create a port in order to add in a GroupStation
 	create_ports(work_station, nb_port);
+
+	create_name(work_station);
 
 	//Giving permission not to resize, rotate... object selected
 	station.hasControls = false;
@@ -137,10 +160,11 @@ function create_work_station(id, x, y, nb_port, package_received, type) {
 	canvas.add(station);
 }
 
-function delete_workStation(work_station)
+function delete_workStation(station)
  {
-	for(var i = 0; i<tab_workstation.length; i++)
+	for(var i = 0; i < tab_workstation.length; i++)
 	{
-		tab_workstation.splice(i,1);
+		if(tab_workstation[i] == station)
+			tab_workstation.splice(i,1);
 	}
  }

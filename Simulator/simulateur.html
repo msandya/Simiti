@@ -83,15 +83,12 @@
 					<ul class="nav navbar-nav navbar-right hidden-xs">
 						<a type="button" class="navbar-btn btn btn-gradient-blue" onclick="document.getElementById('noeud').style.display = 'block'"
 						 data-toggle="modal" data-target="#Modal" am-latosans="bold" href="#noeud">Tracer des noeuds</a>
-
 					</ul>
 
+					<li class=""><a href="#" onclick="document.getElementById('aide').style.display = 'block'">Aide</a></li>
+
 
 				</ul>
-				<ul>
-
-				</ul>
-
 			</div>
 			<!--/.nav-collapse -->
 		</div>
@@ -117,6 +114,14 @@
 		<input type="button" onclick="document.getElementById('config').style.display = 'none'; text = document.getElementById('mavar').value;"
 		 value="Valider" style="position: relative; right: -36%; top: 95%;" />
 	</div>
+
+	<div id="aide" class="aide">
+		<input type="button" onclick="document.getElementById('aide').style.display = 'none'" value="X" style="position: relative; float: right;"
+		/>
+		<h1 class="text_aide"> AIDE SIMITI </h1>
+		<input type="button" onclick="document.getElementById('aide').style.display = 'none'; text = document.getElementById('mavar').value;"
+		 value="Valider" style="position: relative; top: 80%;" />
+	</div>
 	
 	<div id="ipconfig" class="ipconfig">
 		<input type="button" onclick="document.getElementById('ipconfig').style.display = 'none'" value="X" style="position: relative; float: right;" />
@@ -131,6 +136,8 @@
 		<input type="button" onclick="document.getElementById('noeud').style.display = 'none'; text = document.getElementById('mavar').value;"
 		 value="Valider" style="position: relative; right: -36%; top: 95%;" />
 	</div>
+
+
 </form>​
 
 
