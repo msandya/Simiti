@@ -193,7 +193,7 @@ function station_progress(portOriginal, postIdOriginal, tabVect, workstationType
 			list_bg.style.width = "200px";
 			list_bg.style.height = "60px";
 			list_bg.style.background = "black";
-			
+
 			for (var j = 0; j < tab_workstation[x.id].TTL.length; j++) {
 
 				var post_list = document.createTextNode("p-" + tab_workstation[x.id].TTL[j].id);
@@ -1120,13 +1120,15 @@ function send_request(portOriginal, postIdOriginal, tabVect, workstationType, wo
 			easing: fabric.util.ease.easeInQuand
 		});
 
-	station_progress(
-		portOriginal,
-		postIdOriginal,
-		tabVect,
-		workstationType,
-		workstationId,
-		port_2_top, port_2_left);
+	if (tab_workstation[workstationId].checked) {
+		station_progress(
+			portOriginal,
+			postIdOriginal,
+			tabVect,
+			workstationType,
+			workstationId,
+			port_2_top, port_2_left);
+	}
 }
 
 function good_path(s, next, path) {
