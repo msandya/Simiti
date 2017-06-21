@@ -52,7 +52,7 @@
  				background-color: white;
  			}
 
-        		.noeud {
+        .noeud {
 			display: none;
 			position: absolute;
 			left: 50px;
@@ -63,6 +63,12 @@
 			border-width: 1px;
 			border-color: black;
 			background-color: white;
+		}
+		
+		.legend {
+			position: absolute;
+			left: 1050px;
+			top: 60px;
 		}
 
 				body {
