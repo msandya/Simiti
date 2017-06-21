@@ -1207,7 +1207,7 @@ function set_ttl(s, tab_vect)
 	{
 		if (tab_vect[i].obj2.type == 'switch')
 		{
-			alert('switch ' + tab_vect[i].obj2.id);
+			//alert('switch ' + tab_vect[i].obj2.id);
 			for (var j = 0; j < tab_vect[i].obj2.TTL.length; j++)
 			{
 				if (tab_vect[i].obj2.TTL[j].id == s.id)
@@ -1231,9 +1231,10 @@ function set_ttl(s, tab_vect)
 				tab_vect[i].obj2.TTL.push(pair);
 			}
 
-			console.log("id:" + tab_vect[i].obj2.id + " length :" + tab_vect[i].obj2.TTL.length);
+			/*console.log("id:" + tab_vect[i].obj2.id + " length :" + tab_vect[i].obj2.TTL.length);
 			for (var j = 0; j < tab_vect[i].obj2.TTL.length; j++)
 				console.log("id: " + tab_vect[i].obj2.TTL[j].id + "   status: " + tab_vect[i].obj2.TTL[j].status);
+				*/
 		}
 	}
 }
