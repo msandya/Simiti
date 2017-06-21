@@ -60,7 +60,7 @@ function TTL_status(id) {
 //-----------------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------In progress-----------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------------------
-function station_progress(portOriginal, postIdOriginal, tabVect, workstationType, workstationId, topPos, leftPos) {
+function station_progress(workStationChecked, portOriginal, postIdOriginal, tabVect, workstationType, workstationId, topPos, leftPos) {
 	var top = (topPos + 60) + "px";
 	var left = (leftPos) + "px";
 	var progress_list = [];
@@ -75,7 +75,6 @@ function station_progress(portOriginal, postIdOriginal, tabVect, workstationType
 	var dest_text = "BCAST";
 	var post_text = "p-" + postIdOriginal;
 	var count = 0;
-	var myScript = "qfytqsgkudhflqjisdkfjqhsdifnvqhsidufnvhqlsidfmvqlskjvdmfosq";
 
 	var list_test = [
 		"element 1",
@@ -144,377 +143,306 @@ function station_progress(portOriginal, postIdOriginal, tabVect, workstationType
 			workstation_type = "Hub";
 			break;
 	}
+	if (workStationChecked == true) {
+		if (workstation_type == "Switch" || workstation_type == "Hub") {
+			setTimeout(function () {
+				var x = document.createElement("div");
+				x.id = workstationId;
+				x.style.position = "absolute";
+				x.style.width = "220px";
+				x.style.height = "115px";
+				x.style.left = left;
+				x.style.top = top;
+				x.style.background = "blue";
+				//color text in box
+				x.style.color = "white";
 
-	if (workstation_type == "Switch" || workstation_type == "Hub") {
-		setTimeout(function () {
-			var x = document.createElement("div");
-			x.id = workstationId;
-			x.style.position = "absolute";
-			x.style.width = "220px";
-			x.style.height = "115px";
-			x.style.left = left;
-			x.style.top = top;
-			x.style.background = "blue";
-			//color text in box
-			x.style.color = "white";
+				//Movement of box info
+				x.addEventListener('mousedown', function (e) {
+					isDown = true;
+					offset = [
+						x.offsetLeft - e.clientX,
+						x.offsetTop - e.clientY
+					];
+				}, true);
 
-			//Movement of box info
-			x.addEventListener('mousedown', function (e) {
-				isDown = true;
-				offset = [
-					x.offsetLeft - e.clientX,
-					x.offsetTop - e.clientY
-				];
-			}, true);
+				x.addEventListener('mouseup', function () {
+					isDown = false;
+				}, true);
 
-			x.addEventListener('mouseup', function () {
-				isDown = false;
-			}, true);
-
-			x.addEventListener('mousemove', function (event) {
-				event.preventDefault();
-				if (isDown) {
-					mousePosition = {
-						posX: event.clientX,
-						posY: event.clientY
-					};
-					x.style.left = (mousePosition.posX + offset[0]) + 'px';
-					x.style.top = (mousePosition.posY + offset[1]) + 'px';
-				}
-			}, true);
-			//x.appendChild(t);
-
-			var list_bg = document.createElement("div");
-			list_bg.style.overflow = "auto";
-			list_bg.style.position = "absolute";
-			list_bg.id = "listBg";
-			list_bg.style.left = "10px";
-			list_bg.style.top = "115px";
-			list_bg.style.width = "200px";
-			list_bg.style.height = "60px";
-			list_bg.style.background = "black";
-
-			for (var j = 0; j < tab_workstation[x.id].TTL.length; j++) {
-
-				var post_list = document.createTextNode("p-" + tab_workstation[x.id].TTL[j].id);
-				var post_bg_list = document.createElement("div");
-				post_bg_list.style.position = "absolute";
-				post_bg_list.style.left = "0px";
-				post_bg_list.style.width = "30px";
-				post_bg_list.style.height = "10px";
-				post_bg_list.style.background = "black";
-				post_bg_list.style.fontSize = "13px";
-				post_bg_list.appendChild(post_list);
-
-				var TTL_text = document.createTextNode(TTL_status(tab_workstation[x.id].TTL[j].status));
-				var TTL_bg_list = document.createElement("div");
-				TTL_bg_list.style.position = "absolute";
-				TTL_bg_list.style.left = "100px";
-				TTL_bg_list.style.height = "10px";
-				TTL_bg_list.style.background = "black";
-				TTL_bg_list.style.fontSize = "13px";
-				TTL_bg_list.appendChild(TTL_text);
-
-				var Element_bg_list = document.createElement("div");
-				Element_bg_list.style.position = "absolute";
-				Element_bg_list.style.left = "10px";
-				Element_bg_list.style.top = count * 20 + "px";
-				Element_bg_list.style.height = "10px";
-				Element_bg_list.style.background = "black";
-
-				Element_bg_list.appendChild(post_bg_list);
-				Element_bg_list.appendChild(TTL_bg_list);
-
-				list_bg.appendChild(Element_bg_list);
-				count++;
-			}
-
-			var z = document.createElement("div");
-			z.style.position = "absolute";
-			z.style.left = "10px";
-			z.style.top = "10px";
-			z.style.width = "200px";
-			z.style.height = "20px";
-			z.style.background = "black";
-
-			var t = document.createTextNode(workstation_type + " id " + x.id);
-			z.appendChild(t);
-
-			var t = document.createTextNode(progress_list[0]);
-			var progress_text = document.createElement("div");
-			progress_text.id = "text1" + x.id;
-			progress_text.style.position = "absolute";
-			progress_text.style.left = "10px";
-			progress_text.style.top = "35px";
-			progress_text.style.width = "200px";
-			progress_text.style.height = "20px";
-			progress_text.style.background = "black";
-
-			progress_text.appendChild(t);
-
-			var detail = document.createTextNode(progress_detail_list[0]);
-			var detail_info = document.createElement("div");
-			detail_info.id = "text2" + x.id;
-			detail_info.style.position = "absolute";
-			detail_info.style.left = "10px";
-			detail_info.style.top = "60px";
-			detail_info.style.width = "200px";
-			detail_info.style.height = "15px";
-			detail_info.style.background = "black";
-			detail_info.style.fontSize = "13px";
-
-			detail_info.appendChild(detail);
-
-			var detail_info_2 = document.createElement("div");
-			detail_info_2.id = "text3" + x.id;
-			detail_info_2.style.position = "absolute";
-			detail_info_2.style.left = "10px";
-			detail_info_2.style.top = "85px";
-			detail_info_2.style.width = "200px";
-			detail_info_2.style.height = "20px";
-			detail_info_2.style.background = "black";
-
-			//create walls
-			var wall1 = document.createElement("div");
-			wall1.style.position = "absolute";
-			wall1.style.left = "50px";
-			wall1.style.width = "3px";
-			wall1.style.height = "20px";
-			wall1.style.background = "blue";
-
-			var wall2 = document.createElement("div");
-			wall2.style.position = "absolute";
-			wall2.style.left = "110px";
-			wall2.style.width = "3px";
-			wall2.style.height = "20px";
-			wall2.style.background = "blue";
-
-			//create Port background
-			var port = document.createTextNode("Port:");
-			var port_bg = document.createElement("div");
-			port_bg.style.position = "absolute";
-			port_bg.style.background = "black";
-			port_bg.style.color = "white";
-			port_bg.appendChild(port);
-
-			var port_num = document.createTextNode(port_used_id);
-			var port_num_bg = document.createElement("div");
-			port_num_bg.style.position = "absolute";
-			port_num_bg.style.left = "30px";
-			port_num_bg.style.background = "black";
-			port_num_bg.style.color = "white";
-			port_num_bg.appendChild(port_num);
-
-			//create Post background
-			var post = document.createTextNode("De:");
-			var post_bg = document.createElement("div");
-			post_bg.style.position = "absolute";
-			post_bg.style.left = "55px";
-			post_bg.style.background = "black";
-			post_bg.style.color = "white";
-			post_bg.appendChild(post);
-
-			var post_num = document.createTextNode(post_text);
-			var post_num_bg = document.createElement("div");
-			post_num_bg.style.position = "absolute";
-			post_num_bg.style.left = "80px";
-			post_num_bg.style.background = "black";
-			post_num_bg.style.color = "white";
-			post_num_bg.appendChild(post_num);
-
-
-			//create destination background
-			var dest = document.createTextNode("Vers:");
-			var dest_bg = document.createElement("div");
-			dest_bg.style.position = "absolute";
-			dest_bg.style.left = "115px";
-			dest_bg.style.background = "black";
-			dest_bg.style.color = "white";
-			dest_bg.appendChild(dest);
-
-			var dest_num = document.createTextNode(dest_text);
-			var dest_num_bg = document.createElement("div");
-			dest_num_bg.style.position = "absolute";
-			dest_num_bg.style.left = "150px";
-			dest_num_bg.style.width = "50px";
-			dest_num_bg.style.height = "0px";
-			dest_num_bg.style.background = "red";
-			dest_num_bg.style.color = "white";
-			dest_num_bg.appendChild(dest_num);
-
-			detail_info_2.appendChild(port_bg);
-			detail_info_2.appendChild(post_bg);
-			detail_info_2.appendChild(dest_bg);
-			detail_info_2.appendChild(port_num_bg);
-			detail_info_2.appendChild(post_num_bg);
-			detail_info_2.appendChild(dest_num_bg);
-			detail_info_2.appendChild(wall1);
-			detail_info_2.appendChild(wall2);
-
-			{
-				var btnStop = document.createElement("button");
-				btnStop.type = "button";
-				btnStop.style.position = "absolute";
-				btnStop.style.left = "120px";
-				btnStop.style.top = "3px";
-				btnStop.style.width = "15px";
-				btnStop.style.height = "15px";
-				btnStop.addEventListener("click", function () {
-					searche_and_send_from_station(postIdOriginal, x.id, tabVect);
-					x.parentNode.removeChild(x);
-				});
-				z.appendChild(btnStop);
-			} {
-				var btnBack = document.createElement("button");
-				btnBack.type = "button";
-				btnBack.style.position = "absolute";
-				btnBack.style.left = "140px";
-				btnBack.style.top = "3px";
-				btnBack.style.width = "15px";
-				btnBack.style.height = "15px";
-				btnBack.addEventListener("click", function () {
-					if (progress_list_index > 0 && progress_detail_list_index > 0) {
-						progress_list_index--;
-						progress_detail_list_index--;
-
-						//Add space for list
-						if ((progress_list_index == 2 || progress_list_index == 3) && workstation_type == "Switch") {
-							count = 0;
-							x.style.height = "190px";
-							x.appendChild(list_bg);
-
-						} else {
-							if (document.getElementById("listBg") != null) {
-								list_bg.parentNode.removeChild(list_bg);
-							}
-							x.style.height = "115px";
-						}
-						//Progress background
-						//Remove element
-						var element = document.getElementById("text1" + x.id);
-						element.parentNode.removeChild(element);
-
-						//Create element
-						var progress_text = document.createElement("div");
-						progress_text.id = "text1" + x.id;
-						progress_text.style.position = "absolute";
-						progress_text.style.left = "10px";
-						progress_text.style.top = "35px";
-						progress_text.style.width = "200px";
-						progress_text.style.height = "20px";
-						progress_text.style.background = "black";
-
-						//Create text and add it to element
-						var t = document.createTextNode(progress_list[progress_list_index]);
-						progress_text.appendChild(t);
-
-						//Detail background
-						//Remove element
-						var element = document.getElementById("text2" + x.id);
-						element.parentNode.removeChild(element);
-
-						//Create element
-						var detail_info = document.createElement("div");
-						detail_info.id = "text2" + x.id;
-						detail_info.style.position = "absolute";
-						detail_info.style.left = "10px";
-						detail_info.style.top = "60px";
-						detail_info.style.width = "200px";
-						detail_info.style.height = "15px";
-						detail_info.style.background = "black";
-						detail_info.style.fontSize = "13px";
-
-						//Create text and add it to element
-						var detail = document.createTextNode(progress_detail_list[progress_detail_list_index]);
-						detail_info.appendChild(detail);
-
-						x.appendChild(detail_info);
-						x.appendChild(progress_text);
+				x.addEventListener('mousemove', function (event) {
+					event.preventDefault();
+					if (isDown) {
+						mousePosition = {
+							posX: event.clientX,
+							posY: event.clientY
+						};
+						x.style.left = (mousePosition.posX + offset[0]) + 'px';
+						x.style.top = (mousePosition.posY + offset[1]) + 'px';
 					}
-				});
-				z.appendChild(btnBack);
-			} {
-				var btnReset = document.createElement("button");
-				btnReset.type = "button";
-				btnReset.style.position = "absolute";
-				btnReset.style.left = "160px";
-				btnReset.style.top = "3px";
-				btnReset.style.width = "15px";
-				btnReset.style.height = "15px";
-				btnReset.addEventListener("click", function () {
-					progress_list_index = 0;
-					progress_detail_list_index = 0;
+				}, true);
+				//x.appendChild(t);
 
-					//Progress background
-					//Remove element
-					var element = document.getElementById("text1" + x.id);
-					element.parentNode.removeChild(element);
+				var list_bg = document.createElement("div");
+				list_bg.style.overflow = "auto";
+				list_bg.style.position = "absolute";
+				list_bg.id = "listBg";
+				list_bg.style.left = "10px";
+				list_bg.style.top = "115px";
+				list_bg.style.width = "200px";
+				list_bg.style.height = "60px";
+				list_bg.style.background = "black";
 
-					//Create element
-					var progress_text = document.createElement("div");
-					progress_text.id = "text1" + x.id;
-					progress_text.style.position = "absolute";
-					progress_text.style.left = "10px";
-					progress_text.style.top = "35px";
-					progress_text.style.width = "200px";
-					progress_text.style.height = "20px";
-					progress_text.style.background = "black";
+				for (var j = 0; j < tab_workstation[x.id].TTL.length; j++) {
 
-					//Create text and add it to element
-					var t = document.createTextNode(progress_list[progress_list_index]);
-					progress_text.appendChild(t);
+					var post_list = document.createTextNode("p-" + tab_workstation[x.id].TTL[j].id);
+					var post_bg_list = document.createElement("div");
+					post_bg_list.style.position = "absolute";
+					post_bg_list.style.left = "0px";
+					post_bg_list.style.width = "30px";
+					post_bg_list.style.height = "10px";
+					post_bg_list.style.background = "black";
+					post_bg_list.style.fontSize = "13px";
+					post_bg_list.appendChild(post_list);
 
-					//Detail background
-					//Remove element
-					var element = document.getElementById("text2" + x.id);
-					element.parentNode.removeChild(element);
+					var TTL_text = document.createTextNode(TTL_status(tab_workstation[x.id].TTL[j].status));
+					var TTL_bg_list = document.createElement("div");
+					TTL_bg_list.style.position = "absolute";
+					TTL_bg_list.style.left = "100px";
+					TTL_bg_list.style.height = "10px";
+					TTL_bg_list.style.background = "black";
+					TTL_bg_list.style.fontSize = "13px";
+					TTL_bg_list.appendChild(TTL_text);
 
-					//Create element
-					var detail_info = document.createElement("div");
-					detail_info.id = "text2" + x.id;
-					detail_info.style.position = "absolute";
-					detail_info.style.left = "10px";
-					detail_info.style.top = "60px";
-					detail_info.style.width = "200px";
-					detail_info.style.height = "15px";
-					detail_info.style.background = "black";
-					detail_info.style.fontSize = "13px";
+					var Element_bg_list = document.createElement("div");
+					Element_bg_list.style.position = "absolute";
+					Element_bg_list.style.left = "10px";
+					Element_bg_list.style.top = count * 20 + "px";
+					Element_bg_list.style.height = "10px";
+					Element_bg_list.style.background = "black";
 
-					//Create text and add it to element
-					var detail = document.createTextNode(progress_detail_list[progress_detail_list_index]);
-					detail_info.appendChild(detail);
+					Element_bg_list.appendChild(post_bg_list);
+					Element_bg_list.appendChild(TTL_bg_list);
 
-					x.appendChild(detail_info);
-					x.appendChild(progress_text);
-				});
-				z.appendChild(btnReset);
-			} {
-				var btnNext = document.createElement("button");
-				btnNext.type = "button";
-				btnNext.style.position = "absolute";
-				btnNext.style.left = "180px"
-				btnNext.style.top = "3px"
-				btnNext.style.width = "15px";
-				btnNext.style.height = "15px";
-				btnNext.addEventListener("click", function () {
-					if (progress_list_index == progress_list.length - 1) {
+					list_bg.appendChild(Element_bg_list);
+					count++;
+				}
+
+				var z = document.createElement("div");
+				z.style.position = "absolute";
+				z.style.left = "10px";
+				z.style.top = "10px";
+				z.style.width = "200px";
+				z.style.height = "20px";
+				z.style.background = "black";
+
+				var t = document.createTextNode(workstation_type + " id " + x.id);
+				z.appendChild(t);
+
+				var t = document.createTextNode(progress_list[0]);
+				var progress_text = document.createElement("div");
+				progress_text.id = "text1" + x.id;
+				progress_text.style.position = "absolute";
+				progress_text.style.left = "10px";
+				progress_text.style.top = "35px";
+				progress_text.style.width = "200px";
+				progress_text.style.height = "20px";
+				progress_text.style.background = "black";
+
+				progress_text.appendChild(t);
+
+				var detail = document.createTextNode(progress_detail_list[0]);
+				var detail_info = document.createElement("div");
+				detail_info.id = "text2" + x.id;
+				detail_info.style.position = "absolute";
+				detail_info.style.left = "10px";
+				detail_info.style.top = "60px";
+				detail_info.style.width = "200px";
+				detail_info.style.height = "15px";
+				detail_info.style.background = "black";
+				detail_info.style.fontSize = "13px";
+
+				detail_info.appendChild(detail);
+
+				var detail_info_2 = document.createElement("div");
+				detail_info_2.id = "text3" + x.id;
+				detail_info_2.style.position = "absolute";
+				detail_info_2.style.left = "10px";
+				detail_info_2.style.top = "85px";
+				detail_info_2.style.width = "200px";
+				detail_info_2.style.height = "20px";
+				detail_info_2.style.background = "black";
+
+				//create walls
+				var wall1 = document.createElement("div");
+				wall1.style.position = "absolute";
+				wall1.style.left = "50px";
+				wall1.style.width = "3px";
+				wall1.style.height = "20px";
+				wall1.style.background = "blue";
+
+				var wall2 = document.createElement("div");
+				wall2.style.position = "absolute";
+				wall2.style.left = "110px";
+				wall2.style.width = "3px";
+				wall2.style.height = "20px";
+				wall2.style.background = "blue";
+
+				//create Port background
+				var port = document.createTextNode("Port:");
+				var port_bg = document.createElement("div");
+				port_bg.style.position = "absolute";
+				port_bg.style.background = "black";
+				port_bg.style.color = "white";
+				port_bg.appendChild(port);
+
+				var port_num = document.createTextNode(port_used_id);
+				var port_num_bg = document.createElement("div");
+				port_num_bg.style.position = "absolute";
+				port_num_bg.style.left = "30px";
+				port_num_bg.style.background = "black";
+				port_num_bg.style.color = "white";
+				port_num_bg.appendChild(port_num);
+
+				//create Post background
+				var post = document.createTextNode("De:");
+				var post_bg = document.createElement("div");
+				post_bg.style.position = "absolute";
+				post_bg.style.left = "55px";
+				post_bg.style.background = "black";
+				post_bg.style.color = "white";
+				post_bg.appendChild(post);
+
+				var post_num = document.createTextNode(post_text);
+				var post_num_bg = document.createElement("div");
+				post_num_bg.style.position = "absolute";
+				post_num_bg.style.left = "80px";
+				post_num_bg.style.background = "black";
+				post_num_bg.style.color = "white";
+				post_num_bg.appendChild(post_num);
+
+
+				//create destination background
+				var dest = document.createTextNode("Vers:");
+				var dest_bg = document.createElement("div");
+				dest_bg.style.position = "absolute";
+				dest_bg.style.left = "115px";
+				dest_bg.style.background = "black";
+				dest_bg.style.color = "white";
+				dest_bg.appendChild(dest);
+
+				var dest_num = document.createTextNode(dest_text);
+				var dest_num_bg = document.createElement("div");
+				dest_num_bg.style.position = "absolute";
+				dest_num_bg.style.left = "150px";
+				dest_num_bg.style.width = "50px";
+				dest_num_bg.style.height = "0px";
+				dest_num_bg.style.background = "red";
+				dest_num_bg.style.color = "white";
+				dest_num_bg.appendChild(dest_num);
+
+				detail_info_2.appendChild(port_bg);
+				detail_info_2.appendChild(post_bg);
+				detail_info_2.appendChild(dest_bg);
+				detail_info_2.appendChild(port_num_bg);
+				detail_info_2.appendChild(post_num_bg);
+				detail_info_2.appendChild(dest_num_bg);
+				detail_info_2.appendChild(wall1);
+				detail_info_2.appendChild(wall2);
+
+				{
+					var btnStop = document.createElement("button");
+					btnStop.type = "button";
+					btnStop.style.position = "absolute";
+					btnStop.style.left = "120px";
+					btnStop.style.top = "3px";
+					btnStop.style.width = "15px";
+					btnStop.style.height = "15px";
+					btnStop.addEventListener("click", function () {
 						searche_and_send_from_station(postIdOriginal, x.id, tabVect);
 						x.parentNode.removeChild(x);
-					} else {
-						progress_list_index++;
-						progress_detail_list_index++;
+					});
+					z.appendChild(btnStop);
+				} {
+					var btnBack = document.createElement("button");
+					btnBack.type = "button";
+					btnBack.style.position = "absolute";
+					btnBack.style.left = "140px";
+					btnBack.style.top = "3px";
+					btnBack.style.width = "15px";
+					btnBack.style.height = "15px";
+					btnBack.addEventListener("click", function () {
+						if (progress_list_index > 0 && progress_detail_list_index > 0) {
+							progress_list_index--;
+							progress_detail_list_index--;
 
-						//Add space for list
-						if ((progress_list_index == 2 || progress_list_index == 3) && workstation_type == "Switch") {
-							x.style.height = "190px";
-							count = 0;
-							x.appendChild(list_bg);
-						} else {
-							if (document.getElementById("listBg") != null) {
-								list_bg.parentNode.removeChild(list_bg);
+							//Add space for list
+							if ((progress_list_index == 2 || progress_list_index == 3) && workstation_type == "Switch") {
+								count = 0;
+								x.style.height = "190px";
+								x.appendChild(list_bg);
+
+							} else {
+								if (document.getElementById("listBg") != null) {
+									list_bg.parentNode.removeChild(list_bg);
+								}
+								x.style.height = "115px";
 							}
-							x.style.height = "115px";
+							//Progress background
+							//Remove element
+							var element = document.getElementById("text1" + x.id);
+							element.parentNode.removeChild(element);
+
+							//Create element
+							var progress_text = document.createElement("div");
+							progress_text.id = "text1" + x.id;
+							progress_text.style.position = "absolute";
+							progress_text.style.left = "10px";
+							progress_text.style.top = "35px";
+							progress_text.style.width = "200px";
+							progress_text.style.height = "20px";
+							progress_text.style.background = "black";
+
+							//Create text and add it to element
+							var t = document.createTextNode(progress_list[progress_list_index]);
+							progress_text.appendChild(t);
+
+							//Detail background
+							//Remove element
+							var element = document.getElementById("text2" + x.id);
+							element.parentNode.removeChild(element);
+
+							//Create element
+							var detail_info = document.createElement("div");
+							detail_info.id = "text2" + x.id;
+							detail_info.style.position = "absolute";
+							detail_info.style.left = "10px";
+							detail_info.style.top = "60px";
+							detail_info.style.width = "200px";
+							detail_info.style.height = "15px";
+							detail_info.style.background = "black";
+							detail_info.style.fontSize = "13px";
+
+							//Create text and add it to element
+							var detail = document.createTextNode(progress_detail_list[progress_detail_list_index]);
+							detail_info.appendChild(detail);
+
+							x.appendChild(detail_info);
+							x.appendChild(progress_text);
 						}
+					});
+					z.appendChild(btnBack);
+				} {
+					var btnReset = document.createElement("button");
+					btnReset.type = "button";
+					btnReset.style.position = "absolute";
+					btnReset.style.left = "160px";
+					btnReset.style.top = "3px";
+					btnReset.style.width = "15px";
+					btnReset.style.height = "15px";
+					btnReset.addEventListener("click", function () {
+						progress_list_index = 0;
+						progress_detail_list_index = 0;
 
 						//Progress background
 						//Remove element
@@ -534,7 +462,6 @@ function station_progress(portOriginal, postIdOriginal, tabVect, workstationType
 						//Create text and add it to element
 						var t = document.createTextNode(progress_list[progress_list_index]);
 						progress_text.appendChild(t);
-
 
 						//Detail background
 						//Remove element
@@ -558,313 +485,390 @@ function station_progress(portOriginal, postIdOriginal, tabVect, workstationType
 
 						x.appendChild(detail_info);
 						x.appendChild(progress_text);
+					});
+					z.appendChild(btnReset);
+				} {
+					var btnNext = document.createElement("button");
+					btnNext.type = "button";
+					btnNext.style.position = "absolute";
+					btnNext.style.left = "180px"
+					btnNext.style.top = "3px"
+					btnNext.style.width = "15px";
+					btnNext.style.height = "15px";
+					btnNext.addEventListener("click", function () {
+						if (progress_list_index == progress_list.length - 1) {
+							searche_and_send_from_station(postIdOriginal, x.id, tabVect);
+							x.parentNode.removeChild(x);
+						} else {
+							progress_list_index++;
+							progress_detail_list_index++;
+
+							//Add space for list
+							if ((progress_list_index == 2 || progress_list_index == 3) && workstation_type == "Switch") {
+								x.style.height = "190px";
+								count = 0;
+								x.appendChild(list_bg);
+							} else {
+								if (document.getElementById("listBg") != null) {
+									list_bg.parentNode.removeChild(list_bg);
+								}
+								x.style.height = "115px";
+							}
+
+							//Progress background
+							//Remove element
+							var element = document.getElementById("text1" + x.id);
+							element.parentNode.removeChild(element);
+
+							//Create element
+							var progress_text = document.createElement("div");
+							progress_text.id = "text1" + x.id;
+							progress_text.style.position = "absolute";
+							progress_text.style.left = "10px";
+							progress_text.style.top = "35px";
+							progress_text.style.width = "200px";
+							progress_text.style.height = "20px";
+							progress_text.style.background = "black";
+
+							//Create text and add it to element
+							var t = document.createTextNode(progress_list[progress_list_index]);
+							progress_text.appendChild(t);
+
+
+							//Detail background
+							//Remove element
+							var element = document.getElementById("text2" + x.id);
+							element.parentNode.removeChild(element);
+
+							//Create element
+							var detail_info = document.createElement("div");
+							detail_info.id = "text2" + x.id;
+							detail_info.style.position = "absolute";
+							detail_info.style.left = "10px";
+							detail_info.style.top = "60px";
+							detail_info.style.width = "200px";
+							detail_info.style.height = "15px";
+							detail_info.style.background = "black";
+							detail_info.style.fontSize = "13px";
+
+							//Create text and add it to element
+							var detail = document.createTextNode(progress_detail_list[progress_detail_list_index]);
+							detail_info.appendChild(detail);
+
+							x.appendChild(detail_info);
+							x.appendChild(progress_text);
+						}
+					});
+					z.appendChild(btnNext);
+				}
+
+				x.appendChild(z);
+				x.appendChild(progress_text);
+				x.appendChild(detail_info);
+				x.appendChild(detail_info_2);
+
+				document.body.appendChild(x);
+			}, 1000)
+		} else {
+			setTimeout(function () {
+				var x = document.createElement("div");
+				x.id = workstationId;
+				x.style.position = "absolute";
+				x.style.width = "230px";
+				x.style.height = "115px";
+				x.style.left = left;
+				x.style.top = top;
+				x.style.background = "green";
+				//color text in box
+				x.style.color = "white";
+
+				//Movement of box info
+				x.addEventListener('mousedown', function (e) {
+					isDown = true;
+					offset = [
+						x.offsetLeft - e.clientX,
+						x.offsetTop - e.clientY
+					];
+				}, true);
+
+				x.addEventListener('mouseup', function () {
+					isDown = false;
+				}, true);
+
+				x.addEventListener('mousemove', function (event) {
+					event.preventDefault();
+					if (isDown) {
+						mousePosition = {
+							posX: event.clientX,
+							posY: event.clientY
+						};
+						x.style.left = (mousePosition.posX + offset[0]) + 'px';
+						x.style.top = (mousePosition.posY + offset[1]) + 'px';
 					}
-				});
-				z.appendChild(btnNext);
-			}
+				}, true);
+				//x.appendChild(t);
+				document.body.appendChild(x);
 
-			x.appendChild(z);
-			x.appendChild(progress_text);
-			x.appendChild(detail_info);
-			x.appendChild(detail_info_2);
+				var z = document.createElement("div");
+				z.style.position = "absolute";
+				z.style.left = "10px";
+				z.style.top = "10px";
+				z.style.width = "210px";
+				z.style.height = "20px";
+				z.style.background = "black";
 
-			document.body.appendChild(x);
-		}, 1000)
+				var t = document.createTextNode(workstation_type + " id " + x.id);
+				z.appendChild(t);
+
+				var t = document.createTextNode(progress_list[0]);
+				var progress_text = document.createElement("div");
+				progress_text.id = "text1" + x.id;
+				progress_text.style.position = "absolute";
+				progress_text.style.left = "10px";
+				progress_text.style.top = "35px";
+				progress_text.style.width = "210px";
+				progress_text.style.height = "20px";
+				progress_text.style.background = "black";
+				progress_text.appendChild(t);
+
+				var detail = document.createTextNode(progress_detail_list[0]);
+				var detail_info = document.createElement("div");
+				detail_info.id = "text2" + x.id;
+				detail_info.style.position = "absolute";
+				detail_info.style.left = "10px";
+				detail_info.style.top = "60px";
+				detail_info.style.width = "210px";
+				detail_info.style.height = "15px";
+				detail_info.style.background = "black";
+				detail_info.style.fontSize = "13px";
+				detail_info.appendChild(detail);
+
+				var text4 = document.createTextNode("Destination:")
+				var text_bg = document.createElement("div");
+				text_bg.style.position = "absolute";
+				text_bg.style.left = "0px";
+				text_bg.style.color = "white";
+				text_bg.appendChild(text4);
+
+				var detail_info_2 = document.createElement("div");
+				detail_info_2.id = "text3" + x.id;
+				detail_info_2.style.position = "absolute";
+				detail_info_2.style.left = "10px";
+				detail_info_2.style.top = "85px";
+				detail_info_2.style.width = "210px";
+				detail_info_2.style.height = "20px";
+				detail_info_2.style.background = "black";
+
+				//create Post background
+				var dest = document.createTextNode(dest_text);
+				var dest_bg = document.createElement("div");
+				dest_bg.style.position = "absolute";
+				dest_bg.style.left = "80px";
+				dest_bg.style.color = "white";
+				dest_bg.appendChild(dest);
+
+				detail_info_2.appendChild(dest_bg);
+				detail_info_2.appendChild(text_bg);
+
+				{
+					var btnStop = document.createElement("button");
+					btnStop.type = "button";
+					btnStop.style.position = "absolute";
+					btnStop.style.left = "130px";
+					btnStop.style.top = "3px";
+					btnStop.style.width = "15px";
+					btnStop.style.height = "15px";
+					btnStop.addEventListener("click", function () {
+						searche_and_send_from_station(postIdOriginal, x.id, tabVect);
+						x.parentNode.removeChild(x);
+					});
+					z.appendChild(btnStop);
+				} {
+					var btnBack = document.createElement("button");
+					btnBack.type = "button";
+					btnBack.style.position = "absolute";
+					btnBack.style.left = "150px";
+					btnBack.style.top = "3px";
+					btnBack.style.width = "15px";
+					btnBack.style.height = "15px";
+					btnBack.addEventListener("click", function () {
+						if (progress_list_index > 0) {
+							progress_list_index--;
+							progress_detail_list_index--;
+
+							//Progress background
+							//Remove element
+							var element = document.getElementById("text1" + x.id);
+							element.parentNode.removeChild(element);
+
+							//Create element
+							var progress_text = document.createElement("div");
+							progress_text.id = "text1" + x.id;
+							progress_text.style.position = "absolute";
+							progress_text.style.left = "10px";
+							progress_text.style.top = "35px";
+							progress_text.style.width = "210px";
+							progress_text.style.height = "20px";
+							progress_text.style.background = "black";
+
+							//Create text and add it to element
+							var t = document.createTextNode(progress_list[progress_list_index]);
+							progress_text.appendChild(t);
+
+							//Detail background
+							//Remove element
+							var element = document.getElementById("text2" + x.id);
+							element.parentNode.removeChild(element);
+
+							//Create element
+							var detail_info = document.createElement("div");
+							detail_info.id = "text2" + x.id;
+							detail_info.style.position = "absolute";
+							detail_info.style.left = "10px";
+							detail_info.style.top = "60px";
+							detail_info.style.width = "210px";
+							detail_info.style.height = "15px";
+							detail_info.style.background = "black";
+							detail_info.style.fontSize = "13px";
+
+							//Create text and add it to element
+							var detail = document.createTextNode(progress_detail_list[progress_detail_list_index]);
+							detail_info.appendChild(detail);
+
+							x.appendChild(detail_info);
+							x.appendChild(progress_text);
+						}
+					});
+					z.appendChild(btnBack);
+				} {
+					var btnReset = document.createElement("button");
+					btnReset.type = "button";
+					btnReset.style.position = "absolute";
+					btnReset.style.left = "170px";
+					btnReset.style.top = "3px";
+					btnReset.style.width = "15px";
+					btnReset.style.height = "15px";
+					btnReset.addEventListener("click", function () {
+						progress_list_index = 0;
+
+						//Progress background
+						//Remove element
+						var element = document.getElementById("text1" + x.id);
+						element.parentNode.removeChild(element);
+
+						//Create element
+						var progress_text = document.createElement("div");
+						progress_text.id = "text1" + x.id;
+						progress_text.style.position = "absolute";
+						progress_text.style.left = "10px";
+						progress_text.style.top = "35px";
+						progress_text.style.width = "210px";
+						progress_text.style.height = "20px";
+						progress_text.style.background = "black";
+
+						//Create text and add it to element
+						var t = document.createTextNode(progress_list[progress_list_index]);
+						progress_text.appendChild(t);
+
+						//Detail background
+						//Remove element
+						var element = document.getElementById("text2" + x.id);
+						element.parentNode.removeChild(element);
+
+						//Create element
+						var detail_info = document.createElement("div");
+						detail_info.id = "text2" + x.id;
+						detail_info.style.position = "absolute";
+						detail_info.style.left = "10px";
+						detail_info.style.top = "60px";
+						detail_info.style.width = "210px";
+						detail_info.style.height = "15px";
+						detail_info.style.background = "black";
+						detail_info.style.fontSize = "13px";
+
+						//Create text and add it to element
+						var detail = document.createTextNode(progress_detail_list[progress_detail_list_index]);
+						detail_info.appendChild(detail);
+
+						x.appendChild(detail_info);
+						x.appendChild(progress_text);
+					});
+					z.appendChild(btnReset);
+				} {
+					var btnNext = document.createElement("button");
+					btnNext.type = "button";
+					btnNext.style.position = "absolute";
+					btnNext.style.left = "190px"
+					btnNext.style.top = "3px"
+					btnNext.style.width = "15px";
+					btnNext.style.height = "15px";
+					btnNext.addEventListener("click", function () {
+						if (progress_list_index == progress_list.length - 1) {
+							searche_and_send_from_station(postIdOriginal, x.id, tabVect);
+							x.parentNode.removeChild(x);
+						} else {
+							progress_list_index++;
+							progress_detail_list_index++;
+
+							//Progress background
+							//Remove element
+							var element = document.getElementById("text1" + x.id);
+							element.parentNode.removeChild(element);
+
+							//Create element
+							var progress_text = document.createElement("div");
+							progress_text.id = "text1" + x.id;
+							progress_text.style.position = "absolute";
+							progress_text.style.left = "10px";
+							progress_text.style.top = "35px";
+							progress_text.style.width = "210px";
+							progress_text.style.height = "20px";
+							progress_text.style.background = "black";
+
+							//Create text and add it to element
+							var t = document.createTextNode(progress_list[progress_list_index]);
+							progress_text.appendChild(t);
+
+							//Detail background
+							//Remove element
+							var element = document.getElementById("text2" + x.id);
+							element.parentNode.removeChild(element);
+
+							//Create element
+							var detail_info = document.createElement("div");
+							detail_info.id = "text2" + x.id;
+							detail_info.style.position = "absolute";
+							detail_info.style.left = "10px";
+							detail_info.style.top = "60px";
+							detail_info.style.width = "210px";
+							detail_info.style.height = "15px";
+							detail_info.style.background = "black";
+							detail_info.style.fontSize = "13px";
+
+							//Create text and add it to element
+							var detail = document.createTextNode(progress_detail_list[progress_detail_list_index]);
+							detail_info.appendChild(detail);
+
+							x.appendChild(detail_info);
+							x.appendChild(progress_text);
+						}
+					});
+					z.appendChild(btnNext);
+
+				}
+
+				x.appendChild(z);
+				x.appendChild(progress_text);
+				x.appendChild(detail_info);
+				x.appendChild(detail_info_2);
+
+				document.body.appendChild(x);
+			}, 1000);
+		}
 	} else {
 		setTimeout(function () {
-			var x = document.createElement("div");
-			x.id = workstationId;
-			x.style.position = "absolute";
-			x.style.width = "230px";
-			x.style.height = "115px";
-			x.style.left = left;
-			x.style.top = top;
-			x.style.background = "green";
-			//color text in box
-			x.style.color = "white";
-
-			//Movement of box info
-			x.addEventListener('mousedown', function (e) {
-				isDown = true;
-				offset = [
-					x.offsetLeft - e.clientX,
-					x.offsetTop - e.clientY
-				];
-			}, true);
-
-			x.addEventListener('mouseup', function () {
-				isDown = false;
-			}, true);
-
-			x.addEventListener('mousemove', function (event) {
-				event.preventDefault();
-				if (isDown) {
-					mousePosition = {
-						posX: event.clientX,
-						posY: event.clientY
-					};
-					x.style.left = (mousePosition.posX + offset[0]) + 'px';
-					x.style.top = (mousePosition.posY + offset[1]) + 'px';
-				}
-			}, true);
-			//x.appendChild(t);
-			document.body.appendChild(x);
-
-			var z = document.createElement("div");
-			z.style.position = "absolute";
-			z.style.left = "10px";
-			z.style.top = "10px";
-			z.style.width = "210px";
-			z.style.height = "20px";
-			z.style.background = "black";
-
-			var t = document.createTextNode(workstation_type + " id " + x.id);
-			z.appendChild(t);
-
-			var t = document.createTextNode(progress_list[0]);
-			var progress_text = document.createElement("div");
-			progress_text.id = "text1" + x.id;
-			progress_text.style.position = "absolute";
-			progress_text.style.left = "10px";
-			progress_text.style.top = "35px";
-			progress_text.style.width = "210px";
-			progress_text.style.height = "20px";
-			progress_text.style.background = "black";
-			progress_text.appendChild(t);
-
-			var detail = document.createTextNode(progress_detail_list[0]);
-			var detail_info = document.createElement("div");
-			detail_info.id = "text2" + x.id;
-			detail_info.style.position = "absolute";
-			detail_info.style.left = "10px";
-			detail_info.style.top = "60px";
-			detail_info.style.width = "210px";
-			detail_info.style.height = "15px";
-			detail_info.style.background = "black";
-			detail_info.style.fontSize = "13px";
-			detail_info.appendChild(detail);
-
-			var text4 = document.createTextNode("Destination:")
-			var text_bg = document.createElement("div");
-			text_bg.style.position = "absolute";
-			text_bg.style.left = "0px";
-			text_bg.style.color = "white";
-			text_bg.appendChild(text4);
-
-			var detail_info_2 = document.createElement("div");
-			detail_info_2.id = "text3" + x.id;
-			detail_info_2.style.position = "absolute";
-			detail_info_2.style.left = "10px";
-			detail_info_2.style.top = "85px";
-			detail_info_2.style.width = "210px";
-			detail_info_2.style.height = "20px";
-			detail_info_2.style.background = "black";
-
-			//create Post background
-			var dest = document.createTextNode(dest_text);
-			var dest_bg = document.createElement("div");
-			dest_bg.style.position = "absolute";
-			dest_bg.style.left = "80px";
-			dest_bg.style.color = "white";
-			dest_bg.appendChild(dest);
-
-			detail_info_2.appendChild(dest_bg);
-			detail_info_2.appendChild(text_bg);
-
-			{
-				var btnStop = document.createElement("button");
-				btnStop.type = "button";
-				btnStop.style.position = "absolute";
-				btnStop.style.left = "130px";
-				btnStop.style.top = "3px";
-				btnStop.style.width = "15px";
-				btnStop.style.height = "15px";
-				btnStop.addEventListener("click", function () {
-					searche_and_send_from_station(postIdOriginal, x.id, tabVect);
-					x.parentNode.removeChild(x);
-				});
-				z.appendChild(btnStop);
-			} {
-				var btnBack = document.createElement("button");
-				btnBack.type = "button";
-				btnBack.style.position = "absolute";
-				btnBack.style.left = "150px";
-				btnBack.style.top = "3px";
-				btnBack.style.width = "15px";
-				btnBack.style.height = "15px";
-				btnBack.addEventListener("click", function () {
-					if (progress_list_index > 0) {
-						progress_list_index--;
-						progress_detail_list_index--;
-
-						//Progress background
-						//Remove element
-						var element = document.getElementById("text1" + x.id);
-						element.parentNode.removeChild(element);
-
-						//Create element
-						var progress_text = document.createElement("div");
-						progress_text.id = "text1" + x.id;
-						progress_text.style.position = "absolute";
-						progress_text.style.left = "10px";
-						progress_text.style.top = "35px";
-						progress_text.style.width = "210px";
-						progress_text.style.height = "20px";
-						progress_text.style.background = "black";
-
-						//Create text and add it to element
-						var t = document.createTextNode(progress_list[progress_list_index]);
-						progress_text.appendChild(t);
-
-						//Detail background
-						//Remove element
-						var element = document.getElementById("text2" + x.id);
-						element.parentNode.removeChild(element);
-
-						//Create element
-						var detail_info = document.createElement("div");
-						detail_info.id = "text2" + x.id;
-						detail_info.style.position = "absolute";
-						detail_info.style.left = "10px";
-						detail_info.style.top = "60px";
-						detail_info.style.width = "210px";
-						detail_info.style.height = "15px";
-						detail_info.style.background = "black";
-						detail_info.style.fontSize = "13px";
-
-						//Create text and add it to element
-						var detail = document.createTextNode(progress_detail_list[progress_detail_list_index]);
-						detail_info.appendChild(detail);
-
-						x.appendChild(detail_info);
-						x.appendChild(progress_text);
-					}
-				});
-				z.appendChild(btnBack);
-			} {
-				var btnReset = document.createElement("button");
-				btnReset.type = "button";
-				btnReset.style.position = "absolute";
-				btnReset.style.left = "170px";
-				btnReset.style.top = "3px";
-				btnReset.style.width = "15px";
-				btnReset.style.height = "15px";
-				btnReset.addEventListener("click", function () {
-					progress_list_index = 0;
-
-					//Progress background
-					//Remove element
-					var element = document.getElementById("text1" + x.id);
-					element.parentNode.removeChild(element);
-
-					//Create element
-					var progress_text = document.createElement("div");
-					progress_text.id = "text1" + x.id;
-					progress_text.style.position = "absolute";
-					progress_text.style.left = "10px";
-					progress_text.style.top = "35px";
-					progress_text.style.width = "210px";
-					progress_text.style.height = "20px";
-					progress_text.style.background = "black";
-
-					//Create text and add it to element
-					var t = document.createTextNode(progress_list[progress_list_index]);
-					progress_text.appendChild(t);
-
-					//Detail background
-					//Remove element
-					var element = document.getElementById("text2" + x.id);
-					element.parentNode.removeChild(element);
-
-					//Create element
-					var detail_info = document.createElement("div");
-					detail_info.id = "text2" + x.id;
-					detail_info.style.position = "absolute";
-					detail_info.style.left = "10px";
-					detail_info.style.top = "60px";
-					detail_info.style.width = "210px";
-					detail_info.style.height = "15px";
-					detail_info.style.background = "black";
-					detail_info.style.fontSize = "13px";
-
-					//Create text and add it to element
-					var detail = document.createTextNode(progress_detail_list[progress_detail_list_index]);
-					detail_info.appendChild(detail);
-
-					x.appendChild(detail_info);
-					x.appendChild(progress_text);
-				});
-				z.appendChild(btnReset);
-			} {
-				var btnNext = document.createElement("button");
-				btnNext.type = "button";
-				btnNext.style.position = "absolute";
-				btnNext.style.left = "190px"
-				btnNext.style.top = "3px"
-				btnNext.style.width = "15px";
-				btnNext.style.height = "15px";
-				btnNext.addEventListener("click", function () {
-					if (progress_list_index == progress_list.length - 1) {
-						searche_and_send_from_station(postIdOriginal, x.id, tabVect);
-						x.parentNode.removeChild(x);
-					} else {
-						progress_list_index++;
-						progress_detail_list_index++;
-
-						//Progress background
-						//Remove element
-						var element = document.getElementById("text1" + x.id);
-						element.parentNode.removeChild(element);
-
-						//Create element
-						var progress_text = document.createElement("div");
-						progress_text.id = "text1" + x.id;
-						progress_text.style.position = "absolute";
-						progress_text.style.left = "10px";
-						progress_text.style.top = "35px";
-						progress_text.style.width = "210px";
-						progress_text.style.height = "20px";
-						progress_text.style.background = "black";
-
-						//Create text and add it to element
-						var t = document.createTextNode(progress_list[progress_list_index]);
-						progress_text.appendChild(t);
-
-						//Detail background
-						//Remove element
-						var element = document.getElementById("text2" + x.id);
-						element.parentNode.removeChild(element);
-
-						//Create element
-						var detail_info = document.createElement("div");
-						detail_info.id = "text2" + x.id;
-						detail_info.style.position = "absolute";
-						detail_info.style.left = "10px";
-						detail_info.style.top = "60px";
-						detail_info.style.width = "210px";
-						detail_info.style.height = "15px";
-						detail_info.style.background = "black";
-						detail_info.style.fontSize = "13px";
-
-						//Create text and add it to element
-						var detail = document.createTextNode(progress_detail_list[progress_detail_list_index]);
-						detail_info.appendChild(detail);
-
-						x.appendChild(detail_info);
-						x.appendChild(progress_text);
-					}
-				});
-				z.appendChild(btnNext);
-
-			}
-
-			x.appendChild(z);
-			x.appendChild(progress_text);
-			x.appendChild(detail_info);
-			x.appendChild(detail_info_2);
-
-			document.body.appendChild(x);
-		}, 1000);
+			searche_and_send_from_station(postIdOriginal, workstationId, tabVect);
+		}, 1000)
 	}
 }
 
@@ -1120,15 +1124,14 @@ function send_request(portOriginal, postIdOriginal, tabVect, workstationType, wo
 			easing: fabric.util.ease.easeInQuand
 		});
 
-	if (tab_workstation[workstationId].checked) {
-		station_progress(
-			portOriginal,
-			postIdOriginal,
-			tabVect,
-			workstationType,
-			workstationId,
-			port_2_top, port_2_left);
-	}
+	station_progress(
+		tab_workstation[workstationId].checked,
+		portOriginal,
+		postIdOriginal,
+		tabVect,
+		workstationType,
+		workstationId,
+		port_2_top, port_2_left);
 }
 
 function good_path(s, next, path) {
@@ -1224,7 +1227,6 @@ function simulate(s, target) // s, sommet selectionné
 
 function searche_and_send_from_station(postIdOriginal, stationId, tabVect) {
 	var tab_vect_chosen = [];
-	//alert(tabVect[0].obj1.id);
 	for (var i = 0; i < tabVect.length; i++) {
 		if (tabVect[i].obj1.id == stationId) {
 			var vect = {
@@ -1238,12 +1240,17 @@ function searche_and_send_from_station(postIdOriginal, stationId, tabVect) {
 	}
 
 	for (var i = 0; i < tab_vect_chosen.length; i++) {
-		send_req_2(tab_vect_chosen[i].vect_port_original, postIdOriginal, tabVect, tab_vect_chosen[i].vect_type, tab_vect_chosen[i].vect, tab_vect_chosen[i].vect_id);
+		send_request(
+			tab_vect_chosen[i].vect_port_original,
+			stationId,
+			tabVect,
+			tab_vect_chosen[i].vect_type,
+			tab_vect_chosen[i].vect_id,
+			tab_vect_chosen[i].vect.x1,
+			tab_vect_chosen[i].vect.y1,
+			tab_vect_chosen[i].vect.x2,
+			tab_vect_chosen[i].vect.y2);
 	}
-}
-
-function send_req_2(portOriginal, postIdOriginal, tabVect, vectType, obj, vectId) {
-	send_request(portOriginal, postIdOriginal, tabVect, vectType, vectId, obj.x1, obj.y1, obj.x2, obj.y2);
 }
 
 function set_ttl(s, tab_vect) {
