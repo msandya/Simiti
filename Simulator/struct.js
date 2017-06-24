@@ -68,36 +68,39 @@ function create_cable(l, object_1, object_2, obj_1_port_nb, obj_2_port_nb, type)
 
 //Delete Cable
 function delete_cable(cable) {
- 	cable.l.remove();
-	cable.object_2.ports[cable.obj_2_port_nb].rect.set({fill: 'white'});
-	cable.object_1.ports[cable.obj_1_port_nb].rect.set({fill: 'white'});
-	
- 	cable.object_1.ports[cable.obj_1_port_nb].used = false;
- 	cable.object_2.ports[cable.obj_2_port_nb].used = false;
- 	cable.object_1 = null;
- 	cable.object_2 = null;
+	cable.l.remove();
+	cable.object_2.ports[cable.obj_2_port_nb].rect.set({
+		fill: 'white'
+	});
+	cable.object_1.ports[cable.obj_1_port_nb].rect.set({
+		fill: 'white'
+	});
+
+	cable.object_1.ports[cable.obj_1_port_nb].used = false;
+	cable.object_2.ports[cable.obj_2_port_nb].used = false;
+	cable.object_1 = null;
+	cable.object_2 = null;
 
 	canvas.renderAll();
 }
 
 //Create the name of the workstation
-function create_name(obj)
-{
+function create_name(obj) {
 	var text = new fabric.Text(obj.type + "\n" + obj.id, {
-    fontSize: 13,
-    left: obj.obj.left + 4,
-    top: obj.obj.top,
-    //lineHeight: 1,
-    //originX: 'left',
-    fontFamily: 'Helvetica',
-	fill: 'white'
-    //statefullCache: true
-  });
-  obj.obj.addWithUpdate(text);
+		fontSize: 13,
+		left: obj.obj.left + 4,
+		top: obj.obj.top,
+		//lineHeight: 1,
+		//originX: 'left',
+		fontFamily: 'Helvetica',
+		fill: 'white'
+		//statefullCache: true
+	});
+	obj.obj.addWithUpdate(text);
 }
 
 //Create a Workstation
-function create_work_station(id, x, y, nb_port, package_received, type) {
+function create_work_station(id, x, y, nb_port, type) {
 	//Create a big rectangle outside
 	big_rect = new fabric.Rect({
 		width: 50,
@@ -107,7 +110,9 @@ function create_work_station(id, x, y, nb_port, package_received, type) {
 	});
 
 	if (nb_port > 3)
-		big_rect.set({width: 50 + (nb_port - 3) * (PORT_SIZE + 3)});
+		big_rect.set({
+			width: 50 + (nb_port - 3) * (PORT_SIZE + 3)
+		});
 
 	switch (type) {
 		case "switch":
@@ -139,12 +144,11 @@ function create_work_station(id, x, y, nb_port, package_received, type) {
 		'obj': station,
 		'nb_port': nb_port,
 		'ports': [],
-		'package_received': package_received,
 		'type': type,
-		'TTL': [], 
+		'TTL': [],
 		'ip': '',
 		'masque': '',
-		'checked':false
+		'checked': false
 	};
 
 	//Create a port in order to add in a GroupStation
@@ -161,11 +165,9 @@ function create_work_station(id, x, y, nb_port, package_received, type) {
 	canvas.add(station);
 }
 
-function delete_workStation(station)
- {
-	for(var i = 0; i < tab_workstation.length; i++)
-	{
-		if(tab_workstation[i] == station)
-			tab_workstation.splice(i,1);
+function delete_workStation(station) {
+	for (var i = 0; i < tab_workstation.length; i++) {
+		if (tab_workstation[i] == station)
+			tab_workstation.splice(i, 1);
 	}
- }
+}

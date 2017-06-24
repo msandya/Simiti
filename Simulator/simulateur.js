@@ -107,7 +107,9 @@ window.addEventListener('keydown', this.check, false);
 var PORT_SIZE = 12;
 var selected = 0;
 var tab_workstation = [];
+var tab_workstation_saved = '';
 var tab_cable = [];
+var tab_cable_saved = '';
 var last_object;
 var last_object_port_nb;
 var line_creation = 0;
@@ -237,6 +239,163 @@ function init() {
 
 	bring_front_buttons();
 }
+
+function search_work_station(id) {
+	for (var i = 0; i < tab_workstation.length; i++) {
+		if (tab_workstation[i].id == id) {
+			return tab_workstation[i];
+		}
+	}
+}
+
+//Save
+function save_all_workstations(tabWorkstation) {
+	if (tab_workstation_saved.charAt[0] != '') {
+		tab_workstation_saved = "";
+	}
+	var new_workstation;
+	var type;
+	for (var i = 0; i < tabWorkstation.length; i++) {
+		switch (tabWorkstation[i].type) {
+			case "switch":
+				type = "s";
+				break;
+			case "post":
+				type = "p";
+				break;
+			case "hub":
+				type = "h";
+				break;
+		}
+
+		new_workstation =
+			"< " + tabWorkstation[i].id +
+			" " + type +
+			" " + tabWorkstation[i].nb_port +
+			" " + Math.round(tabWorkstation[i].obj.left) +
+			" " + Math.round(tabWorkstation[i].obj.top) +
+			" >";
+		tab_workstation_saved += new_workstation;
+	}
+}
+
+function save_all_cables(tabCable) {
+	if (tab_cable_saved.charAt[0] != '') {
+		tab_cable_saved = "";
+	}
+
+	var new_cable;
+	var type;
+	for (var i = 0; i < tabCable.length; i++) {
+		new_cable =
+			"< " + tabCable[i].type +
+			" " + tabCable[i].object_1.id +
+			" " + tabCable[i].object_2.id +
+			" " + tabCable[i].obj_1_port_nb +
+			" " + tabCable[i].obj_2_port_nb +
+			" >";
+		tab_cable_saved += new_cable;
+	}
+}
+
+//load
+function load_all_workstations(tab) {
+	var i = 0;
+	while (i <= tab.length) {
+		if (tab[i] == "<") {
+			var id = '';
+			var type = '';
+			var nb_port = '';
+			var left = '';
+			var top = '';
+
+			i = i + 2;
+			while (tab[i] != ' ') {
+				id += tab[i];
+				i++;
+			}
+
+			i = i + 1;
+			switch (tab[i]) {
+				case "s":
+					type = "switch";
+					break;
+				case "p":
+					type = "post";
+					break;
+				case "h":
+					type = "hub";
+					break;
+			}
+
+			i = i + 2;
+			while (tab[i] != ' ') {
+				nb_port += tab[i];
+				i++;
+			}
+			i++;
+			while (tab[i] != ' ') {
+				left += +tab[i];
+				i++;
+			}
+			i++;
+			while (tab[i] != ' ') {
+				top += tab[i];
+				i++;
+			}
+			create_work_station(Number(id), Number(left), Number(top), Number(nb_port), type);
+		}
+		i++;
+	}
+}
+
+function load_all_cables(tab) {
+	var i = 0;
+	while (i <= tab.length) {
+		if (tab[i] == "<") {
+			var type = '';
+			var obj1;
+			var obj2;
+			var nb_obj1_port = '';
+			var nb_obj2_port = '';
+
+			i += 2;
+			type = type + tab[i];
+			i += 2;
+			var obj1_id = ''
+			while (tab[i] != ' ') {
+				obj1_id += tab[i];
+				i++;
+			}
+			obj1 = search_work_station(Number(obj1_id));
+			i++;
+			var obj2_id = ''
+			while (tab[i] != ' ') {
+				obj2_id += tab[i];
+				i++;
+			}
+			obj2 = search_work_station(Number(obj2_id));
+			i++;
+			while (tab[i] != ' ') {
+				nb_obj1_port += tab[i];
+				i++;
+			}
+			i++;
+			while (tab[i] != ' ') {
+				nb_obj2_port += tab[i];
+				i++;
+			}
+
+			console.log(type);
+			console.log(obj1_id);
+			console.log(obj2_id);
+			console.log(nb_obj1_port);
+			console.log(nb_obj2_port);
+		}
+		i++;
+	}
+}
+
 //------------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------Main()--------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -284,10 +443,19 @@ function check(o) {
 	{
 
 		for (var i = 0; i < tab_workstation.length; i++) {
-			console.log("id: "+tab_workstation[i].id + " checked:" + tab_workstation[i].checked);
-					//tab_workstation[i].checked = 1;
-
+			console.log("id: " + tab_workstation[i].id + " checked:" + tab_workstation[i].checked);
+			//tab_workstation[i].checked = 1;
 		}
+
+		save_all_workstations(tab_workstation);
+		save_all_cables(tab_cable);
+		console.log(tab_workstation_saved);
+		console.log(tab_cable_saved);
+		//var ex_workstation = "< 0 s 6 387 117 >< 1 s 6 501 116 >< 2 s 6 605 118 >< 3 p 1 714 115 >< 4 p 1 784 112 >< 5 h 3 863 114 >< 6 h 3 942 113 >";
+		//load_all_workstations(ex_workstation);
+		//var ex_cables = "< 0 2 0 0 0 >< 0 0 1 3 0 >< 0 0 3 5 0 >";
+		//load_all_cables(ex_cables);
+
 	} else if (o.which == 32) // 32 = space
 	{
 		o.preventDefault();
@@ -304,7 +472,7 @@ function check(o) {
 		options.className = "options";
 		options.style = "left: " + s.obj.left + "px; top: " + s.obj.top + "px;";
 		document.body.appendChild(options);
-		
+
 		var broad = document.createElement("button");
 		broad.className = "btn btn-primary btn-xs";
 		broad.innerHTML = "Broadcast";
@@ -316,9 +484,8 @@ function check(o) {
 		uni.innerHTML = "Unicast";
 		uni.addEventListener("click", unicast);
 		options.appendChild(uni);
-		
-		if(trame_type == 3)
-		{
+
+		if (trame_type == 3) {
 			br = document.createElement("br");
 			options.appendChild(br);
 			var input = document.createElement("input");
@@ -552,13 +719,13 @@ canvas.on('mouse:down', function (o) {
 			}
 		}
 	} else if (selected == 2) {
-		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 1, false, "post");
+		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 1, "post");
 		nb_workstation++;
 	} else if (selected == 3) {
-		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, "hub");
+		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, "hub");
 		nb_workstation++;
 	} else if (selected == 4) {
-		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 6, false, "switch");
+		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 6, "switch");
 		nb_workstation++;
 	}
 	canvas.renderAll();
@@ -651,24 +818,21 @@ function displayArrayObjects(WorkStation) {
 		for (var x in myObject) {
 			text += (x + ": " + myObject[x] + " ");
 		}
-		
-		if(tab_workstation[i].checked == true)
-		{
+
+		if (tab_workstation[i].checked == true) {
 			var checkbox = '<input type="checkbox" id="' + WorkStation[i].id + '"checked/>';
-		}
-		else
-			var checkbox = '<input type="checkbox" id="' + WorkStation[i].id  + '"/>';
+		} else
+			var checkbox = '<input type="checkbox" id="' + WorkStation[i].id + '"/>';
 
 
 		text += checkbox + "<br/>";
-		
 
-		var check = document.getElementById(WorkStation[i].id );
 
-		if (check != null)
-		{
+		var check = document.getElementById(WorkStation[i].id);
+
+		if (check != null) {
 			if (check.checked)
-			tab_workstation[i].checked = true;
+				tab_workstation[i].checked = true;
 			/*
 			else
 			tab_workstation[i].checked = false;
