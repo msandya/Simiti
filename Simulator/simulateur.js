@@ -288,6 +288,16 @@ function check(o) {
 					//tab_workstation[i].checked = 1;
 
 		}
+	} else if (o.which == 65) // 65 = a
+	{
+		create_port(tab_workstation[0].ports.length, tab_workstation[0], tab_workstation[0].obj.left + 4 + tab_workstation[0].ports.length * (PORT_SIZE + 3));
+		if (tab_workstation[0].ports.length > 3)
+		{
+			var aux = tab_workstation[0].obj.getObjects();
+			aux[0].set({width: 50 + (tab_workstation[0].ports.length - 3) * (PORT_SIZE + 3)});
+			aux[0].set({strokeWidth: 2});
+			aux[0].set({strokeWidth: 1});
+		}
 	} else if (o.which == 32) // 32 = space
 	{
 		o.preventDefault();
@@ -329,17 +339,27 @@ function check(o) {
 		}
 
 		function broadcast() {
-			simulate(s, null);
-			alert(document.getElementById("trameSize").value);
+			var tram_size = null;
+			if (document.getElementById("trameSize") != null && document.getElementById("trameSize") != '')
+			{
+				alert(document.getElementById("trameSize").value);
+				tram_size = document.getElementById("trameSize").value;
+			}
+			simulate(s, null, tram_size);
 			options.remove();
 		}
 
 		function unicast() {
+			var tram_size = null;
 			var targetid = prompt("Select target id");
-			if (targetid != "") {
-				simulate(s, targetid);
+			if (document.getElementById("trameSize") != null && document.getElementById("trameSize") != '')
+			{
+				alert(document.getElementById("trameSize").value);
+				tram_size = document.getElementById("trameSize").value;
 			}
-			alert(document.getElementById("trameSize").value);
+			if (targetid != "") {
+				simulate(s, targetid, tram_size);
+			}
 			options.remove();
 		}
 
