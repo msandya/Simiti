@@ -1096,8 +1096,7 @@ function simulation() {
 // create the circle
 function create_request(left, top, request_size) {
 	//console.log('request ok');
-	if (request_size != null)
-	{
+	if (request_size != null) {
 		return new fabric.Circle({
 			radius: PORT_SIZE / 2,
 			top: top,
@@ -1117,9 +1116,7 @@ function create_request(left, top, request_size) {
         	stroke:'red',
 			selectable: false
 		});*/
-	}
-	else
-	{
+	} else {
 		return new fabric.Circle({
 			radius: PORT_SIZE / 2,
 			top: top,
@@ -1157,15 +1154,19 @@ function send_request(portOriginal, postIdOriginal, tabVect, workstationType, wo
 			easing: fabric.util.ease.easeInQuand
 		});
 
-	station_progress(
-		tab_workstation[workstationId].checked,
-		portOriginal,
-		postIdOriginal,
-		tabVect,
-		workstationType,
-		workstationId,
-		port_2_top, port_2_left,
-		request_size);
+	for (var i = 0; i < tab_workstation.length; i++) {
+		if (tab_workstation[i].id == workstationId) {
+			station_progress(
+				tab_workstation[i].checked,
+				portOriginal,
+				postIdOriginal,
+				tabVect,
+				workstationType,
+				workstationId,
+				port_2_top, port_2_left,
+				request_size);
+		}
+	}
 }
 
 function good_path(s, next, path) {
