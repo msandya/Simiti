@@ -81,11 +81,7 @@ function menu(e) {
 		menu.appendChild(document.createElement('br'));
 		bt4.addEventListener("click", click, false);
 	}
-}
-
-*/
-
-
+}*/
 
 function click(e) {
 	var select = this;
@@ -237,6 +233,14 @@ function init() {
 	create_button('Images/hubbutton.png', 450, 10, true);
 
 	bring_front_buttons();
+}
+
+function search_work_station(id) {
+	for (var i = 0; i < tab_workstation.length; i++) {
+		if (tab_workstation[i].id == id) {
+			return tab_workstation[i];
+		}
+	}
 }
 //------------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------Main()--------------------------------------------------------------------
