@@ -81,7 +81,11 @@ function menu(e) {
 		menu.appendChild(document.createElement('br'));
 		bt4.addEventListener("click", click, false);
 	}
-}*/
+}
+
+*/
+
+
 
 function click(e) {
 	var select = this;
@@ -234,14 +238,6 @@ function init() {
 
 	bring_front_buttons();
 }
-
-function search_work_station(id) {
-	for (var i = 0; i < tab_workstation.length; i++) {
-		if (tab_workstation[i].id == id) {
-			return tab_workstation[i];
-		}
-	}
-}
 //------------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------Main()--------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -293,16 +289,6 @@ function check(o) {
 					//tab_workstation[i].checked = 1;
 
 		}
-	} else if (o.which == 65) // 65 = a
-	{
-		create_port(tab_workstation[0].ports.length, tab_workstation[0], tab_workstation[0].obj.left + 4 + tab_workstation[0].ports.length * (PORT_SIZE + 3));
-		if (tab_workstation[0].ports.length > 3)
-		{
-			var aux = tab_workstation[0].obj.getObjects();
-			aux[0].set({width: 50 + (tab_workstation[0].ports.length - 3) * (PORT_SIZE + 3)});
-			aux[0].set({strokeWidth: 2});
-			aux[0].set({strokeWidth: 1});
-		}
 	} else if (o.which == 32) // 32 = space
 	{
 		o.preventDefault();
@@ -344,26 +330,41 @@ function check(o) {
 		}
 
 		function broadcast() {
-			var tram_size = null;
-			if (document.getElementById("trameSize") != null && document.getElementById("trameSize") != '')
+			if(trame_type == 3)
 			{
-				alert(document.getElementById("trameSize").value);
-				tram_size = document.getElementById("trameSize").value;
+				console.log(document.getElementById("trameSize").value);
 			}
-			simulate(s, null, tram_size);
+			simulate(s, null);
 			options.remove();
 		}
 
 		function unicast() {
-			var tram_size = null;
-			var targetid = prompt("Select target id");
-			if (document.getElementById("trameSize") != null && document.getElementById("trameSize") != '')
-			{
-				alert(document.getElementById("trameSize").value);
-				tram_size = document.getElementById("trameSize").value;
-			}
-			if (targetid != "") {
-				simulate(s, targetid, tram_size);
+			br = document.createElement("br");
+			options.appendChild(br);
+			
+			var input2 = document.createElement("input");
+			input2.type = "text";
+			input2.placeholder = "Id de la cible";
+			input2.id = "targetId";
+			options.appendChild(input2);
+			br = document.createElement("br");
+			options.appendChild(br);
+			
+			var target = document.createElement("button");
+			target.className = "btn btn-primary btn-xs";
+			target.innerHTML = "Send";
+			target.addEventListener("click", targetFc);
+			options.appendChild(target);
+		}
+		
+		function targetFc() {
+			console.log(document.getElementById("targetId").value);
+			if (document.getElementById("targetId").value != null) {
+				if(trame_type == 3)
+				{
+					console.log(document.getElementById("trameSize").value);
+				}
+				simulate(s, document.getElementById("targetId").value);
 			}
 			options.remove();
 		}

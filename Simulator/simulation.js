@@ -60,7 +60,7 @@ function TTL_status(id) {
 //-----------------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------In progress-----------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------------------
-function station_progress(workStationChecked, portOriginal, postIdOriginal, tabVect, workstationType, workstationId, topPos, leftPos, request_size) {
+function station_progress(workStationChecked, portOriginal, postIdOriginal, tabVect, workstationType, workstationId, topPos, leftPos) {
 	var top = (topPos + 60) + "px";
 	var left = (leftPos) + "px";
 	var progress_list = [];
@@ -366,7 +366,7 @@ function station_progress(workStationChecked, portOriginal, postIdOriginal, tabV
 					btnStop.style.width = "15px";
 					btnStop.style.height = "15px";
 					btnStop.addEventListener("click", function () {
-						searche_and_send_from_station(postIdOriginal, x.id, tabVect, request_size);
+						searche_and_send_from_station(postIdOriginal, x.id, tabVect);
 						x.parentNode.removeChild(x);
 					});
 					z.appendChild(btnStop);
@@ -504,7 +504,7 @@ function station_progress(workStationChecked, portOriginal, postIdOriginal, tabV
 					btnNext.style.height = "15px";
 					btnNext.addEventListener("click", function () {
 						if (progress_list_index == progress_list.length - 1) {
-							searche_and_send_from_station(postIdOriginal, x.id, tabVect, request_size);
+							searche_and_send_from_station(postIdOriginal, x.id, tabVect);
 							x.parentNode.removeChild(x);
 						} else {
 							progress_list_index++;
@@ -686,7 +686,7 @@ function station_progress(workStationChecked, portOriginal, postIdOriginal, tabV
 					btnStop.style.width = "15px";
 					btnStop.style.height = "15px";
 					btnStop.addEventListener("click", function () {
-						searche_and_send_from_station(postIdOriginal, x.id, tabVect, request_size);
+						searche_and_send_from_station(postIdOriginal, x.id, tabVect);
 						x.parentNode.removeChild(x);
 					});
 					z.appendChild(btnStop);
@@ -811,7 +811,7 @@ function station_progress(workStationChecked, portOriginal, postIdOriginal, tabV
 					btnNext.style.height = "15px";
 					btnNext.addEventListener("click", function () {
 						if (progress_list_index == progress_list.length - 1) {
-							searche_and_send_from_station(postIdOriginal, x.id, tabVect, request_size);
+							searche_and_send_from_station(postIdOriginal, x.id, tabVect);
 							x.parentNode.removeChild(x);
 						} else {
 							progress_list_index++;
@@ -874,7 +874,7 @@ function station_progress(workStationChecked, portOriginal, postIdOriginal, tabV
 		}
 	} else {
 		setTimeout(function () {
-			searche_and_send_from_station(postIdOriginal, workstationId, tabVect, request_size);
+			searche_and_send_from_station(postIdOriginal, workstationId, tabVect);
 		}, 1000)
 	}
 }
@@ -1094,43 +1094,20 @@ function simulation() {
 }
 
 // create the circle
-function create_request(left, top, request_size) {
-	//console.log('request ok');
-	if (request_size != null) {
-		return new fabric.Circle({
-			radius: PORT_SIZE / 2,
-			top: top,
-			left: left,
-			fill: 'blue',
-			stroke: 'red',
-			selectable: false
-		});
-		/*console.log('ellipse ok');
-		return new fabric.Ellipse({
-        	top: top,
-			left: left,
-			originX: 'left', originY: 'top',
-     		rx: request_size, ry: 5,
-        	angle: 0,
-        	fill: 'black',
-        	stroke:'red',
-			selectable: false
-		});*/
-	} else {
-		return new fabric.Circle({
-			radius: PORT_SIZE / 2,
-			top: top,
-			left: left,
-			fill: 'blue',
-			stroke: 'red',
-			selectable: false
-		});
-	}
+function create_request(left, top) {
+	return new fabric.Circle({
+		radius: PORT_SIZE / 2,
+		top: top,
+		left: left,
+		fill: 'blue',
+		stroke: 'red',
+		selectable: false
+	});
 }
 
 // send the request from port_1 to port_2
-function send_request(portOriginal, postIdOriginal, tabVect, workstationType, workstationId, port_1_left, port_1_top, port_2_left, port_2_top, request_size) {
-	var request = create_request(port_1_left, port_1_top, request_size);
+function send_request(portOriginal, postIdOriginal, tabVect, workstationType, workstationId, port_1_left, port_1_top, port_2_left, port_2_top) {
+	var request = create_request(port_1_left, port_1_top);
 	canvas.add(request);
 
 	var animation = document.getElementById('animate');
@@ -1154,19 +1131,14 @@ function send_request(portOriginal, postIdOriginal, tabVect, workstationType, wo
 			easing: fabric.util.ease.easeInQuand
 		});
 
-	for (var i = 0; i < tab_workstation.length; i++) {
-		if (tab_workstation[i].id == workstationId) {
-			station_progress(
-				tab_workstation[i].checked,
-				portOriginal,
-				postIdOriginal,
-				tabVect,
-				workstationType,
-				workstationId,
-				port_2_top, port_2_left,
-				request_size);
-		}
-	}
+	station_progress(
+		tab_workstation[workstationId].checked,
+		portOriginal,
+		postIdOriginal,
+		tabVect,
+		workstationType,
+		workstationId,
+		port_2_top, port_2_left);
 }
 
 function good_path(s, next, path) {
@@ -1215,8 +1187,9 @@ function rec_simulation(s, h, marked, tab_vect, father, path) {
 }
 
 //parcour largeur
-function simulate(s, target, request_size) // s, sommet selectionné, taille de la trame
+function simulate(s, target) // s, sommet selectionné
 {
+	console.log(target);
 	var h = 0;
 	var marked = []; // marked, tableau des sommet déjà vu
 	var next = null;
@@ -1246,7 +1219,7 @@ function simulate(s, target, request_size) // s, sommet selectionné, taille de 
 
 	set_ttl(s, tab_vect);
 
-	searche_and_send_from_station(s.id, s.id, tab_vect, request_size);
+	searche_and_send_from_station(s.id, s.id, tab_vect);
 
 	/*for (var i = 0; i < tab_vect.length; i++) {
 		send_req(tab_vect[i]);
@@ -1260,7 +1233,7 @@ function simulate(s, target, request_size) // s, sommet selectionné, taille de 
 }*/
 
 
-function searche_and_send_from_station(postIdOriginal, stationId, tabVect, request_size) {
+function searche_and_send_from_station(postIdOriginal, stationId, tabVect) {
 	var tab_vect_chosen = [];
 	for (var i = 0; i < tabVect.length; i++) {
 		if (tabVect[i].obj1.id == stationId) {
@@ -1284,8 +1257,7 @@ function searche_and_send_from_station(postIdOriginal, stationId, tabVect, reque
 			tab_vect_chosen[i].vect.x1,
 			tab_vect_chosen[i].vect.y1,
 			tab_vect_chosen[i].vect.x2,
-			tab_vect_chosen[i].vect.y2,
-			request_size);
+			tab_vect_chosen[i].vect.y2);
 	}
 }
 
@@ -1293,6 +1265,7 @@ function set_ttl(s, tab_vect) {
 	var ok = false;
 	for (var i = 0; i < tab_vect.length; i++) {
 		if (tab_vect[i].obj2.type == 'switch') {
+			//alert('switch ' + tab_vect[i].obj2.id);
 			for (var j = 0; j < tab_vect[i].obj2.TTL.length; j++) {
 				if (tab_vect[i].obj2.TTL[j].id == s.id) {
 					tab_vect[i].obj2.TTL[j].status = 0;
