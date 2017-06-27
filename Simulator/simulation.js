@@ -1248,7 +1248,7 @@ function searche_and_send_from_station(postIdOriginal, stationId, tabVect) {
 	}
 
 	for (var i = 0; i < tab_vect_chosen.length; i++) {
-		send_request(
+		send_request_2(
 			tab_vect_chosen[i].vect_port_original,
 			stationId,
 			tabVect,

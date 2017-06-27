@@ -285,8 +285,8 @@ function check(o) {
 	{
 
 		for (var i = 0; i < tab_workstation.length; i++) {
-			console.log("id: "+tab_workstation[i].id + " checked:" + tab_workstation[i].checked);
-					//tab_workstation[i].checked = 1;
+			console.log("id: " + tab_workstation[i].id + " checked:" + tab_workstation[i].checked);
+			//tab_workstation[i].checked = 1;
 
 		}
 	} else if (o.which == 32) // 32 = space
@@ -305,7 +305,7 @@ function check(o) {
 		options.className = "options";
 		options.style = "left: " + s.obj.left + "px; top: " + s.obj.top + "px;";
 		document.body.appendChild(options);
-		
+
 		var broad = document.createElement("button");
 		broad.className = "btn btn-primary btn-xs";
 		broad.innerHTML = "Broadcast";
@@ -317,9 +317,8 @@ function check(o) {
 		uni.innerHTML = "Unicast";
 		uni.addEventListener("click", unicast);
 		options.appendChild(uni);
-		
-		if(trame_type == 3)
-		{
+
+		if (trame_type == 3) {
 			br = document.createElement("br");
 			options.appendChild(br);
 			var input = document.createElement("input");
@@ -330,8 +329,7 @@ function check(o) {
 		}
 
 		function broadcast() {
-			if(trame_type == 3)
-			{
+			if (trame_type == 3) {
 				console.log(document.getElementById("trameSize").value);
 			}
 			simulate(s, null);
@@ -341,7 +339,7 @@ function check(o) {
 		function unicast() {
 			br = document.createElement("br");
 			options.appendChild(br);
-			
+
 			var input2 = document.createElement("input");
 			input2.type = "text";
 			input2.placeholder = "Id de la cible";
@@ -349,19 +347,18 @@ function check(o) {
 			options.appendChild(input2);
 			br = document.createElement("br");
 			options.appendChild(br);
-			
+
 			var target = document.createElement("button");
 			target.className = "btn btn-primary btn-xs";
 			target.innerHTML = "Send";
 			target.addEventListener("click", targetFc);
 			options.appendChild(target);
 		}
-		
+
 		function targetFc() {
 			console.log(document.getElementById("targetId").value);
 			if (document.getElementById("targetId").value != null) {
-				if(trame_type == 3)
-				{
+				if (trame_type == 3) {
 					console.log(document.getElementById("trameSize").value);
 				}
 				simulate(s, document.getElementById("targetId").value);
@@ -677,24 +674,21 @@ function displayArrayObjects(WorkStation) {
 		for (var x in myObject) {
 			text += (x + ": " + myObject[x] + " ");
 		}
-		
-		if(tab_workstation[i].checked == true)
-		{
+
+		if (tab_workstation[i].checked == true) {
 			var checkbox = '<input type="checkbox" id="' + WorkStation[i].id + '"checked/>';
-		}
-		else
-			var checkbox = '<input type="checkbox" id="' + WorkStation[i].id  + '"/>';
+		} else
+			var checkbox = '<input type="checkbox" id="' + WorkStation[i].id + '"/>';
 
 
 		text += checkbox + "<br/>";
-		
 
-		var check = document.getElementById(WorkStation[i].id );
 
-		if (check != null)
-		{
+		var check = document.getElementById(WorkStation[i].id);
+
+		if (check != null) {
 			if (check.checked)
-			tab_workstation[i].checked = true;
+				tab_workstation[i].checked = true;
 			/*
 			else
 			tab_workstation[i].checked = false;
@@ -704,4 +698,97 @@ function displayArrayObjects(WorkStation) {
 	}
 
 	document.getElementById("message").innerHTML = text;
+}
+
+///////test
+// variable to hold how many frames have elapsed in the animation
+
+function send_request_2(portOriginal, postIdOriginal, tabVect, workstationType, workstationId, port_1_left, port_1_top, port_2_left, port_2_top, request_size) {
+	var vertices = [];
+	var fps = 17;
+	var count = 0;
+
+	var originX = port_1_left + PORT_SIZE / 2 - 1;
+	var originY = port_1_top + PORT_SIZE / 2 - 1;
+
+	vertices.push({
+		x: originX,
+		y: originY
+	});
+	vertices.push({
+		x: port_2_left + PORT_SIZE / 2 - 1,
+		y: port_2_top + PORT_SIZE / 2 - 1
+	});
+
+	var points = calcWaypoints(vertices);
+
+	var line = new fabric.Line([originX, originY, originX, originY], {
+		stroke: 'blue',
+		strokeWidth: 3,
+		hasControls: false,
+	});
+	canvas.add(line);
+
+	function draw() {
+		if (count < points.length) {
+			requestAnimationFrame(draw);
+			line.set({
+				x1: points[count].x,
+				y1: points[count].y
+			});
+		};
+		canvas.renderAll();
+		count++;
+	}
+	draw();
+
+	setTimeout(function () {
+		count = 1;
+		function draw() {
+			if (count < points.length) {
+				requestAnimationFrame(draw);
+				line.set({
+					x2: points[count].x,
+					y2: points[count].y
+				});
+			};
+			canvas.renderAll();
+			count++;
+		}
+		draw();
+	}, fps * points.length);
+
+	setTimeout(function () {
+		for (var i = 0; i < tab_workstation.length; i++) {
+			if (tab_workstation[i].id == workstationId) {
+				station_progress(
+					tab_workstation[i].checked,
+					portOriginal,
+					postIdOriginal,
+					tabVect,
+					workstationType,
+					workstationId,
+					port_2_top, port_2_left,
+					request_size);
+			}
+		}
+	}, 2 * fps * points.length);
+}
+// calc waypoints traveling along vertices
+function calcWaypoints(vertices) {
+	var waypoints = [];
+	var pt0 = vertices[0];
+	var pt1 = vertices[1];
+
+	var dx = pt1.x - pt0.x;
+	var dy = pt1.y - pt0.y;
+	for (var j = 0; j < 100; j++) {
+		var x = pt0.x + dx * j / 100;
+		var y = pt0.y + dy * j / 100;
+		waypoints.push({
+			x: x,
+			y: y
+		});
+	}
+	return (waypoints);
 }
