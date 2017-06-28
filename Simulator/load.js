@@ -14,7 +14,6 @@ function create_line(obj1, obj2, nb_obj1_port, nb_obj2_port, type) {
         obj2.obj.top + obj2.ports[nb_obj2_port].rect.top + 26 + PORT_SIZE / 2
     ];
 
-
     if (points_line != null) {
         line = new fabric.Line(points_line, {
             strokeWidth: 1,

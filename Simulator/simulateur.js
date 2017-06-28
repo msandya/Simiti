@@ -81,11 +81,7 @@ function menu(e) {
 		menu.appendChild(document.createElement('br'));
 		bt4.addEventListener("click", click, false);
 	}
-}
-
-*/
-
-
+}*/
 
 function click(e) {
 	var select = this;
@@ -101,6 +97,11 @@ var canvas = new fabric.Canvas('c', {
 	selection: false
 });
 
+var ctx = canvas.getContext("2d");
+ctx.lineWidth = 1;
+ctx.strokeStyle = "blue";
+ctx.lineCap = "round";
+
 var line, isDown, rect;
 
 window.addEventListener('keydown', this.check, false);
@@ -112,9 +113,10 @@ var tab_cable = [];
 var last_object;
 var last_object_port_nb;
 var line_creation = 0;
-var tab_images = [];
 var current;
+var target_station;
 
+var is_sending_package = false;
 var color_0 = 'black';
 var color_1 = 'red';
 var color_2 = 'green';
@@ -238,6 +240,14 @@ function init() {
 
 	bring_front_buttons();
 }
+
+function search_work_station(id) {
+	for (var i = 0; i < tab_workstation.length; i++) {
+		if (tab_workstation[i].id == id) {
+			return tab_workstation[i];
+		}
+	}
+}
 //------------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------Main()--------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -287,7 +297,26 @@ function check(o) {
 		for (var i = 0; i < tab_workstation.length; i++) {
 			console.log("id: " + tab_workstation[i].id + " checked:" + tab_workstation[i].checked);
 			//tab_workstation[i].checked = 1;
+		}
+		t = 1;
+		send_request_2(200, 200, 600, 500);
+		ctx.clearRect(200, 200, 10, 10);
+		console.log("End.");
 
+	} else if (o.which == 65) // 65 = a
+	{
+		create_port(tab_workstation[0].ports.length, tab_workstation[0], tab_workstation[0].obj.left + 4 + tab_workstation[0].ports.length * (PORT_SIZE + 3));
+		if (tab_workstation[0].ports.length > 3) {
+			var aux = tab_workstation[0].obj.getObjects();
+			aux[0].set({
+				width: 50 + (tab_workstation[0].ports.length - 3) * (PORT_SIZE + 3)
+			});
+			aux[0].set({
+				strokeWidth: 2
+			});
+			aux[0].set({
+				strokeWidth: 1
+			});
 		}
 	} else if (o.which == 32) // 32 = space
 	{
@@ -329,39 +358,24 @@ function check(o) {
 		}
 
 		function broadcast() {
-			if (trame_type == 3) {
-				console.log(document.getElementById("trameSize").value);
+			var tram_size = null;
+			if (document.getElementById("trameSize") != null && document.getElementById("trameSize") != '') {
+				alert(document.getElementById("trameSize").value);
+				tram_size = document.getElementById("trameSize").value;
 			}
-			simulate(s, null);
+			simulate(s, null, tram_size);
 			options.remove();
 		}
 
 		function unicast() {
-			br = document.createElement("br");
-			options.appendChild(br);
-
-			var input2 = document.createElement("input");
-			input2.type = "text";
-			input2.placeholder = "Id de la cible";
-			input2.id = "targetId";
-			options.appendChild(input2);
-			br = document.createElement("br");
-			options.appendChild(br);
-
-			var target = document.createElement("button");
-			target.className = "btn btn-primary btn-xs";
-			target.innerHTML = "Send";
-			target.addEventListener("click", targetFc);
-			options.appendChild(target);
-		}
-
-		function targetFc() {
-			console.log(document.getElementById("targetId").value);
-			if (document.getElementById("targetId").value != null) {
-				if (trame_type == 3) {
-					console.log(document.getElementById("trameSize").value);
-				}
-				simulate(s, document.getElementById("targetId").value);
+			var tram_size = null;
+			var targetid = prompt("Select target id");
+			if (document.getElementById("trameSize") != null && document.getElementById("trameSize") != '') {
+				alert(document.getElementById("trameSize").value);
+				tram_size = document.getElementById("trameSize").value;
+			}
+			if (targetid != "") {
+				simulate(s, targetid, tram_size);
 			}
 			options.remove();
 		}
@@ -588,7 +602,6 @@ canvas.on('mouse:down', function (o) {
 });
 
 canvas.on('mouse:move', function (o) {
-
 	//if (!isDown) return;
 	var pointer = canvas.getPointer(o.e);
 
@@ -657,7 +670,9 @@ canvas.on('mouse:move', function (o) {
 	}
 	displayArrayObjects(WorkStation);
 
-	canvas.renderAll();
+	if (!is_sending_package) {
+		canvas.renderAll();
+	}
 });
 
 canvas.on('mouse:up', function (o) {
@@ -703,10 +718,11 @@ function displayArrayObjects(WorkStation) {
 ///////test
 // variable to hold how many frames have elapsed in the animation
 
-function send_request_2(portOriginal, postIdOriginal, tabVect, workstationType, workstationId, port_1_left, port_1_top, port_2_left, port_2_top, request_size) {
+function send_request_2(portOriginal, postIdOriginal, tabVect, workstationType, workstationId, port_1_left, port_1_top, port_2_left, port_2_top, request_size, target) {
 	var vertices = [];
 	var fps = 17;
-	var count = 0;
+	var count1 = 0;
+	var count2 = 0;
 
 	var originX = port_1_left + PORT_SIZE / 2 - 1;
 	var originY = port_1_top + PORT_SIZE / 2 - 1;
@@ -722,6 +738,7 @@ function send_request_2(portOriginal, postIdOriginal, tabVect, workstationType, 
 
 	var points = calcWaypoints(vertices);
 
+	//Create Line
 	var line = new fabric.Line([originX, originY, originX, originY], {
 		stroke: 'blue',
 		strokeWidth: 3,
@@ -729,34 +746,38 @@ function send_request_2(portOriginal, postIdOriginal, tabVect, workstationType, 
 	});
 	canvas.add(line);
 
+	//First parcour
 	function draw() {
-		if (count < points.length) {
+		if (count1 < points.length) {
 			requestAnimationFrame(draw);
 			line.set({
-				x1: points[count].x,
-				y1: points[count].y
+				x1: points[count1].x,
+				y1: points[count1].y
 			});
 		};
 		canvas.renderAll();
-		count++;
+		count1++;
 	}
 	draw();
 
+	//Second Parcour
 	setTimeout(function () {
-		count = 1;
 		function draw() {
-			if (count < points.length) {
+			if (count2 < points.length) {
 				requestAnimationFrame(draw);
 				line.set({
-					x2: points[count].x,
-					y2: points[count].y
+					x2: points[count2].x,
+					y2: points[count2].y
 				});
 			};
 			canvas.renderAll();
-			count++;
+			count2++;
 		}
 		draw();
 	}, fps * points.length);
+
+	count1 = 0;
+	count2 = 0;
 
 	setTimeout(function () {
 		for (var i = 0; i < tab_workstation.length; i++) {
@@ -769,11 +790,13 @@ function send_request_2(portOriginal, postIdOriginal, tabVect, workstationType, 
 					workstationType,
 					workstationId,
 					port_2_top, port_2_left,
-					request_size);
+					request_size,
+					target);
 			}
 		}
 	}, 2 * fps * points.length);
 }
+
 // calc waypoints traveling along vertices
 function calcWaypoints(vertices) {
 	var waypoints = [];

@@ -1,8 +1,6 @@
 // look if x is in tab
-function is_in(x, tab)
-{
-	for (var i = 0; i < tab.length; i++)
-	{
+function is_in(x, tab) {
+	for (var i = 0; i < tab.length; i++) {
 		if (x == tab[i])
 			return true;
 	}
@@ -12,21 +10,20 @@ function is_in(x, tab)
 //Checking if the mouse is inside of the Port or not
 function is_inside(x, y, port, station) {
 	var aux = 25;
-	if (station.ports.length > 3)
-	{
-				aux = (50 + ((station.ports.length - 3) * (PORT_SIZE + 3))) / 2;
+	if (station.ports.length > 3) {
+		aux = (50 + ((station.ports.length - 3) * (PORT_SIZE + 3))) / 2;
 	}
 	return (x >= station.obj.left + port.rect.left + aux && x <= station.obj.left + port.rect.left + PORT_SIZE + aux &&
 		y >= station.obj.top + port.rect.top + 25 && y <= station.obj.top + port.rect.top + PORT_SIZE + 25);
 }
 
 function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
+	var start = new Date().getTime();
+	for (var i = 0; i < 1e7; i++) {
+		if ((new Date().getTime() - start) > milliseconds) {
+			break;
+		}
+	}
 }
 
 //take in parameter type of object 1,2 and cable
@@ -34,14 +31,14 @@ function sleep(milliseconds) {
 //1 = torsadé croisée
 //2 = cable coaxial
 //3 = ligne télécom
-function good_cable(type_1,type_2, type_cable) {
-  //If menu_selected = 5 (Ethernet)
-  if ((type_cable == 1 && type_1 == type_2)
-      || (type_cable == 2 && type_1 == type_2 && type_1 == "post")
-      || (type_cable == 0 && (type_1 == "post" || type_2 == "post") && type_1 != type_2)
-      || (type_cable == 1 && ((type_1 =="hub" && type_2 == "switch")|| (type_2 =="hub" && type_1 == "switch"))))
-    return true;
-  return false;
+function good_cable(type_1, type_2, type_cable) {
+	//If menu_selected = 5 (Ethernet)
+	if ((type_cable == 1 && type_1 == type_2) ||
+		(type_cable == 2 && type_1 == type_2 && type_1 == "post") ||
+		(type_cable == 0 && (type_1 == "post" || type_2 == "post") && type_1 != type_2) ||
+		(type_cable == 1 && ((type_1 == "hub" && type_2 == "switch") || (type_2 == "hub" && type_1 == "switch"))))
+		return true;
+	return false;
 }
 
 function get_linked_port(work_station, port_nb) {
@@ -68,30 +65,40 @@ function get_linked_port(work_station, port_nb) {
 	return null;
 }
 
-function apply_color(obj, type, is_line)
-{
-		switch (type) {
-				case 0:
-						if (is_line)
-							obj.set({	stroke: color_0,
-												strokeDashArray: [1, 0]});
-						else
-							obj.set({	fill: color_0 });
-						break;
-				case 1:
-						if (is_line)
-							obj.set({ stroke: color_1,
-												strokeDashArray: [2, 5]});
-						else
-							obj.set({	fill: color_1 });
-						break;
-				default:
-						if (is_line)
-							obj.set({	stroke: color_2,
-												strokeDashArray: [10, 5]});
-						else
-							obj.set({	fill: color_2 });
-						break;
-		}
+function apply_color(obj, type, is_line) {
+	switch (type) {
+		case 0:
+			if (is_line)
+				obj.set({
+					stroke: color_0,
+					strokeDashArray: [1, 0]
+				});
+			else
+				obj.set({
+					fill: color_0
+				});
+			break;
+		case 1:
+			if (is_line)
+				obj.set({
+					stroke: color_1,
+					strokeDashArray: [2, 5]
+				});
+			else
+				obj.set({
+					fill: color_1
+				});
+			break;
+		default:
+			if (is_line)
+				obj.set({
+					stroke: color_2,
+					strokeDashArray: [10, 5]
+				});
+			else
+				obj.set({
+					fill: color_2
+				});
+			break;
+	}
 }
-

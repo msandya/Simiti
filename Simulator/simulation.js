@@ -60,7 +60,7 @@ function TTL_status(id) {
 //-----------------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------In progress-----------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------------------
-function station_progress(workStationChecked, portOriginal, postIdOriginal, tabVect, workstationType, workstationId, topPos, leftPos, request_size) {
+function station_progress(workStationChecked, portOriginal, postIdOriginal, tabVect, workstationType, workstationId, topPos, leftPos, request_size, target) {
 	var top = (topPos + 60) + "px";
 	var left = (leftPos) + "px";
 	var progress_list = [];
@@ -72,7 +72,14 @@ function station_progress(workStationChecked, portOriginal, postIdOriginal, tabV
 	var workstation_type = "";
 
 	var port_used_id = portOriginal;
-	var dest_text = "BCAST";
+
+	var dest_text = "";
+	if (target != null) {
+		dest_text = "p-" + target;
+	} else {
+		dest_text = "BCAST";
+	}
+
 	var post_text = "p-" + postIdOriginal;
 	var count = 0;
 
@@ -94,15 +101,23 @@ function station_progress(workStationChecked, portOriginal, postIdOriginal, tabV
 		"Réémettre sur les autres ports",
 		"Fin de la demonstration"
 	]
+
 	var progress_switch_detail = [
 		"Post émetteur: p-" + postIdOriginal,
 		"Port d'origine:" + portOriginal,
 		"Port de l'émetteur connu et correct",
 		"TTL réinitialisé",
-		"Adresse de broadcast",
-		"Réémission autres ports actifs",
+		"",
+		"",
 		""
 	]
+	if (target != null) {
+		progress_switch_detail[4] += "Destinataire port " + target;
+		progress_switch_detail[5] += "Réémission autres ports: " + target;
+	} else {
+		progress_switch_detail[4] += "Adresse de broadcast";
+		progress_switch_detail[5] += "Réémission autres ports actifs";
+	}
 
 	var progress_post = [
 		"Examiner le destinataire",
@@ -110,10 +125,15 @@ function station_progress(workStationChecked, portOriginal, postIdOriginal, tabV
 		"Fin de la demonstration"
 	]
 	var progress_post_detail = [
-		"Destinataire: BCAST",
+		"Destinataire: ",
 		"Transmettre à la couche concernée",
 		""
 	]
+	if (target != null) {
+		progress_post_detail[0] += ("p-" + target);
+	} else {
+		progress_switch_detail[0] += "BCAST";
+	}
 
 	var progress_hub = [
 		"Examiner le port d'origine",
@@ -366,7 +386,7 @@ function station_progress(workStationChecked, portOriginal, postIdOriginal, tabV
 					btnStop.style.width = "15px";
 					btnStop.style.height = "15px";
 					btnStop.addEventListener("click", function () {
-						searche_and_send_from_station(postIdOriginal, x.id, tabVect, request_size);
+						searche_and_send_from_station(postIdOriginal, x.id, tabVect, request_size, target);
 						x.parentNode.removeChild(x);
 					});
 					z.appendChild(btnStop);
@@ -504,7 +524,7 @@ function station_progress(workStationChecked, portOriginal, postIdOriginal, tabV
 					btnNext.style.height = "15px";
 					btnNext.addEventListener("click", function () {
 						if (progress_list_index == progress_list.length - 1) {
-							searche_and_send_from_station(postIdOriginal, x.id, tabVect, request_size);
+							searche_and_send_from_station(postIdOriginal, x.id, tabVect, request_size, target);
 							x.parentNode.removeChild(x);
 						} else {
 							progress_list_index++;
@@ -686,7 +706,7 @@ function station_progress(workStationChecked, portOriginal, postIdOriginal, tabV
 					btnStop.style.width = "15px";
 					btnStop.style.height = "15px";
 					btnStop.addEventListener("click", function () {
-						searche_and_send_from_station(postIdOriginal, x.id, tabVect, request_size);
+						searche_and_send_from_station(postIdOriginal, x.id, tabVect, request_size, target);
 						x.parentNode.removeChild(x);
 					});
 					z.appendChild(btnStop);
@@ -811,7 +831,7 @@ function station_progress(workStationChecked, portOriginal, postIdOriginal, tabV
 					btnNext.style.height = "15px";
 					btnNext.addEventListener("click", function () {
 						if (progress_list_index == progress_list.length - 1) {
-							searche_and_send_from_station(postIdOriginal, x.id, tabVect, request_size);
+							searche_and_send_from_station(postIdOriginal, x.id, tabVect, request_size, target);
 							x.parentNode.removeChild(x);
 						} else {
 							progress_list_index++;
@@ -874,7 +894,7 @@ function station_progress(workStationChecked, portOriginal, postIdOriginal, tabV
 		}
 	} else {
 		setTimeout(function () {
-			searche_and_send_from_station(postIdOriginal, workstationId, tabVect, request_size);
+			searche_and_send_from_station(postIdOriginal, workstationId, tabVect, request_size, target);
 		}, 1000)
 	}
 }
@@ -1244,7 +1264,7 @@ function simulate(s, target, request_size) // s, sommet selectionné, taille de 
 
 	set_ttl(s, tab_vect);
 
-	searche_and_send_from_station(s.id, s.id, tab_vect, request_size);
+	searche_and_send_from_station(s.id, s.id, tab_vect, request_size, target);
 
 	/*for (var i = 0; i < tab_vect.length; i++) {
 		send_req(tab_vect[i]);
@@ -1258,7 +1278,7 @@ function simulate(s, target, request_size) // s, sommet selectionné, taille de 
 }*/
 
 
-function searche_and_send_from_station(postIdOriginal, stationId, tabVect, request_size) {
+function searche_and_send_from_station(postIdOriginal, stationId, tabVect, request_size, target) {
 	var tab_vect_chosen = [];
 	for (var i = 0; i < tabVect.length; i++) {
 		if (tabVect[i].obj1.id == stationId) {
@@ -1283,7 +1303,8 @@ function searche_and_send_from_station(postIdOriginal, stationId, tabVect, reque
 			tab_vect_chosen[i].vect.y1,
 			tab_vect_chosen[i].vect.x2,
 			tab_vect_chosen[i].vect.y2,
-			request_size);
+			request_size,
+			target);
 	}
 }
 

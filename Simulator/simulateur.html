@@ -3,21 +3,23 @@
 
 <head>
 	<meta charset="utf-8" />
-	<link rel="stylesheet" href="simulateur.css" >
+	<link rel="stylesheet" href="simulateur.css">
 
 	<script src="jQuery.js"></script>
 	<script src="fabric.js"></script>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	 crossorigin="anonymous">
+	    crossorigin="anonymous">
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-	 crossorigin="anonymous">
+	    crossorigin="anonymous">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-	 crossorigin="anonymous"></script>
+	    crossorigin="anonymous"></script>
 	<script type="text/javascript" src="helper.js"></script>
 	<script type="text/javascript" src="struct.js"></script>
 	<script type="text/javascript" src="simulation.js"></script>
+	<script type="text/javascript" src="load.js"></script>
+	<script type="text/javascript" src="save.js"></script>
 
 
 
@@ -35,7 +37,7 @@
 		<img src="images/sample_red.png" /> Paires torsadées croisées<br />
 		<img src="images/sample_green.png" /> Cable coaxial
 	</div>
-	
+
 	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
@@ -82,7 +84,7 @@
 
 					<ul class="nav navbar-nav navbar-right hidden-xs">
 						<a type="button" class="navbar-btn btn btn-gradient-blue" onclick="document.getElementById('noeud').style.display = 'block'"
-						 data-toggle="modal" data-target="#Modal" am-latosans="bold" href="#noeud">Tracer des noeuds</a>
+						    data-toggle="modal" data-target="#Modal" am-latosans="bold" href="#noeud">Tracer des noeuds</a>
 					</ul>
 
 					<li class=""><a href="#" onclick="document.getElementById('aide').style.display = 'block'">Aide</a></li>
@@ -98,7 +100,9 @@
 	<canvas id="c" width="1500" height="650" style="border:1px solid #ccc">
 		Canvas n'est pas implémenté dans ce navigateur.
 	</canvas>
-	<img id="canvasImg"/>
+
+
+	<img id="canvasImg" />
 
 	<!--<div id="options" class="options">
 		<div class="ui-group-buttons">
@@ -113,7 +117,7 @@
 		/>
 		<input type="text" id="mavar" style="position: relative; right: -45%; top: 45%; " />
 		<input type="button" onclick="document.getElementById('config').style.display = 'none'; text = document.getElementById('mavar').value;"
-		 value="Valider" style="position: relative; right: -36%; top: 95%;" />
+		    value="Valider" style="position: relative; right: -36%; top: 95%;" />
 	</div>
 
 	<div id="aide" class="aide">
@@ -121,30 +125,30 @@
 		/>
 		<h1 class="text_aide"> AIDE SIMITI </h1>
 		<input type="button" onclick="document.getElementById('aide').style.display = 'none'; text = document.getElementById('mavar').value;"
-		 value="Valider" style="position: relative; top: 80%;" />
+		    value="Valider" style="position: relative; top: 80%;" />
 	</div>
-	
+
 	<div id="ipconfig" class="ipconfig">
-		<input type="button" onclick="document.getElementById('ipconfig').style.display = 'none'" value="X" style="position: relative; float: right;" />
+		<input type="button" onclick="document.getElementById('ipconfig').style.display = 'none'" value="X" style="position: relative; float: right;"
+		/>
 		<input type="text" id="mavar2" style="position: relative; right: -25%; top: 30%; " />
 		<input type="text" id="mavar3" style="position: relative; right: -25%; top: 40%; " />
-		<input type="button" onclick="document.getElementById('ipconfig').style.display = 'none';" value="Valider" id="saveip" style="position: relative; right: 5%; top: 65%;" />
+		<input type="button" onclick="document.getElementById('ipconfig').style.display = 'none';" value="Valider" id="saveip" style="position: relative; right: 5%; top: 65%;"
+		/>
 	</div>
 
 	<div id="noeud" class="noeud">
-		<h1> Choisissez les stations </h1> 
+		<h1> Choisissez les stations </h1>
 		<h4 id="message"></h4>
 		<input type="button" onclick="document.getElementById('noeud').style.display = 'none'; text = document.getElementById('mavar').value;"
-		 value="Valider" style="position: relative; right: -36%; top: 95%;" />
+		    value="Valider" style="position: relative; right: -36%; top: 95%;" />
 	</div>
 
 
-</form>​
+	</form>​
 
 
 	<script type="text/javascript" src="simulateur.js"></script>
-
-
 
 </body>
 
