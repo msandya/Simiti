@@ -17,11 +17,10 @@ function is_inside(x, y, port, station) {
 		y >= station.obj.top + port.rect.top + 25 && y <= station.obj.top + port.rect.top + PORT_SIZE + 25);
 }
 
-function sleep(milliseconds) {
-	var start = new Date().getTime();
-	for (var i = 0; i < 1e7; i++) {
-		if ((new Date().getTime() - start) > milliseconds) {
-			break;
+function search_work_station(id) {
+	for (var i = 0; i < tab_workstation.length; i++) {
+		if (tab_workstation[i].id == id) {
+			return tab_workstation[i];
 		}
 	}
 }
