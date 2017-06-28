@@ -6,83 +6,6 @@ menu_selected = 0;
 text = "";
 trame_type = 0;
 
-
-/*document.oncontextmenu = function() {
-	var dataURL = canvas.toDataURL();
-	var img = document.createElement("img");
-	document.getElementById("canvasImg").src = dataURL;
-	return false;
-}*/
-
-
-//document.getElementById('un').addEventListener("click", menu, false);
-//document.getElementById('deux').addEventListener("click", menu, false);
-/*
-document.getElementById('Ethernet').addEventListener("click", menu, false);
-
-
-
-function menu(e) {
-	var select = this;
-
-	if (document.getElementById("menu") != null) {
-		document.getElementById("menu").remove();
-	}
-
-	var menu = document.createElement('div');
-	menu.className = 'menu';
-	menu.id = 'menu';
-	menu.style.left = select.offsetLeft + "px";
-	menu.style.top = (select.offsetTop + 20) + "px";
-	document.getElementsByTagName('body')[0].appendChild(menu);
-
-	if (select.id == "un") {
-		var bt1 = document.createElement('button');
-		bt1.name = "1";
-		bt1.innerHTML = "Nouveau";
-		menu.appendChild(bt1);
-		menu.appendChild(document.createElement('br'));
-		bt1.addEventListener("click", click, false);
-		var bt2 = document.createElement('button');
-		bt2.name = "2";
-		bt2.innerHTML = "2";
-		menu.appendChild(bt2);
-		menu.appendChild(document.createElement('br'));
-		bt2.addEventListener("click", click, false);
-		var bt3 = document.createElement('button');
-		bt3.name = "3";
-		bt3.innerHTML = "3";
-		menu.appendChild(bt3);
-		menu.appendChild(document.createElement('br'));
-		bt3.addEventListener("click", click, false);
-	} else if (select.id == "deux") {
-		var bt1 = document.createElement('button');
-		bt1.name = "4";
-		bt1.innerHTML = "Conception";
-		menu.appendChild(bt1);
-		menu.appendChild(document.createElement('br'));
-		bt1.addEventListener("click", click, false);
-		var bt2 = document.createElement('button');
-		bt2.name = "5";
-		bt2.innerHTML = "Ethernet";
-		menu.appendChild(bt2);
-		menu.appendChild(document.createElement('br'));
-		bt2.addEventListener("click", click, false);
-		var bt3 = document.createElement('button');
-		bt3.name = "6";
-		bt3.innerHTML = "IP";
-		menu.appendChild(bt3);
-		menu.appendChild(document.createElement('br'));
-		bt3.addEventListener("click", click, false);
-		var bt4 = document.createElement('button');
-		bt4.name = "7";
-		bt4.innerHTML = "Transport";
-		menu.appendChild(bt4);
-		menu.appendChild(document.createElement('br'));
-		bt4.addEventListener("click", click, false);
-	}
-}*/
-
 function click(e) {
 	var select = this;
 	selected = parseInt(select.name);
@@ -113,8 +36,6 @@ var tab_cable = [];
 var last_object;
 var last_object_port_nb;
 var line_creation = 0;
-var current;
-var target_station;
 
 var is_sending_package = false;
 var color_0 = 'black';
@@ -132,63 +53,6 @@ var WorkStationType = 0;
 
 var tab_buttons = [];
 
-//Create rectangle
-function rectangle(x, y, color) {
-	rect = new fabric.Rect({
-		width: 100,
-		height: 50,
-		left: x,
-		top: y,
-		stroke: 'black',
-		strokeWidth: 1,
-		fill: color,
-		selectable: false
-	});
-	canvas.add(rect);
-}
-
-function add_image(nameImage, imageURL) {
-	var inserted = false;
-
-	for (var i = 0; i < tab_images.length; i++) {
-		if (tab_images[i].name_image == nameImage) {
-			inserted = true;
-		}
-	}
-
-	if (inserted == true) {
-		alert("This image is inserted.");
-	} else {
-		var image = {
-			'name_image': nameImage,
-			'image': imageURL
-		}
-		tab_images.push(image);
-		//alert("Inserted successfully.");
-	}
-}
-
-function get_image(nameImage) {
-	var result;
-	for (var i = 0; i < tab_images.length; i++) {
-		if (nameImage == tab_images[i].name_image) {
-			result = tab_images[i];
-		}
-	}
-	if (result == null) {
-		alert("Error: Image can not be found.");
-	} else {
-		return result;
-	}
-}
-
-function add_button(buttonImage, nameButton) {
-	var button_add = {
-		'button_image': buttonImage,
-		'name_button': nameButton
-	}
-	tab_buttons.push(button_add);
-}
 
 function create_button(image, x, y, normal_button) {
 	var button = new fabric.Image.fromURL(image, function (img) {
@@ -204,18 +68,6 @@ function create_button(image, x, y, normal_button) {
 		else
 			buttons_selected.push(img);
 	});
-}
-
-function remove_button(image) {
-	var button = new fabric.Image.fromURL(image, function (img) {
-		canvas.remove(img);
-	});
-	/*for (var i = 0; i < tab_buttons.length; i++) {
-		if (buttonName == tab_buttons[i].name_button) {
-			canvas.remove(tab_buttons[i].button_image);
-			return 1;
-		}
-	}*/
 }
 
 function bring_front_buttons() {
@@ -241,13 +93,6 @@ function init() {
 	bring_front_buttons();
 }
 
-function search_work_station(id) {
-	for (var i = 0; i < tab_workstation.length; i++) {
-		if (tab_workstation[i].id == id) {
-			return tab_workstation[i];
-		}
-	}
-}
 //------------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------Main()--------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -270,7 +115,6 @@ function check(o) {
 			if (tab_cable[i].object_1 != null && tab_cable[i].object_2 != null) {
 				if (canvas.getActiveObject() == tab_cable[i].object_1.obj || canvas.getActiveObject() == tab_cable[i].object_2.obj) {
 					delete_cable(tab_cable[i]);
-					//tab_cable.splice(i, 1);
 				}
 			}
 		}
@@ -278,9 +122,7 @@ function check(o) {
 		var activeObject = canvas.getActiveObject(),
 			activeGroup = canvas.getActiveGroup();
 		if (activeObject) {
-			//if (confirm('Are you sure ?')) {
 			canvas.remove(activeObject);
-			//}
 		} else if (activeGroup) {
 			var objectsInGroup = activeGroup.getObjects();
 			canvas.discardActiveGroup();
@@ -296,7 +138,6 @@ function check(o) {
 
 		for (var i = 0; i < tab_workstation.length; i++) {
 			console.log("id: " + tab_workstation[i].id + " checked:" + tab_workstation[i].checked);
-			//tab_workstation[i].checked = 1;
 		}
 		t = 1;
 		send_request_2(200, 200, 600, 500);
@@ -421,9 +262,6 @@ canvas.on('mouse:down', function (o) {
 	var points = [pointer.x, pointer.y, pointer.x, pointer.y];
 
 	if (pointer.x >= 10 && pointer.x <= 110 && pointer.y <= 60 && pointer.y >= 10) {
-		/*rectangle(10, 10, 'black');
-		rectangle(120, 10, 'white');
-		rectangle(230, 10, 'white');*/
 		bring_front_buttons();
 		for (var i = 0; i < buttons_selected.length; i++) {
 			if (buttons_selected[i].left == 10)
@@ -445,7 +283,6 @@ canvas.on('mouse:down', function (o) {
 			if (buttons_selected[i].left == 230)
 				canvas.bringToFront(buttons_selected[i]);
 		}
-		//canvas.bringToFront(buttons_selected[2]);
 		selected = 2;
 		canvas.selection = false;
 	} else if (pointer.x >= 340 && pointer.x <= 440 && pointer.y <= 60 && pointer.y >= 10) {
@@ -529,7 +366,7 @@ canvas.on('mouse:down', function (o) {
 						aux = ((50 + ((actual_obj.ports.length - 3) * (PORT_SIZE + 3))) / 2) + 1;
 
 					points_line = [actual_obj.obj.left + actual_obj.ports[j].rect.left + aux + PORT_SIZE / 2,
-						actual_obj.obj.top + actual_obj.ports[j].rect.top + 26 + PORT_SIZE / 2, pointer.x, pointer.y
+					actual_obj.obj.top + actual_obj.ports[j].rect.top + 26 + PORT_SIZE / 2, pointer.x, pointer.y
 					];
 					last_object_port_nb = j;
 				}
@@ -602,7 +439,6 @@ canvas.on('mouse:down', function (o) {
 });
 
 canvas.on('mouse:move', function (o) {
-	//if (!isDown) return;
 	var pointer = canvas.getPointer(o.e);
 
 	for (var i = 0; i < tab_workstation.length; i++) {
@@ -704,10 +540,6 @@ function displayArrayObjects(WorkStation) {
 		if (check != null) {
 			if (check.checked)
 				tab_workstation[i].checked = true;
-			/*
-			else
-			tab_workstation[i].checked = false;
-			*/
 		}
 
 	}
@@ -715,7 +547,6 @@ function displayArrayObjects(WorkStation) {
 	document.getElementById("message").innerHTML = text;
 }
 
-///////test
 // variable to hold how many frames have elapsed in the animation
 
 function send_request_2(portOriginal, postIdOriginal, tabVect, workstationType, workstationId, port_1_left, port_1_top, port_2_left, port_2_top, request_size, target) {
@@ -797,7 +628,7 @@ function send_request_2(portOriginal, postIdOriginal, tabVect, workstationType, 
 	}, 2 * fps * points.length);
 }
 
-// calc waypoints traveling along vertices
+// calculate waypoints traveling along vertices
 function calcWaypoints(vertices) {
 	var waypoints = [];
 	var pt0 = vertices[0];
