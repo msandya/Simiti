@@ -1,4 +1,3 @@
-
 import {fabric} from 'fabric'
 import simu from '../services/VariaG.js';
 
