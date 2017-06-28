@@ -4323,12 +4323,12 @@
   },
   "libraries": {
     "Dapper/1.50.2": {
-      "sha512": "31Ju5VGyNNc66OAsw+SCp1TWPBuyw8ZBdkMG5pSUPChZcy27s2GhVz5B9INP4f25mPqfiJ+mfeHy9JAJyyT+LQ==",
+      "sha512": "PhxIV8TI/5aYdLT4epuIZB+Evf0sv9gcQDpFGa04fSKDfNQIChRq0sKUgQbfpFWbuDW/UDDuiL3Grkhp/cvYrA==",
       "type": "package",
       "path": "dapper/1.50.2",
       "files": [
-        "dapper.1.50.2.nupkg.sha512",
-        "dapper.nuspec",
+        "Dapper.1.50.2.nupkg.sha512",
+        "Dapper.nuspec",
         "lib/net40/Dapper.dll",
         "lib/net40/Dapper.xml",
         "lib/net45/Dapper.dll",
@@ -11106,15 +11106,15 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Vu Tuan Trung\\.nuget\\packages\\": {}
+    "C:\\Users\\sandy\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Vu Tuan Trung\\Documents\\Visual Studio 2017\\Projects\\PI S4\\Simiti\\ITI.Simiti.WebApp\\ITI.Simiti.WebApp.csproj",
+      "projectUniqueName": "C:\\Users\\sandy\\Documents\\PI\\Simiti\\Simiti\\Simiti\\ITI.Simiti.WebApp\\ITI.Simiti.WebApp.csproj",
       "projectName": "ITI.Simiti.WebApp",
-      "projectPath": "C:\\Users\\Vu Tuan Trung\\Documents\\Visual Studio 2017\\Projects\\PI S4\\Simiti\\ITI.Simiti.WebApp\\ITI.Simiti.WebApp.csproj",
-      "outputPath": "C:\\Users\\Vu Tuan Trung\\Documents\\Visual Studio 2017\\Projects\\PI S4\\Simiti\\ITI.Simiti.WebApp\\obj\\",
+      "projectPath": "C:\\Users\\sandy\\Documents\\PI\\Simiti\\Simiti\\Simiti\\ITI.Simiti.WebApp\\ITI.Simiti.WebApp.csproj",
+      "outputPath": "C:\\Users\\sandy\\Documents\\PI\\Simiti\\Simiti\\Simiti\\ITI.Simiti.WebApp\\obj\\",
       "projectStyle": "PackageReference",
       "originalTargetFrameworks": [
         "netcoreapp1.1"
@@ -11122,8 +11122,8 @@
       "frameworks": {
         "netcoreapp1.1": {
           "projectReferences": {
-            "C:\\Users\\Vu Tuan Trung\\Documents\\Visual Studio 2017\\Projects\\PI S4\\Simiti\\ITI.Simiti.DAL\\ITI.Simiti.DAL.csproj": {
-              "projectPath": "C:\\Users\\Vu Tuan Trung\\Documents\\Visual Studio 2017\\Projects\\PI S4\\Simiti\\ITI.Simiti.DAL\\ITI.Simiti.DAL.csproj"
+            "C:\\Users\\sandy\\Documents\\PI\\Simiti\\Simiti\\Simiti\\ITI.Simiti.DAL\\ITI.Simiti.DAL.csproj": {
+              "projectPath": "C:\\Users\\sandy\\Documents\\PI\\Simiti\\Simiti\\Simiti\\ITI.Simiti.DAL\\ITI.Simiti.DAL.csproj"
             }
           }
         }

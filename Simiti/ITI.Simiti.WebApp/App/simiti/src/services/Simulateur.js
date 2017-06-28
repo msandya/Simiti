@@ -1,0 +1,620 @@
+
+import {fabric} from 'fabric'
+import simu from '../services/VariaG.js';
+
+
+export default {
+	init()
+	{
+		this.canvas = new fabric.Canvas('c', {
+	selection: false
+});
+		/*
+		var rect = new fabric.Rect({
+			left: 400,
+			top: 400,
+			fill:simu.color_1,
+			width: 40,
+			height: 40,
+			angle: 90
+		});
+
+		this.this.canvas = new fabric.this.canvas('c');
+		this.this.canvas.add(rect);
+		this.this.canvas.renderAll();
+*/
+/*
+	create_button('src/components/img/mousepointerbutton_clicked.png', 10, 10, false);
+	create_button('../img/cablebutton_clicked.png', 120, 10, false);
+	create_button('../img/postbutton_clicked.png', 230, 10, false);
+	create_button('../img/switchbutton_clicked.png', 340, 10, false);
+	create_button('../img/hubbutton_clicked.png', 450, 10, false);
+
+	create_button('../img/mousepointerbutton.png', 10, 10, true);
+	create_button('../img/cablebutton.png', 120, 10, true);
+	create_button('../img/postbutton.png', 230, 10, true);
+	create_button('../img/switchbutton.png', 340, 10, true);
+	create_button('../img/hubbutton.png', 450, 10, true);
+	*/
+
+	//bring_front_buttons();
+		//popi();
+	}
+}
+function popi()
+{
+	alert("hi");
+
+}
+
+function create_button(image, x, y, normal_button) {
+	var button = new fabric.Image.fromURL(image, function (img) {
+		img.setWidth(100);
+		img.setHeight(50);
+		img.left = x;
+		img.top = y;
+		img.selectable = false;
+		this.canvas.add(img);
+
+		if (normal_button)
+			simu.buttons.push(img);
+		else
+			simu.buttons_selected.push(img);
+	});
+}
+
+function bring_front_buttons() {
+	for (var i = 0; i < simu.buttons.length; i++) {
+		this.canvas.bringToFront(simu.buttons[i]);
+	}
+}
+
+/*
+
+function check(o) {
+	if (o.which == 46) // 46 = suppr
+	{
+		var s = null;
+		if (this.canvas.getActiveObject() != null) {
+			for (var i = 0; s == null && i < tab_workstation.length; i++) {
+				if (this.canvas.getActiveObject() == tab_workstation[i].obj)
+					s = tab_workstation[i];
+			}
+			delete_workStation(s);
+		}
+
+		for (var i = 0; i < tab_cable.length; i++) {
+			if (tab_cable[i].object_1 != null && tab_cable[i].object_2 != null) {
+				if (this.canvas.getActiveObject() == tab_cable[i].object_1.obj || this.canvas.getActiveObject() == tab_cable[i].object_2.obj) {
+					delete_cable(tab_cable[i]);
+				}
+			}
+		}
+
+		var activeObject = this.canvas.getActiveObject(),
+			activeGroup = this.canvas.getActiveGroup();
+		if (activeObject) {
+			this.canvas.remove(activeObject);
+		} else if (activeGroup) {
+			var objectsInGroup = activeGroup.getObjects();
+			this.canvas.discardActiveGroup();
+			objectsInGroup.forEach(function (object) {
+				this.canvas.remove(object);
+			});
+		}
+	} else if (o.which == 13) // 13 = enter
+	{
+		simulation();
+	} else if (o.which == 67) // 67 = c 
+	{
+
+		for (var i = 0; i < tab_workstation.length; i++) {
+			console.log("id: " + tab_workstation[i].id + " checked:" + tab_workstation[i].checked);
+		}
+		t = 1;
+		send_request_2(200, 200, 600, 500);
+		ctx.clearRect(200, 200, 10, 10);
+		console.log("End.");
+
+	} else if (o.which == 65) // 65 = a
+	{
+		create_port(tab_workstation[0].ports.length, tab_workstation[0], tab_workstation[0].obj.left + 4 + tab_workstation[0].ports.length * (PORT_SIZE + 3));
+		if (tab_workstation[0].ports.length > 3) {
+			var aux = tab_workstation[0].obj.getObjects();
+			aux[0].set({
+				width: 50 + (tab_workstation[0].ports.length - 3) * (PORT_SIZE + 3)
+			});
+			aux[0].set({
+				strokeWidth: 2
+			});
+			aux[0].set({
+				strokeWidth: 1
+			});
+		}
+	} else if (o.which == 32) // 32 = space
+	{
+		o.preventDefault();
+		var s = null;
+		if (this.canvas.getActiveObject() != null) {
+			for (var i = 0; s == null && i < tab_workstation.length; i++) {
+				if (this.canvas.getActiveObject() == tab_workstation[i].obj)
+					s = tab_workstation[i];
+			}
+		} else
+			s = tab_workstation[0];
+
+		var options = document.createElement("div");
+		options.className = "options";
+		options.style = "left: " + s.obj.left + "px; top: " + s.obj.top + "px;";
+		document.body.appendChild(options);
+
+		var broad = document.createElement("button");
+		broad.className = "btn btn-primary btn-xs";
+		broad.innerHTML = "Broadcast";
+		broad.addEventListener("click", broadcast);
+		options.appendChild(broad);
+
+		var uni = document.createElement("button");
+		uni.className = "btn btn-primary btn-xs";
+		uni.innerHTML = "Unicast";
+		uni.addEventListener("click", unicast);
+		options.appendChild(uni);
+
+		if (trame_type == 3) {
+			br = document.createElement("br");
+			options.appendChild(br);
+			var input = document.createElement("input");
+			input.type = "text";
+			input.placeholder = "Taille de la trame";
+			input.id = "trameSize";
+			options.appendChild(input);
+		}
+
+		function broadcast() {
+			var tram_size = null;
+			if (document.getElementById("trameSize") != null && document.getElementById("trameSize") != '') {
+				alert(document.getElementById("trameSize").value);
+				tram_size = document.getElementById("trameSize").value;
+			}
+			simulate(s, null, tram_size);
+			options.remove();
+		}
+
+		function unicast() {
+			var tram_size = null;
+			var targetid = prompt("Select target id");
+			if (document.getElementById("trameSize") != null && document.getElementById("trameSize") != '') {
+				alert(document.getElementById("trameSize").value);
+				tram_size = document.getElementById("trameSize").value;
+			}
+			if (targetid != "") {
+				simulate(s, targetid, tram_size);
+			}
+			options.remove();
+		}
+
+	} else if (o.which == 65) // 65 = a
+	{
+		o.preventDefault();
+
+		var s = null;
+		if (this.canvas.getActiveObject() != null) {
+			for (var i = 0; s == null && i < tab_workstation.length; i++) {
+				if (this.canvas.getActiveObject() == tab_workstation[i].obj)
+					s = tab_workstation[i];
+			}
+		} else
+			s = tab_workstation[0];
+
+		document.getElementById("ipconfig").style.display = "block";
+		document.getElementById("mavar2").value = s.ip;
+		document.getElementById("mavar3").value = s.masque;
+
+		function saveip() {
+			s.ip = document.getElementById("mavar2").value;
+			s.masque = document.getElementById("mavar3").value;
+			document.getElementById("saveip").removeEventListener("click", saveip);
+		}
+
+		document.getElementById("saveip").addEventListener("click", saveip);
+	}
+}
+
+this.canvas.on('selection:created', function (o) {
+	o.target.set({
+		lockScalingX: true,
+		lockScalingY: true,
+		hasControls: false
+	});
+});
+
+this.canvas.on('mouse:down', function (o) {
+	isDown = true;
+	var pointer = this.canvas.getPointer(o.e);
+	var points = [pointer.x, pointer.y, pointer.x, pointer.y];
+
+	if (pointer.x >= 10 && pointer.x <= 110 && pointer.y <= 60 && pointer.y >= 10) {
+		bring_front_buttons();
+		for (var i = 0; i < simu.buttons_selected.length; i++) {
+			if (simu.buttons_selected[i].left == 10)
+				this.canvas.bringToFront(buttons_selected[i]);
+		}
+		selected = 0;
+		this.canvas.selection = false;
+	} else if (pointer.x >= 120 && pointer.x <= 220 && pointer.y <= 60 && pointer.y >= 10) {
+		bring_front_buttons();
+		for (var i = 0; i < simu.buttons_selected.length; i++) {
+			if (buttons_selected[i].left == 120)
+				this.canvas.bringToFront(buttons_selected[i]);
+		}
+		selected = 1;
+		this.canvas.selection = false;
+	} else if (pointer.x >= 230 && pointer.x <= 330 && pointer.y <= 60 && pointer.y >= 10) {
+		bring_front_buttons();
+		for (var i = 0; i < buttons_selected.length; i++) {
+			if (buttons_selected[i].left == 230)
+				this.canvas.bringToFront(buttons_selected[i]);
+		}
+		selected = 2;
+		this.canvas.selection = false;
+	} else if (pointer.x >= 340 && pointer.x <= 440 && pointer.y <= 60 && pointer.y >= 10) {
+		bring_front_buttons();
+		for (var i = 0; i < buttons_selected.length; i++) {
+			if (buttons_selected[i].left == 340)
+				this.canvas.bringToFront(buttons_selected[i]);
+		}
+		selected = 3;
+		this.canvas.selection = false;
+	} else if (pointer.x >= 450 && pointer.x <= 550 && pointer.y <= 60 && pointer.y >= 10) {
+		bring_front_buttons();
+		for (var i = 0; i < buttons_selected.length; i++) {
+			if (buttons_selected[i].left == 450)
+				this.canvas.bringToFront(buttons_selected[i]);
+		}
+		selected = 4;
+		this.canvas.selection = false;
+	} else if (selected == 0) {
+		var pointer = this.canvas.getPointer(o.e);
+
+		for (var i = 0; i < tab_workstation.length; i++) {
+			for (var j = 0; j < tab_workstation[i].ports.length; j++) {
+				if (is_inside(pointer.x, pointer.y, tab_workstation[i].ports[j], tab_workstation[i])) {
+					tab_workstation[i].ports[j].type = (tab_workstation[i].ports[j].type + 1) % 3;
+
+					if (tab_workstation[i].ports[j].used) {
+						for (var cab = 0; cab < tab_cable.length; cab++) {
+							if (tab_cable[cab].object_1 == tab_workstation[i]) {
+								if (j == tab_cable[cab].obj_1_port_nb) {
+									tab_cable[cab].type = tab_workstation[i].ports[j].type;
+									tab_cable[cab].object_2.ports[tab_cable[cab].obj_2_port_nb].type = tab_workstation[i].ports[j].type;
+									apply_color(tab_cable[cab].l, tab_cable[cab].type, true);
+									apply_color(tab_cable[cab].object_2.ports[tab_cable[cab].obj_2_port_nb].rect, tab_cable[cab].type, false);
+									apply_color(tab_cable[cab].object_1.ports[tab_cable[cab].obj_1_port_nb].rect, tab_cable[cab].type, false);
+								}
+							}
+							if (tab_cable[cab].object_2 == tab_workstation[i]) {
+								if (j == tab_cable[cab].obj_2_port_nb) {
+									tab_cable[cab].type = tab_workstation[i].ports[j].type;
+									tab_cable[cab].object_1.ports[tab_cable[cab].obj_1_port_nb].type = tab_workstation[i].ports[j].type;
+									apply_color(tab_cable[cab].l, tab_cable[cab].type, true);
+									apply_color(tab_cable[cab].object_2.ports[tab_cable[cab].obj_2_port_nb].rect, tab_cable[cab].type, false);
+									apply_color(tab_cable[cab].object_1.ports[tab_cable[cab].obj_1_port_nb].rect, tab_cable[cab].type, false);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	} else if (selected == 1) {
+		if (line_creation == 0 && this.canvas.getActiveObject() != null) {
+			var actual_obj = null;
+			var points_line;
+
+			for (var i = 0; actual_obj == null && i < tab_workstation.length; i++) {
+				if (this.canvas.getActiveObject() == tab_workstation[i].obj) {
+					actual_obj = tab_workstation[i];
+				}
+			}
+
+			for (var j = 0; j < actual_obj.ports.length; j++) {
+				if (is_inside(pointer.x, pointer.y, actual_obj.ports[j], actual_obj)) {
+					if (actual_obj.ports[j].used) {
+						for (var cab = 0; cab < tab_cable.length; cab++) {
+							if (tab_cable[cab].object_1 == actual_obj && tab_cable[cab].obj_1_port_nb == j) {
+								actual_obj = tab_cable[cab].object_2;
+								j = tab_cable[cab].obj_2_port_nb;
+								delete_cable(tab_cable[cab]);
+							} else if (tab_cable[cab].object_2 == actual_obj && tab_cable[cab].obj_2_port_nb == j) {
+								actual_obj = tab_cable[cab].object_1;
+								j = tab_cable[cab].obj_1_port_nb;
+								delete_cable(tab_cable[cab]);
+							}
+						}
+					}
+
+					var aux = 26;
+					if (actual_obj.ports.length > 3)
+						aux = ((50 + ((actual_obj.ports.length - 3) * (PORT_SIZE + 3))) / 2) + 1;
+
+					points_line = [actual_obj.obj.left + actual_obj.ports[j].rect.left + aux + PORT_SIZE / 2,
+					actual_obj.obj.top + actual_obj.ports[j].rect.top + 26 + PORT_SIZE / 2, pointer.x, pointer.y
+					];
+					last_object_port_nb = j;
+				}
+			}
+
+			if (points_line != null) {
+				line = new fabric.Line(points_line, {
+					strokeWidth: 1,
+					fill: 'black',
+					originX: 'center',
+					originY: 'center',
+					selectable: false
+				});
+
+				apply_color(line, actual_obj.ports[last_object_port_nb].type, true); // true if it's for line
+
+				this.canvas.add(line);
+				line_creation = 1;
+				last_object = actual_obj;
+			}
+		} else if (line_creation == 1) {
+			line_creation = 0;
+			if (this.canvas.getActiveObject() != null) {
+				var matched = false;
+				var actual_obj;
+				var object_port_nb;
+
+				for (var i = 0; i < tab_workstation.length; i++) {
+					if (this.canvas.getActiveObject() == tab_workstation[i].obj) {
+						actual_obj = tab_workstation[i];
+					}
+				}
+
+				for (var j = 0; !matched && j < actual_obj.ports.length; j++) {
+					if (is_inside(pointer.x, pointer.y, actual_obj.ports[j], actual_obj)) {
+						var aux = 26;
+						if (actual_obj.ports.length > 3) {
+							aux = ((50 + ((actual_obj.ports.length - 3) * (PORT_SIZE + 3))) / 2) + 1;
+						}
+
+						line.set({
+							x2: actual_obj.obj.left + actual_obj.ports[j].rect.left + aux + PORT_SIZE / 2,
+							y2: actual_obj.obj.top + actual_obj.ports[j].rect.top + 26 + PORT_SIZE / 2
+						});
+						object_port_nb = j;
+						matched = true;
+					}
+				}
+
+				if (matched) {
+					create_cable(line, last_object, actual_obj, last_object_port_nb, object_port_nb, last_object.ports[last_object_port_nb].type);
+					actual_obj.ports[object_port_nb].type = last_object.ports[last_object_port_nb].type;
+				} else
+					line.remove();
+			} else {
+				line.remove();
+			}
+		}
+	} else if (selected == 2) {
+		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 1, false, "post");
+		nb_workstation++;
+	} else if (selected == 3) {
+		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, "hub");
+		nb_workstation++;
+	} else if (selected == 4) {
+		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 6, false, "switch");
+		nb_workstation++;
+	}
+	this.canvas.renderAll();
+});
+
+this.canvas.on('mouse:move', function (o) {
+	var pointer = this.canvas.getPointer(o.e);
+
+	for (var i = 0; i < tab_workstation.length; i++) {
+		for (var j = 0; j < tab_workstation[i].ports.length; j++) {
+			if (is_inside(pointer.x, pointer.y, tab_workstation[i].ports[j], tab_workstation[i]) || tab_workstation[i].ports[j].used) {
+				switch (tab_workstation[i].ports[j].type) {
+					case 0:
+						tab_workstation[i].ports[j].rect.set({
+							fill: color_0
+						});
+						break;
+					case 1:
+						tab_workstation[i].ports[j].rect.set({
+							fill: color_1
+						});
+						break;
+					default:
+						tab_workstation[i].ports[j].rect.set({
+							fill: color_2
+						});
+						break;
+				}
+			} else {
+				tab_workstation[i].ports[j].rect.set({
+					fill: 'white'
+				});
+			}
+		}
+	}
+
+	if (selected == 1 && this.canvas.getActiveObject() != null && line_creation == 1) {
+		line.set({
+			x2: pointer.x,
+			y2: pointer.y
+		});
+	}
+
+	for (var i = 0; i < tab_cable.length; i++) {
+		if (tab_cable[i].object_1 != null) {
+			var aux1 = 26;
+			if (tab_cable[i].object_1.ports.length > 3)
+				aux1 = ((50 + ((tab_cable[i].object_1.ports.length - 3) * (PORT_SIZE + 3))) / 2) + 1;
+			var aux2 = 26
+			if (tab_cable[i].object_2.ports.length > 3)
+				aux2 = ((50 + ((tab_cable[i].object_2.ports.length - 3) * (PORT_SIZE + 3))) / 2) + 1;
+
+			tab_cable[i].l.set({
+				x1: tab_cable[i].object_1.obj.left + tab_cable[i].object_1.ports[tab_cable[i].obj_1_port_nb].rect.left + aux1 + PORT_SIZE / 2,
+				y1: tab_cable[i].object_1.obj.top + tab_cable[i].object_1.ports[tab_cable[i].obj_1_port_nb].rect.top + 26 + PORT_SIZE / 2,
+				x2: tab_cable[i].object_2.obj.left + tab_cable[i].object_2.ports[tab_cable[i].obj_2_port_nb].rect.left + aux2 + PORT_SIZE / 2,
+				y2: tab_cable[i].object_2.obj.top + tab_cable[i].object_2.ports[tab_cable[i].obj_2_port_nb].rect.top + 26 + PORT_SIZE / 2
+			});
+
+			apply_color(tab_cable[i].l, tab_cable[i].type, true); // true if it's for line
+		}
+	}
+
+	var WorkStation = [];
+	for (var j = 0; j < tab_workstation.length; j++) {
+		var aux = {
+			id: tab_workstation[j].id,
+			type: tab_workstation[j].type
+		};
+		WorkStation.push(aux);
+	}
+	displayArrayObjects(WorkStation);
+
+	if (!is_sending_package) {
+		this.canvas.renderAll();
+	}
+});
+
+this.canvas.on('mouse:up', function (o) {
+	isDown = false;
+});
+
+function displayArrayObjects(WorkStation) {
+	var len = WorkStation.length,
+		text = "";
+
+	for (var i = 0; i < len; i++) {
+		var myObject = WorkStation[i];
+
+		for (var x in myObject) {
+			text += (x + ": " + myObject[x] + " ");
+		}
+
+		if (tab_workstation[i].checked == true) {
+			var checkbox = '<input type="checkbox" id="' + WorkStation[i].id + '"checked/>';
+		} else
+			var checkbox = '<input type="checkbox" id="' + WorkStation[i].id + '"/>';
+
+
+		text += checkbox + "<br/>";
+
+
+		var check = document.getElementById(WorkStation[i].id);
+
+		if (check != null) {
+			if (check.checked)
+				tab_workstation[i].checked = true;
+		}
+
+	}
+
+	document.getElementById("message").innerHTML = text;
+}
+// variable to hold how many frames have elapsed in the animation
+
+function send_request_2(portOriginal, postIdOriginal, tabVect, workstationType, workstationId, port_1_left, port_1_top, port_2_left, port_2_top, request_size, target) {
+	var vertices = [];
+	var fps = 17;
+	var count1 = 0;
+	var count2 = 0;
+
+	var originX = port_1_left + PORT_SIZE / 2 - 1;
+	var originY = port_1_top + PORT_SIZE / 2 - 1;
+
+	vertices.push({
+		x: originX,
+		y: originY
+	});
+	vertices.push({
+		x: port_2_left + PORT_SIZE / 2 - 1,
+		y: port_2_top + PORT_SIZE / 2 - 1
+	});
+
+	var points = calcWaypoints(vertices);
+
+	//Create Line
+	var line = new fabric.Line([originX, originY, originX, originY], {
+		stroke: 'blue',
+		strokeWidth: 3,
+		hasControls: false,
+	});
+	this.canvas.add(line);
+
+	//First parcour
+	function draw() {
+		if (count1 < points.length) {
+			requestAnimationFrame(draw);
+			line.set({
+				x1: points[count1].x,
+				y1: points[count1].y
+			});
+		};
+		this.canvas.renderAll();
+		count1++;
+	}
+	draw();
+
+	//Second Parcour
+	setTimeout(function () {
+		function draw() {
+			if (count2 < points.length) {
+				requestAnimationFrame(draw);
+				line.set({
+					x2: points[count2].x,
+					y2: points[count2].y
+				});
+			};
+			this.canvas.renderAll();
+			count2++;
+		}
+		draw();
+	}, fps * points.length);
+
+	count1 = 0;
+	count2 = 0;
+
+	setTimeout(function () {
+		for (var i = 0; i < tab_workstation.length; i++) {
+			if (tab_workstation[i].id == workstationId) {
+				station_progress(
+					tab_workstation[i].checked,
+					portOriginal,
+					postIdOriginal,
+					tabVect,
+					workstationType,
+					workstationId,
+					port_2_top, port_2_left,
+					request_size,
+					target);
+			}
+		}
+	}, 2 * fps * points.length);
+}
+
+// calculate waypoints traveling along vertices
+function calcWaypoints(vertices) {
+	var waypoints = [];
+	var pt0 = vertices[0];
+	var pt1 = vertices[1];
+
+	var dx = pt1.x - pt0.x;
+	var dy = pt1.y - pt0.y;
+	for (var j = 0; j < 100; j++) {
+		var x = pt0.x + dx * j / 100;
+		var y = pt0.y + dy * j / 100;
+		waypoints.push({
+			x: x,
+			y: y
+		});
+	}
+	return (waypoints);
+}
+*/

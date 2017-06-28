@@ -1,6 +1,8 @@
 import 'babel-polyfill'
 import $ from 'jquery'
 import 'bootstrap/dist/js/bootstrap'
+import Fabric from 'fabric'
+
 import Vue from 'vue'
 import store from './vuex/store'
 import VueRouter from 'vue-router'
@@ -13,6 +15,11 @@ import Register from './components/Register.vue'
 
 import User from './components/User/User.vue'
 import UserModificationMP from './components/User/UserEditPassword.vue'
+import QuiSommesNous from './components/QuiSommesNous.vue'
+
+
+import Simi from './components/Simulateur.vue'
+
 
 /*import ClassList from './components/classes/ClassList.vue'
 import ClassEdit from './components/classes/ClassEdit.vue'
@@ -72,6 +79,9 @@ const router = new VueRouter({
 
     { path: '/users/:emailUser', component: User, beforeEnter: requireAuth },
     { path: '/users/users/modiMP', component: UserModificationMP, beforeEnter: requireAuth },
+    { path: '/quisommesnous', component: QuiSommesNous },
+    { path: '/simulateur', component: Simi },
+
 
     //{ path: '/users/inscription', component: UserInscription, beforeEnter: requireAuth}
 

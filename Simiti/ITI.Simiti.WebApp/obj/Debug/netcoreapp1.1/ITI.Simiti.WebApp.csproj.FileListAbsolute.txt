@@ -9,3 +9,14 @@ C:\Users\Vu Tuan Trung\Documents\Visual Studio 2017\Projects\PI S4\Simiti\ITI.Si
 C:\Users\Vu Tuan Trung\Documents\Visual Studio 2017\Projects\PI S4\Simiti\ITI.Simiti.WebApp\obj\Debug\netcoreapp1.1\ITI.Simiti.WebApp.AssemblyInfo.cs
 C:\Users\Vu Tuan Trung\Documents\Visual Studio 2017\Projects\PI S4\Simiti\ITI.Simiti.WebApp\obj\Debug\netcoreapp1.1\ITI.Simiti.WebApp.dll
 C:\Users\Vu Tuan Trung\Documents\Visual Studio 2017\Projects\PI S4\Simiti\ITI.Simiti.WebApp\obj\Debug\netcoreapp1.1\ITI.Simiti.WebApp.pdb
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.WebApp\bin\Debug\netcoreapp1.1\ITI.Simiti.WebApp.deps.json
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.WebApp\bin\Debug\netcoreapp1.1\ITI.Simiti.WebApp.runtimeconfig.json
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.WebApp\bin\Debug\netcoreapp1.1\ITI.Simiti.WebApp.runtimeconfig.dev.json
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.WebApp\bin\Debug\netcoreapp1.1\ITI.Simiti.WebApp.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.WebApp\bin\Debug\netcoreapp1.1\ITI.Simiti.WebApp.pdb
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.WebApp\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.WebApp\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.pdb
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.WebApp\obj\Debug\netcoreapp1.1\ITI.Simiti.WebApp.csprojResolveAssemblyReference.cache
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.WebApp\obj\Debug\netcoreapp1.1\ITI.Simiti.WebApp.AssemblyInfo.cs
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.WebApp\obj\Debug\netcoreapp1.1\ITI.Simiti.WebApp.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.WebApp\obj\Debug\netcoreapp1.1\ITI.Simiti.WebApp.pdb

@@ -4,10 +4,12 @@
             <div class="container-fluid">
               <!-- Brand and toggle get grouped for better mobile display -->
                       <div class="navbar-header">
-                              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#iti-navbar-collapse" aria-expanded="false">
+                                               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#iti-navbar-collapse" aria-expanded="false">
                                   <span class="icon-bar"></span>
                               </button>
-                              <router-link class="navbar-brand" to="/">Simiti</router-link>
+                              <router-link class="navbar-brand" to="/"><img src="../img/LogoPI.png" style="width:50px"></img></router-link>
+                              <router-link class="navbar-brand" to="/Quisommesnous">Qui sommes-nous ?</router-link>
+                              <router-link class="navbar-brand" to="/simulateur">Simi</router-link>
                       </div>
 
               <!-- Collect the nav links, forms, and other content for toggling -->
