@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<h1 v-on="click: onClick"> POPOPOOOOOOOO </h1>
 
 		<div class="legend">
 			<img src="../img/sample_black.png" /> Paires torsadées droites<br />
@@ -16,7 +15,7 @@
 
 <script>
 import Vue from 'vue'
-import jquery from '../services/jQuery'
+import jquery from 'jQuery'
 //import {fabric} from 'fabric'
 import api from '../services/simulateur.js'
 
