@@ -23,19 +23,16 @@ function create_line(obj1, obj2, nb_obj1_port, nb_obj2_port, type) {
             selectable: false
         });
 
-        apply_color(line, obj1.ports[nb_obj1_port].type, true); // true if it's for line
-        //apply_color(obj1.ports[nb_obj1_port].rect, type, false); // true if it's for line
+        apply_color(line, obj1.ports[nb_obj1_port].type, true);
         obj1.ports[nb_obj1_port].type = type;
-        //apply_color(obj2.ports[nb_obj2_port].rect, type, false); // true if it's for line
         obj2.ports[nb_obj2_port].type = type;
-        console.log(type);
 
         canvas.add(line);
         return line;
     }
 }
 
-function load_all_cables(tab) {
+function load_all_cables(tab, index) {
     var i = 0;
     while (i <= tab.length) {
         if (tab[i] == "<") {
@@ -76,18 +73,10 @@ function load_all_cables(tab) {
             var line = create_line(obj1, obj2, nb_obj1_port, nb_obj2_port, Number(type));
 
             create_cable(line, obj1, obj2, nb_obj1_port, nb_obj2_port, Number(type));
-
-            /*console.log(type);
-            console.log(obj1_id);
-            console.log(obj2_id);
-            console.log(nb_obj1_port);
-            console.log(nb_obj2_port);*/
         }
         i++;
     }
 }
-
-
 
 function load_all_workstations(tab) {
     var i = 0;
@@ -137,4 +126,33 @@ function load_all_workstations(tab) {
         }
         i++;
     }
+}
+
+function load(savedData) {
+    var j = 0;
+    var index = 0;
+    var cables = '';
+    var workstations = '';
+
+    while (j < savedData.length) {
+        if (savedData[j] == 'w') {
+            index = j;
+        }
+        j++;
+    }
+
+    for (var i = 0; i < index; i++) {
+        cables += savedData[i];
+    }
+
+    for (var i = index; i < savedData.length; i++) {
+        workstations += savedData[i];
+    }
+
+    console.log(workstations);
+    console.log(cables);
+
+    load_all_workstations(workstations);
+    load_all_cables(cables);
+
 }

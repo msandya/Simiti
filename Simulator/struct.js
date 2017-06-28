@@ -96,7 +96,7 @@ function create_name(obj) {
 }
 
 //Create a Workstation
-function create_work_station(id, x, y, nb_port, package_received, type) {
+function create_work_station(id, x, y, nb_port, type) {
 	//Create a big rectangle outside
 	big_rect = new fabric.Rect({
 		width: 50,
@@ -138,7 +138,6 @@ function create_work_station(id, x, y, nb_port, package_received, type) {
 		'obj': station,
 		'nb_port': nb_port,
 		'ports': [],
-		'package_received': package_received,
 		'type': type,
 		'TTL': [],
 		'ip': '',

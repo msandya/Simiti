@@ -1,7 +1,5 @@
 function save_all_workstations(tabWorkstation) {
-	if (tab_workstation_saved.charAt[0] != '') {
-		tab_workstation_saved = "";
-	}
+	var tab_workstation_saved = '';
 	var new_workstation;
 	var type;
 	for (var i = 0; i < tabWorkstation.length; i++) {
@@ -26,13 +24,12 @@ function save_all_workstations(tabWorkstation) {
 			" >";
 		tab_workstation_saved += new_workstation;
 	}
+	tab_workstation_saved = "w" + tab_workstation_saved;
+	return tab_workstation_saved;
 }
 
 function save_all_cables(tabCable) {
-	if (tab_cable_saved.charAt[0] != '') {
-		tab_cable_saved = "";
-	}
-
+	var tab_cable_saved = '';
 	var new_cable;
 	var type;
 	for (var i = 0; i < tabCable.length; i++) {
@@ -45,4 +42,13 @@ function save_all_cables(tabCable) {
 			" >";
 		tab_cable_saved += new_cable;
 	}
+	tab_cable_saved = "c" + tab_cable_saved;
+	return tab_cable_saved;
+}
+
+function save(tabWorkstation, tabCable){
+	var cables = save_all_cables(tabCable);
+	var workstations = save_all_workstations(tabWorkstation);
+	var save_data = cables + workstations;
+	return save_data;
 }

@@ -36,6 +36,9 @@ var tab_cable = [];
 var last_object;
 var last_object_port_nb;
 var line_creation = 0;
+var save_cable = '';
+var save_workstation = '';
+var save_data = '';
 
 var is_sending_package = false;
 var color_0 = 'black';
@@ -135,15 +138,14 @@ function check(o) {
 		simulation();
 	} else if (o.which == 67) // 67 = c 
 	{
-
-		for (var i = 0; i < tab_workstation.length; i++) {
-			console.log("id: " + tab_workstation[i].id + " checked:" + tab_workstation[i].checked);
-		}
-		t = 1;
-		send_request_2(200, 200, 600, 500);
-		ctx.clearRect(200, 200, 10, 10);
-		console.log("End.");
-
+		/*save_data = save(tab_workstation, tab_cable);
+		console.log(save_data);*/
+		var test = "c< 1 0 1 5 0 >< 0 1 6 2 0 >< 0 1 5 3 0 >< 0 1 4 5 0 >< 0 0 3 0 0 >< 0 0 2 1 0 >w< 0 s 6 323 165 >< 1 s 6 516 284 >< 2 p 1 267 240 >< 3 p 1 282 94 >< 4 p 1 704 320 >< 5 p 1 574 400 >< 6 p 1 392 380 >";
+		load(test);
+		/*var exemple_ws = "w< 0 s 6 309 121 >< 1 s 6 408 286 >< 2 p 1 206 117 >< 3 p 1 228 204 >< 4 p 1 568 234 >< 5 p 1 493 411 >< 6 p 1 342 418 >";
+		var exemple_c = "c< 1 0 1 5 3 >< 0 1 4 5 0 >< 0 1 6 0 0 >< 0 1 5 2 0 >< 0 0 2 0 0 >< 0 0 3 2 0 >";
+		load_all_workstations(exemple_ws);
+		load_all_cables(exemple_c);*/
 	} else if (o.which == 65) // 65 = a
 	{
 		create_port(tab_workstation[0].ports.length, tab_workstation[0], tab_workstation[0].obj.left + 4 + tab_workstation[0].ports.length * (PORT_SIZE + 3));
@@ -366,7 +368,7 @@ canvas.on('mouse:down', function (o) {
 						aux = ((50 + ((actual_obj.ports.length - 3) * (PORT_SIZE + 3))) / 2) + 1;
 
 					points_line = [actual_obj.obj.left + actual_obj.ports[j].rect.left + aux + PORT_SIZE / 2,
-					actual_obj.obj.top + actual_obj.ports[j].rect.top + 26 + PORT_SIZE / 2, pointer.x, pointer.y
+						actual_obj.obj.top + actual_obj.ports[j].rect.top + 26 + PORT_SIZE / 2, pointer.x, pointer.y
 					];
 					last_object_port_nb = j;
 				}
@@ -426,13 +428,13 @@ canvas.on('mouse:down', function (o) {
 			}
 		}
 	} else if (selected == 2) {
-		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 1, false, "post");
+		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 1, "post");
 		nb_workstation++;
 	} else if (selected == 3) {
-		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, false, "hub");
+		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 3, "hub");
 		nb_workstation++;
 	} else if (selected == 4) {
-		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 6, false, "switch");
+		create_work_station(nb_workstation, pointer.x - 25, pointer.y - 25, 6, "switch");
 		nb_workstation++;
 	}
 	canvas.renderAll();
