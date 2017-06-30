@@ -106,9 +106,6 @@ export default {
 			top: 110px;
 		}
 
-				body {
-		}
-
 		.navbar-template {
 			padding: 40px 15px;
 		}
