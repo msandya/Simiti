@@ -42,7 +42,6 @@ class AuthService {
 
     get boundProviders() {
         var identity = this.identity;
-
         return identity ? identity.boundProviders : [];
     }
     
