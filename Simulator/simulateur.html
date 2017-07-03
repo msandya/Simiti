@@ -20,6 +20,7 @@
 	<script type="text/javascript" src="simulation.js"></script>
 	<script type="text/javascript" src="load.js"></script>
 	<script type="text/javascript" src="save.js"></script>
+	<script type="text/javascript" src="jscolor.js"></script>
 
 
 
@@ -113,10 +114,14 @@
 	</div>-->
 
 	<div id="config" class="config">
-		<input type="button" onclick="document.getElementById('config').style.display = 'none'" value="X" style="position: relative; float: right;"
-		/>
-		<input type="text" id="mavar" style="position: relative; right: -45%; top: 45%; " />
-		<input type="button" onclick="document.getElementById('config').style.display = 'none'; text = document.getElementById('mavar').value;"
+		<input type="button" onclick="document.getElementById('config').style.display = 'none'" value="X" style="position: relative; float: right;"/>
+		<input class="jscolor" value="000000" id="color0">
+		<input class="jscolor" value="FF0000" id="color1">
+		<input class="jscolor" value="008000" id="color2">
+		<input type="button" onclick="document.getElementById('config').style.display = 'none';
+									  color_0 = '#' + document.getElementById('color0').value;
+									  color_1 = '#' + document.getElementById('color1').value;
+									  color_2 = '#' + document.getElementById('color2').value;"
 		    value="Valider" style="position: relative; right: -36%; top: 95%;" />
 	</div>
 
