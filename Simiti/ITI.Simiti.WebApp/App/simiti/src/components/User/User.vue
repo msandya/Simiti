@@ -4,7 +4,7 @@
             <h1>Editer un user</h1>
         </div>
 
-        <form @submit="onSubmit($event)">
+        <form>
             <div class="alert alert-danger" v-if="errors.length > 0">
                 <b>Les champs suivants semblent invalides : </b>
                 <ul>
@@ -20,7 +20,7 @@
                 <input type="text" v-model="item.email" class="form-control">
             </div>
             <button type="button" @click="modifyPassword()" class="btn btn-primary">Modifier mot de passe</button>
-            <button type="submit" class="btn btn-primary">Sauvegarder</button>
+            <button type="button" @click="onSubmit()" class="btn btn-primary">Sauvegarder</button>
         </form>
     </div>
 </template>
@@ -68,8 +68,7 @@ export default {
                 AuthService.modifyPassword();
             },
 
-            async onSubmit(e) {
-                e.preventDefault();
+            async onSubmit() {
 
                 var errors = [];
 
@@ -84,7 +83,7 @@ export default {
                             AuthService.logout();
                             this.$router.replace('/');
                         }
-                    catch (error) {
+                    catch (error){
                         
                         this.notifyError(error);
                         

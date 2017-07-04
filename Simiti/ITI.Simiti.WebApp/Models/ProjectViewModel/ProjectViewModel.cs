@@ -9,6 +9,9 @@ namespace ITI.Simiti.WebApp.Models.ProjectViewModel
     {
         public string Name { get; set; }
 
+        public string Project { get; set; }
+
+
         public int UserId { get; set; }
     }
 }

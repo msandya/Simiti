@@ -69,9 +69,11 @@ namespace ITI.Simiti.WebApp.Services
         public User FindUserByEmail( string email )
         {
             User user = _userGateway.FindByEmail(email);
-            user.Password = _userGateway.FindUserPassword(user.UserId).Password;
             if (user != null)
+            {
+                user.Password = _userGateway.FindUserPassword(user.UserId).Password;
                 return user;
+            }
             return null;
         }
 
@@ -82,15 +84,23 @@ namespace ITI.Simiti.WebApp.Services
             return user;
         }
 
+        public User FindUserById(int userId)
+        {
+            User user = _userGateway.FindById(userId);
+            return user;
+        }
+
         public User FindUser(string email, string password)
         {
             User user = _userGateway.FindByEmail(email);
-            user.Password = _userGateway.FindUserPassword(user.UserId).Password;
+            if(user != null)
+            {
+                user.Password = _userGateway.FindUserPassword(user.UserId).Password;
+            }
             if (user != null && _passwordHasher.VerifyHashedPassword(user.Password, password) == PasswordVerificationResult.Success)
             {
                 return user;
             }
-
             return null;
         }
 

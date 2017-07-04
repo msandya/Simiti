@@ -19,11 +19,12 @@ namespace ITI.Simiti.WebApp.Controllers
             };
         }
 
-        public static ProjectViewModel ToProjectViewModel( this Project @this )
+        public static ProjectViewModel ToProjectViewModel( this TheProject @this )
         {
             return new ProjectViewModel
             {
                 Name = @this.Name,
+                Project = @this.Project,
                 UserId = @this.UserId
             };
         }

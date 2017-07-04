@@ -72,3 +72,40 @@ C:\Users\Vu Tuan Trung\Documents\Visual Studio 2017\Projects\PI S4\Simiti\ITI.Si
 C:\Users\Vu Tuan Trung\Documents\Visual Studio 2017\Projects\PI S4\Simiti\ITI.Simiti.DB\obj\Debug\net46\ITI.Simiti.DB.AssemblyInfo.cs
 C:\Users\Vu Tuan Trung\Documents\Visual Studio 2017\Projects\PI S4\Simiti\ITI.Simiti.DB\obj\Debug\net46\ITI.Simiti.DB.exe
 C:\Users\Vu Tuan Trung\Documents\Visual Studio 2017\Projects\PI S4\Simiti\ITI.Simiti.DB\obj\Debug\net46\ITI.Simiti.DB.pdb
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\ITI.Simiti.DB.runtimeconfig.json
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\ITI.Simiti.DB.runtimeconfig.dev.json
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\ITI.Simiti.DB.exe
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\ITI.Simiti.DB.pdb
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\DbUp.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\Microsoft.Extensions.Configuration.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\Microsoft.Extensions.Configuration.EnvironmentVariables.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\Microsoft.Extensions.Configuration.Json.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\Microsoft.Extensions.Primitives.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\Microsoft.Win32.Primitives.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\Newtonsoft.Json.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\System.AppContext.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\System.Console.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\System.Diagnostics.DiagnosticSource.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\System.Globalization.Calendars.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\System.IO.Compression.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\System.IO.Compression.ZipFile.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\System.IO.FileSystem.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\System.IO.FileSystem.Primitives.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\System.Net.Http.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\System.Net.Sockets.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\System.Security.Cryptography.Algorithms.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\System.Security.Cryptography.Encoding.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\System.Security.Cryptography.Primitives.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\System.Security.Cryptography.X509Certificates.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\bin\Debug\net46\System.Xml.ReaderWriter.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\obj\Debug\net46\ITI.Simiti.DB.csprojResolveAssemblyReference.cache
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\obj\Debug\net46\ITI.Simiti.DB.AssemblyInfo.cs
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\obj\Debug\net46\ITI.Simiti.DB.exe
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DB\obj\Debug\net46\ITI.Simiti.DB.pdb

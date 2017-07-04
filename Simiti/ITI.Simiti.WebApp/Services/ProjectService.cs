@@ -17,37 +17,59 @@ namespace ITI.Simiti.WebApp.Services
             _userGateway = userGateway;
         }
 
-        public Result<IEnumerable<Project>> GetAll()
+        public TheProject GetByProjectId(int projectId)
+        {
+            TheProject project = _projectGateway.FindById(projectId);
+            return project;
+        }
+
+        public TheProject GetByName(string name)
+        {
+            TheProject project = _projectGateway.FindByName(name);
+            return project;
+        }
+
+        public Result<TheProject> GetByNameNUserId(int userId, string name)
+        {
+            TheProject project = _projectGateway.FindByNameNUserId(userId, name);
+            if (!IsNameValid(name)) return Result.Failure<TheProject>(Status.BadRequest, "The name of project is not valid.");
+            if (project != null) return Result.Failure<TheProject>(Status.BadRequest, "This user created this project.");
+
+            return Result.Success(Status.Created, project);
+        }
+
+        public Result<TheProject> CreateProject(string name, string project, int userId)
+        {
+            if (!IsNameValid(name)) return Result.Failure<TheProject>(Status.BadRequest, "The name of project is not valid.");
+            if (!IsNameValid(project)) return Result.Failure<TheProject>(Status.BadRequest, "The project is not valid.");
+            if (_userGateway.FindById(userId) == null) return Result.Failure<TheProject>(Status.NotFound, "The user not exist.");
+            if (_projectGateway.FindByNameNUserId(userId, name) != null) return Result.Failure<TheProject>(Status.BadRequest, "This project existed.");
+
+            _projectGateway.Create(name, project, userId);
+            TheProject projectTesting = _projectGateway.FindByNameNUserId(userId, name);
+            return Result.Success(Status.Ok, projectTesting);
+        }
+
+        public Result<IEnumerable<TheProject>> GetAll()
         {
             return Result.Success(Status.Ok, _projectGateway.GetAll());
         }
 
-        public Result<Project> CreateProject( string name, string pathProject, int userId )
+        public Result<TheProject> UpdateProject( int userId, int projectId, string name, string pathProject )
         {
-            if (!IsNameValid(name)) return Result.Failure<Project>(Status.BadRequest, "The name of project is not valid.");
-            if (!IsPathProjectValid(pathProject)) return Result.Failure<Project>(Status.BadRequest, "The path of project is not valid.");
-            if (_projectGateway.FindByName(name) != null && _userGateway.FindById(userId) != null ) return Result.Failure<Project>(Status.BadRequest, "This project exist with its owner.");
-
-            _projectGateway.Create(name, pathProject, userId);
-            Project project = _projectGateway.FindByName(name);
-            return Result.Success(Status.Created, project);
-        }
-
-        public Result<Project> UpdateProject( int userId, int projectId, string name, string pathProject )
-        {
-            if (!IsNameValid(name)) return Result.Failure<Project>(Status.BadRequest, "The name of project is not valid.");
-            if (!IsPathProjectValid(pathProject)) return Result.Failure<Project>(Status.BadRequest, "The path of project is not valid.");
-            if (_projectGateway.FindById(projectId) == null) return Result.Failure<Project>(Status.NotFound, "This project does not exist.");
-            if (_userGateway.FindUserByProjectIdAndName(name, projectId) != null) return Result.Failure<Project>(Status.BadRequest, "This project exist with its owner.");
+            if (!IsNameValid(name)) return Result.Failure<TheProject>(Status.BadRequest, "The name of project is not valid.");
+            if (!IsPathProjectValid(pathProject)) return Result.Failure<TheProject>(Status.BadRequest, "The path of project is not valid.");
+            if (_projectGateway.FindById(projectId) == null) return Result.Failure<TheProject>(Status.NotFound, "This project does not exist.");
+            if (_userGateway.FindUserByProjectIdAndName(name, projectId) != null) return Result.Failure<TheProject>(Status.BadRequest, "This project exist with its owner.");
 
             _projectGateway.Update(projectId, name, pathProject);
-            Project project = _projectGateway.FindById(projectId);
+            TheProject project = _projectGateway.FindById(projectId);
             return Result.Success(Status.Ok, project);
         }
 
-        public Result<Project> GetById( int projectId )
+        public Result<TheProject> GetById( int projectId )
         {
-            if ((_projectGateway.FindById(projectId)) == null) return Result.Failure<Project>(Status.NotFound, "Project not found.");
+            if ((_projectGateway.FindById(projectId)) == null) return Result.Failure<TheProject>(Status.NotFound, "Project not found.");
             return Result.Success(Status.Ok, _projectGateway.FindById(projectId));
         }
 

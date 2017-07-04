@@ -16,11 +16,11 @@ namespace ITI.Simiti.DAL
             _connectionString = connectionString;
         }
 
-        public IEnumerable<Project> GetAll()
+        public IEnumerable<TheProject> GetAll()
         {
             using( SqlConnection con = new SqlConnection( _connectionString ))
             {
-                return con.Query<Project>(
+                return con.Query<TheProject>(
                     @"select p.ProjectId,
                              p.Name,
                              p.UserId
@@ -28,11 +28,11 @@ namespace ITI.Simiti.DAL
             }
         }
 
-        public Project FindById( int projectId )
+        public TheProject FindById( int projectId )
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
-                return con.Query<Project>(
+                return con.Query<TheProject>(
                     @"select p.ProjectId,
                              p.Name,
                              p.UserId
@@ -43,11 +43,11 @@ namespace ITI.Simiti.DAL
             }
         }
 
-        public Project FindByName( string name )
+        public TheProject FindByName( string name )
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
-                return con.Query<Project>(
+                return con.Query<TheProject>(
                     @"select p.ProjectId,
                              p.Name,
                              p.UserId
@@ -58,18 +58,34 @@ namespace ITI.Simiti.DAL
             }
         }
 
+        public TheProject FindByNameNUserId(int userId, string name)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<TheProject>(
+                    @"select p.ProjectId,
+                             p.Name,
+                             p.Project,
+                             p.UserId
+                          from iti.vProject p
+                          where Name = @Name and UserId = @UserId",
+                    new { Name = name, UserId = userId })
+                    .FirstOrDefault();
+            }
+        }
+
         public void Create( string name, int userId )
         {
             Create(name, userId);
         }
 
-        public void Create( string name, string pathProject, int userId )
+        public void Create( string name, string project, int userId )
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Execute(
                     "iti.sProjectCreate",
-                    new { Name = name, PathProject = pathProject, UserId = userId },
+                    new { Name = name, Project = project, UserId = userId },
                     commandType: System.Data.CommandType.StoredProcedure);
             }
         }

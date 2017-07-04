@@ -4294,15 +4294,15 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Vu Tuan Trung\\.nuget\\packages\\": {}
+    "C:\\Users\\sandy\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Vu Tuan Trung\\Documents\\RepoGit\\Simiti\\Simiti\\Simiti\\ITI.Simiti.DB\\ITI.Simiti.DB.csproj",
+      "projectUniqueName": "C:\\Users\\sandy\\Documents\\PI\\Simiti\\Simiti\\Simiti\\ITI.Simiti.DB\\ITI.Simiti.DB.csproj",
       "projectName": "ITI.Simiti.DB",
-      "projectPath": "C:\\Users\\Vu Tuan Trung\\Documents\\RepoGit\\Simiti\\Simiti\\Simiti\\ITI.Simiti.DB\\ITI.Simiti.DB.csproj",
-      "outputPath": "C:\\Users\\Vu Tuan Trung\\Documents\\RepoGit\\Simiti\\Simiti\\Simiti\\ITI.Simiti.DB\\obj\\",
+      "projectPath": "C:\\Users\\sandy\\Documents\\PI\\Simiti\\Simiti\\Simiti\\ITI.Simiti.DB\\ITI.Simiti.DB.csproj",
+      "outputPath": "C:\\Users\\sandy\\Documents\\PI\\Simiti\\Simiti\\Simiti\\ITI.Simiti.DB\\obj\\",
       "projectStyle": "PackageReference",
       "originalTargetFrameworks": [
         "net46"

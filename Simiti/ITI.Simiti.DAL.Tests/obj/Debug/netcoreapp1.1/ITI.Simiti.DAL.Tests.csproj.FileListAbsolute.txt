@@ -4,3 +4,14 @@ c:\users\sandy\documents\visual studio 2017\Projects\ITI.Simiti.DB\ITI.Simiti.DA
 c:\users\sandy\documents\visual studio 2017\Projects\ITI.Simiti.DB\ITI.Simiti.DAL.Tests\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.dll
 c:\users\sandy\documents\visual studio 2017\Projects\ITI.Simiti.DB\ITI.Simiti.DAL.Tests\obj\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.csprojResolveAssemblyReference.cache
 c:\users\sandy\documents\visual studio 2017\Projects\ITI.Simiti.DB\ITI.Simiti.DAL.Tests\obj\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.AssemblyInfo.cs
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL.Tests\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.deps.json
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL.Tests\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.runtimeconfig.json
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL.Tests\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.runtimeconfig.dev.json
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL.Tests\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL.Tests\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.pdb
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL.Tests\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL.Tests\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.pdb
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL.Tests\obj\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.csprojResolveAssemblyReference.cache
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL.Tests\obj\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.AssemblyInfo.cs
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL.Tests\obj\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL.Tests\obj\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.pdb

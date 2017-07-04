@@ -50,13 +50,13 @@ namespace ITI.Simiti.WebApp.Controllers
             });
         }
 
-        [HttpPut("{email}")]
-        public bool VerifyUserPassword(string email, string password)
-        {
-            User user = _userService.FindUser(email, password);
-            if (user != null) return true;
-            return false;
+        //[HttpPut("{email}")]
+        //public bool VerifyUserPassword(string email, string password)
+        //{
+        //    User user = _userService.FindUser(email, password);
+        //    if (user != null) return true;
+        //    return false;
             
-        }
+        //}
     }
 }

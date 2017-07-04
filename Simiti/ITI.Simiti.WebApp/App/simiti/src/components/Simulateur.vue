@@ -9,25 +9,84 @@
         <canvas id="c" width="1500" height="650" style="">
         	Canvas is not implemented in this navagator
         </canvas>
+		<form>
+				<input type="text" v-model="this.projectN" name="project" size="10">
+				
+		<!--<a href="#" @click="RegisterP()" class="">Enregistrer le Project</a>-->
+		<button type="button" @click="onSubmit()" class="btn btn-lg btn-block btn-danger">Sauvegarder</button>
+
+		</form>
+
 	</div>
 
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 import Vue from 'vue'
 import jquery from 'jQuery'
 //import {fabric} from 'fabric'
 import api from '../services/simulateur.js'
-
+import AuthService from '../services/AuthService'
+import UserApiService from '../services/UserApiService'
+import ProjectApiService from '../services/ProjectApiService'
 
 export default {
-	mounted() {
-		api.init();
+	data(){
+		return{
+			userInfo: {},
+			projectN: '',
+			model:{
+				nameProject: '',
+				project: '',
+				userId: ''
+			}
+		}
 	},
+
+	computed: {
+    ...mapGetters(['isLoading']),
+    auth: () => AuthService
+    },
+ 
+	async mounted() {
+		api.init();
+		var userEmail = AuthService.emailUser();
+        this.userInfo = await UserApiService.getUserAsync(userEmail);
+		
+	},
+
 	methods:{
 		onClick: function(){
 			alert('start');
-		}
+		},
+
+		async onSubmit() {
+                var errors = [];
+				this.model.nameProject = projectN;
+				this.model.userId = this.userInfo.userId;
+				this.model.project = 'datasaved';
+				await ProjectApiService.createProjectAsync(this.model);
+
+                /*if (!this.model.nameProject)errors.push("Project")
+                this.errors = errors;
+
+                if (errors.length == 0) {
+                    try {
+                            await ProjectApiService.createProjectAsync(this.model);
+                        }
+                    catch (error) {
+                        
+                        this.notifyError(error);
+                        
+                        // Custom error management here.
+                        // In our application, errors throwed when executing a request are managed globally via the "executeAsyncRequest" action: errors are added to the 'app.errors' state.
+                        // A custom component should react to this state when a new error is added, and make an action, like showing an alert message, or something else.
+                        // By the way, you can handle errors manually for each component if you need it...
+                    }
+                }*/
+            }
 	}	
 }	
 

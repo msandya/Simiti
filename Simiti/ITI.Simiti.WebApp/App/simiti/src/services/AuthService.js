@@ -94,6 +94,7 @@ class AuthService {
         this.authenticatedCallbacks.splice(this.authenticatedCallbacks.indexOf(cb), 1);
     }
 
+
     onAuthenticated(i) {
         this.identity = i;
         for(var cb of this.authenticatedCallbacks) {
