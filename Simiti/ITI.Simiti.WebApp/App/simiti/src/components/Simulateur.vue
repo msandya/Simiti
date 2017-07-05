@@ -1,59 +1,5 @@
 <template>
 <div>
-	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-			</div>
-			<div class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-					<li>
-						<a href="#" id="un" class="dropdown-toggle" data-toggle="dropdown">Fichier <b class="caret"></b></a>
-
-						<ul class="dropdown-menu">
-							<li><a href="#">Nouveau</a></li>
-							<li><a href="#">Sauvegarder</a></li>
-							<li><a href="#">Charger</a></li>
-						</ul>
-					</li>
-					<li>
-						<a href="#" id="deux" class="dropdown-toggle" data-toggle="dropdown">Mode <b class="caret"></b></a>
-
-						<ul class="dropdown-menu">
-							<li><a href="#">Conception</a></li>
-							<li><a href="#" id="Ethernet" onclick="alert('ton message alerte!')">Ethernet</a></li>
-							<li><a href="#">IP</a></li>
-							<li><a href="#">Transport</a></li>
-						</ul>
-					</li>
-					<li class=""><a href="#" onclick="document.getElementById('config').style.display = 'block'">Parametrage</a></li>
-					<li class="">
-						<span style="color:#A4A4A4">Type de trame :</span><br />
-						<select v-model="trame" v-on:change="set_trame_type(trame)">
-							<option value="0">Pas a pas</option>
-							<option value="1">Automatique</option>
-							<option value="2">Manuelle</option>
-							<option value="3">Trame reelle</option>
-						</select>
-					</li>
-
-					<ul class="nav navbar-nav navbar-right hidden-xs">
-						<a type="button" class="navbar-btn btn btn-gradient-blue" onclick="document.getElementById('noeud').style.display = 'block'"
-						    data-toggle="modal" data-target="#Modal" am-latosans="bold" href="#noeud">Tracer des noeuds</a>
-					</ul>
-
-					<li class=""><a href="#" onclick="document.getElementById('aide').style.display = 'block'">Aide</a></li>
-				</ul>
-			</div>
-			<!--/.nav-collapse -->
-		</div>
-	</div>
-
 	<div>
 		<div>
 			<button v-on:click = "clicked_button(1)" class='button-elements' id="btn1">

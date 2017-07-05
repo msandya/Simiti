@@ -1,9 +1,7 @@
 <template>
-<body>
  <div id="app"> 
 <div class="container">
             <div class="col-sm-12">
-
                 <div class="bs-calltoaction bs-calltoaction-default">
                     <div class="row">
                         <div class="col-md-9 cta-contents">
@@ -29,7 +27,6 @@
         </div>
 
   </div>
-</body>
 </template>
 
 <script>

@@ -11,41 +11,19 @@
             <img src="../img/LogoPI.png" style="width:50px"></img>
           </router-link>
           <router-link class="navbar-brand" to="/Quisommesnous">Qui sommes-nous ?</router-link>
+          <router-link class="navbar-brand" to="/simulateur">Simi</router-link>
+          
         </div>
-        <ul class="nav navbar-nav navbar-right" v-if="!auth.isConnected">
-        <li><a href="#" @click="login()">Connexion</a></li>
-        <li><a href="#" @click="register()">Inscription</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-center">
-         <li class=""><a href="#"v-if="!auth.isConnected" onclick="document.getElementById('new').style.display = 'block'">Nouveau</a></li>
-         					<li>
-						<a href="#" id="un" v-if="auth.isConnected"class="dropdown-toggle" data-toggle="dropdown">Fichier <b class="caret"></b></a>
-
-						<ul class="dropdown-menu">
-							<li><a href="#">Nouveau</a></li>
-							<li><a href="#">Sauvegarder</a></li>
-							<li><a href="#">Charger</a></li>
-						</ul>
-					</li>
-            <li class=""><a href="#" onclick="document.getElementById('config').style.display = 'block'">Parametrage</a></li>
-					<li class="">
-						<span style="color:#A4A4A4">Type de trame :</span><br />
-						<select v-model="trame" v-on:change="set_trame_type(trame)">
-							<option value="0">Pas a pas</option>
-							<option value="1">Automatique</option>
-							<option value="2">Manuelle</option>
-							<option value="3">Trame reelle</option>
-						</select>
-					</li>
-          	<ul class="nav navbar-nav navbar-right hidden-xs">
-						<a type="button" class="navbar-btn btn btn-gradient-blue" onclick="document.getElementById('noeud').style.display = 'block'"
-						data-toggle="modal" data-target="#Modal" am-latosans="bold" href="#noeud">Tracer des noeuds</a>
-					</ul> 
-          <li class=""><a href="#" onclick="document.getElementById('aide').style.display = 'block'">Aide</a></li>
-          </ul>
+        <li><a href="#" @click="login('Base')">Connexion</a></li>
+          <li><a href="#" @click="login('Base1')">Inscription</a></li>
+  
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="iti-navbar-collapse" v-if="auth.isConnected">
-
+          <ul class="nav navbar-nav">
+            <li>
+              <router-link :to="`users/information`">Profile</router-link>
+            </li>
+          </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ auth.email }}
@@ -56,11 +34,6 @@
                   <router-link to="/logout">Se déconnecter</router-link>
                 </li>
               </ul>
-            </li>
-          </ul>
-                    <ul class="nav navbar-nav navbar-right">
-            <li>
-              <router-link :to="`users/information`">Profile</router-link>
             </li>
           </ul>
         </div>
@@ -83,8 +56,6 @@
 <script>
 
 import AuthService from '../services/AuthService'
-import Vue from 'vue'
-import $ from 'jquery'
 import UserApiService from '../services/AuthService'
 import { mapGetters, mapActions } from 'vuex'
 import '../directives/requiredProviders'
@@ -92,8 +63,7 @@ import '../directives/requiredProviders'
 export default {
   data() {
     return {
-      userEmail: null,
-      endpoint:null
+      userEmail: null
     }
   },
 
@@ -105,26 +75,7 @@ export default {
   async mounted() {
     this.userEmail = AuthService.emailUser();
     console.log(this.userEmail);
-   AuthService.registerAuthenticatedCallback(() => this.onAuthenticated());
-
-  },
-
- beforeDestroy() {
-   AuthService.removeAuthenticatedCallback(() => this.onAuthenticated());
-  },
-  methods: {
-     login() {
-     AuthService.login();
-     document.reload();
-      },
-            register(){
-                AuthService.register();
-            },
-            onAuthenticated() {
-                 this.$router.replace('/');
-            }
   }
-
 }
 </script>
 

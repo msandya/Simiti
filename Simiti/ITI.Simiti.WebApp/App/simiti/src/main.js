@@ -7,8 +7,9 @@ import Vue from 'vue'
 import store from './vuex/store'
 import VueRouter from 'vue-router'
 
+import index from './components/av.vue'
 import App from './components/App.vue'
-import Home from './components/Home.vue'
+import Home from './components/simulateur.vue'
 import Login from './components/Login.vue'
 import Logout from './components/Logout.vue'
 import Register from './components/Register.vue'
@@ -17,7 +18,7 @@ import User from './components/User/User.vue'
 import UserModificationMP from './components/User/UserEditPassword.vue'
 import QuiSommesNous from './components/QuiSommesNous.vue'
 
-
+import AuthService from './services/AuthService'
 import Simi from './components/Simulateur.vue'
 
 
@@ -36,7 +37,6 @@ import TeacherAssign from './components/teachers/TeacherAssign.vue'
 
 import FollowingList from './components/github/FollowingList.vue'*/
 
-import AuthService from './services/AuthService'
 
 Vue.use(VueRouter)
 
@@ -50,7 +50,7 @@ function requireAuth (to, from, next)  {
   console.log(AuthService.isConnected);
   if (!AuthService.isConnected) {
     next({
-      path: '/login',
+      path: '/simulateur',
       query: { redirect: to.fullPath }
     });
     return;
@@ -72,15 +72,14 @@ const router = new VueRouter({
   mode: 'history',
   base: '/Home',
   routes: [
-    { path: '/login', component: Login },
     { path: '/logout', component: Logout, beforeEnter: requireAuth },
-
     { path: '', component: Home, beforeEnter: requireAuth },
 
     { path: '/users/information', component: User, beforeEnter: requireAuth },
     { path: '/users/users/modiMP', component: UserModificationMP, beforeEnter: requireAuth },
     { path: '/quisommesnous', component: QuiSommesNous },
     { path: '/simulateur', component: Simi },
+
 
     //{ path: '/users/inscription', component: UserInscription, beforeEnter: requireAuth}
 
@@ -116,10 +115,6 @@ AuthService.loginEndpoint = '/Account/Login';
 
 // Allowed providers to sign up our application, and the corresponding server-side endpoints
 AuthService.registerEndpoint = '/Account/Register'
-
-//Registered the project into the bdd
-AuthService.registerProjectEndpoint = '/Project/Register'
-
 
 AuthService.modifyPasswordEndpoint = '/Account/ModifyPassword'
 
