@@ -7,12 +7,12 @@ class  ProjectApiService {
 
     }
 
-    async getProjectAsync(ProjecN){
-        return await getAsync(`${endpoint}/${ProjectId}`);
+    async getProjectAsync(projecN, userId){
+        return await getAsync(`${endpoint}/loadproj/${projecN}/${userId}`);
     }
 
     async createProjectAsync(model) {
-        return await postAsync(`${endpoint}/${model.userId}`, model);
+        return await postAsync(`${endpoint}/saveproj/${model.userId}`, model);
     }
 }
 export default new ProjectApiService()

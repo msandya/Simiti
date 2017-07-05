@@ -8,7 +8,7 @@ export default {
         var index = 0;
         var cables = '';
         var workstations = '';
-
+        console.log(savedData);
         while (j < savedData.length) {
             if (savedData[j] == 'w') {
                 index = j;

@@ -79,6 +79,7 @@ const router = new VueRouter({
 
     { path: '/users/information', component: User, beforeEnter: requireAuth },
     { path: '/users/users/modiMP', component: UserModificationMP, beforeEnter: requireAuth },
+    
     { path: '/quisommesnous', component: QuiSommesNous },
     { path: '/simulateur', component: Simi },
 

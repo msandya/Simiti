@@ -29,24 +29,23 @@ namespace ITI.Simiti.WebApp.Services
             return project;
         }
 
-        public Result<TheProject> GetByNameNUserId(int userId, string name)
+        public Result<TheProject> GetByNameNUserId(string projectN, int userId)
         {
-            TheProject project = _projectGateway.FindByNameNUserId(userId, name);
-            if (!IsNameValid(name)) return Result.Failure<TheProject>(Status.BadRequest, "The name of project is not valid.");
-            if (project != null) return Result.Failure<TheProject>(Status.BadRequest, "This user created this project.");
-
-            return Result.Success(Status.Created, project);
+            if (_userGateway.FindById(userId) == null) return Result.Failure<TheProject>(Status.NotFound, "This user not exist.");
+            if (_projectGateway.FindByUserId(userId) == null) return Result.Failure<TheProject>(Status.NotFound, "The project not exist.");
+            
+            return Result.Success(Status.Ok, _projectGateway.FindByNameNUserId(projectN, userId));
         }
 
         public Result<TheProject> CreateProject(string name, string project, int userId)
         {
             if (!IsNameValid(name)) return Result.Failure<TheProject>(Status.BadRequest, "The name of project is not valid.");
             if (!IsNameValid(project)) return Result.Failure<TheProject>(Status.BadRequest, "The project is not valid.");
-            if (_userGateway.FindById(userId) == null) return Result.Failure<TheProject>(Status.NotFound, "The user not exist.");
-            if (_projectGateway.FindByNameNUserId(userId, name) != null) return Result.Failure<TheProject>(Status.BadRequest, "This project existed.");
+            if (_userGateway.FindById(userId) == null) return Result.Failure<TheProject>(Status.NotFound, "This user not exist.");
+            if (_projectGateway.FindByNameNUserId(name, userId) != null) return Result.Failure<TheProject>(Status.BadRequest, "This project existed.");
 
             _projectGateway.Create(name, project, userId);
-            TheProject projectTesting = _projectGateway.FindByNameNUserId(userId, name);
+            TheProject projectTesting = _projectGateway.FindByNameNUserId(name, userId);
             return Result.Success(Status.Ok, projectTesting);
         }
 
