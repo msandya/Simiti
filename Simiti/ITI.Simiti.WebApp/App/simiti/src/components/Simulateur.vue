@@ -1,25 +1,133 @@
 <template>
-	<div>
+<div>
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+			</div>
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="#" id="un" class="dropdown-toggle" data-toggle="dropdown">Fichier <b class="caret"></b></a>
 
-		<div class="legend">
-			<img src="../img/sample_black.png" /> Paires torsadées droites<br />
-			<img src="../img/sample_red.png" /> Paires torsadées croisées<br />
-			<img src="../img/sample_green.png" /> Cable coaxial
+						<ul class="dropdown-menu">
+							<li><a href="#">Nouveau</a></li>
+							<li><a href="#">Sauvegarder</a></li>
+							<li><a href="#">Charger</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#" id="deux" class="dropdown-toggle" data-toggle="dropdown">Mode <b class="caret"></b></a>
+
+						<ul class="dropdown-menu">
+							<li><a href="#">Conception</a></li>
+							<li><a href="#" id="Ethernet" onclick="alert('ton message alerte!')">Ethernet</a></li>
+							<li><a href="#">IP</a></li>
+							<li><a href="#">Transport</a></li>
+						</ul>
+					</li>
+					<li class=""><a href="#" onclick="document.getElementById('config').style.display = 'block'">Parametrage</a></li>
+					<li class="">
+						<span style="color:#A4A4A4">Type de trame :</span><br />
+						<select v-model="trame" v-on:change="set_trame_type(trame)">
+							<option value="0">Pas a pas</option>
+							<option value="1">Automatique</option>
+							<option value="2">Manuelle</option>
+							<option value="3">Trame reelle</option>
+						</select>
+					</li>
+
+					<ul class="nav navbar-nav navbar-right hidden-xs">
+						<a type="button" class="navbar-btn btn btn-gradient-blue" onclick="document.getElementById('noeud').style.display = 'block'"
+						    data-toggle="modal" data-target="#Modal" am-latosans="bold" href="#noeud">Tracer des noeuds</a>
+					</ul>
+
+					<li class=""><a href="#" onclick="document.getElementById('aide').style.display = 'block'">Aide</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
 		</div>
-        <canvas id="c" width="1500" height="650" style="">
-        	Canvas is not implemented in this navagator
-        </canvas>
-		<form>
-				<input type="text" v-model="this.projectN" name="project" size="10">
+	</div>
+
+	<div>
+		<div>
+			<button v-on:click = "clicked_button(1)" class='button-elements' id="btn1">
+				<img style="width:100px;height:50px" src="../img/mousepointerbutton.png">
+			</button>
+			<button v-on:click = "clicked_button(2)" class='button-elements' id="btn2">
+				<img style="width:100px;height:50px;" src="../img/cablebutton.png">
+			</button>
+			<button v-on:click = "clicked_button(3)" class='button-elements' id="btn3">
+				<img style="width:100px;height:50px;" src="../img/postbutton.png">
+			</button>
+			<button v-on:click = "clicked_button(4)" class='button-elements' id="btn4">
+				<img style="width:100px;height:50px;" src="../img/switchbutton.png">
+			</button>
+			<button v-on:click = "clicked_button(5)" class='button-elements' id="btn5">
+				<img style="width:100px;height:50px;" src="../img/hubbutton.png">
+			</button>
+		</div>
+		<div class="legend">
+			<img src="../img/sample_black.png"></img> Paires torsadées droites
+			<br>
+			<img src="../img/sample_red.png"></img> Paires torsadées croisées
+			<br>
+			<img src="../img/sample_green.png"></img> Cable coaxial
+		</div>
+	</div>
+
+	<div id="canvas_container" class="canvas_container" tabindex="-1" @mousedown="mousedown" @mousemove="move" @keyup.17="contrl(false)" @keydown.17="contrl(true)" @keyup.46="suppr" @keyup.enter="enter" @keyup.space="space" @keyup.65="press_a" @keyup.67="press_c">
+		<canvas id="c" width="1300" height="600" style="border:1px solid #ccc">
+			Canvas is not implemented in this navigator
+		</canvas>
+	</div>
+	
+	<form>
+		<input type="text" v-model="this.projectN" name="project" size="10">
 				
 		<!--<a href="#" @click="RegisterP()" class="">Enregistrer le Project</a>-->
 		<button type="button" @click="onSubmit()" class="btn btn-lg btn-block btn-danger">Sauvegarder</button>
+	</form>
 
-		</form>
-
+	<div id="config" class="config">
+		<input type="button" onclick="document.getElementById('config').style.display = 'none'" value="X" style="position: relative; float: right;"
+		/>
+		<input type="text" id="mavar" style="position: relative; right: -45%; top: 45%; " />
+		<input type="button" onclick="document.getElementById('config').style.display = 'none'; text = document.getElementById('mavar').value;"
+		    value="Valider" style="position: relative; right: -36%; top: 95%;" />
 	</div>
 
+	<div id="aide" class="aide">
+		<input type="button" onclick="document.getElementById('aide').style.display = 'none'" value="X" style="position: relative; float: right;"
+		/>
+		<h1 class="text_aide"> AIDE SIMITI </h1>
+		<input type="button" onclick="document.getElementById('aide').style.display = 'none'; text = document.getElementById('mavar').value;"
+		    value="Valider" style="position: relative; top: 80%;" />
+	</div>
+
+	<div id="ipconfig" class="ipconfig">
+		<input type="button" onclick="document.getElementById('ipconfig').style.display = 'none'" value="X" style="position: relative; float: right;"
+		/>
+		<input type="text" id="mavar2" style="position: relative; right: -25%; top: 30%; " />
+		<input type="text" id="mavar3" style="position: relative; right: -25%; top: 40%; " />
+		<input type="button" onclick="document.getElementById('ipconfig').style.display = 'none';" value="Valider" id="saveip" style="position: relative; right: 5%; top: 65%;"
+		/>
+	</div>
+
+	<div id="noeud" class="noeud">
+		<h1> Choisissez les stations </h1>
+		<h4 id="message"></h4>
+		<input type="button" onclick="document.getElementById('noeud').style.display = 'none'; text = document.getElementById('mavar').value;"
+		    value="Valider" style="position: relative; right: -36%; top: 70%;" />
+	</div>
+</div>
 </template>
+
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
@@ -58,156 +166,311 @@ export default {
 	},
 
 	methods:{
-		onClick: function(){
-			alert('start');
+		clicked_button: function (buttonNum) {
+			api.button_pressed(buttonNum);
 		},
 
+		mousedown: function(e){
+			var rect = c.getBoundingClientRect();
+			api.mousedown(e.pageX - (rect.left - rect.left % 1), e.pageY - (rect.top - rect.top % 1));
+		},
+
+		move: function(e){
+			var rect = c.getBoundingClientRect();
+			api.move(e.pageX - (rect.left - rect.left % 1), e.pageY - (rect.top - rect.top % 1));
+		},
+
+		enter: function(){
+			api.enter();
+		},
+
+		suppr: function(){
+			api.suppr();
+		},
+
+		contrl: function(bool){
+			api.contrl(bool);
+		},
+
+		press_c: function(){
+			api.press_c();
+		},
+
+		press_a: function(){
+			api.press_a();
+		},
+
+		space: function(){
+			api.space();
+		},
+
+		set_trame_type: function(nb){
+			api.set_trame_type(nb);
+		},
+		
 		async onSubmit() {
-                var errors = [];
-				this.model.nameProject = projectN;
-				this.model.userId = this.userInfo.userId;
-				this.model.project = 'datasaved';
-				await ProjectApiService.createProjectAsync(this.model);
+			var errors = [];
+			this.model.nameProject = projectN;
+			this.model.userId = this.userInfo.userId;
+			this.model.project = 'datasaved';
+			await ProjectApiService.createProjectAsync(this.model);
 
-                /*if (!this.model.nameProject)errors.push("Project")
-                this.errors = errors;
+			/*if (!this.model.nameProject)errors.push("Project")
+			this.errors = errors;
 
-                if (errors.length == 0) {
-                    try {
-                            await ProjectApiService.createProjectAsync(this.model);
-                        }
-                    catch (error) {
-                        
-                        this.notifyError(error);
-                        
-                        // Custom error management here.
-                        // In our application, errors throwed when executing a request are managed globally via the "executeAsyncRequest" action: errors are added to the 'app.errors' state.
-                        // A custom component should react to this state when a new error is added, and make an action, like showing an alert message, or something else.
-                        // By the way, you can handle errors manually for each component if you need it...
-                    }
-                }*/
-            }
+			if (errors.length == 0) {
+				try {
+						await ProjectApiService.createProjectAsync(this.model);
+					}
+				catch (error) {
+					
+					this.notifyError(error);
+					
+					// Custom error management here.
+					// In our application, errors throwed when executing a request are managed globally via the "executeAsyncRequest" action: errors are added to the 'app.errors' state.
+					// A custom component should react to this state when a new error is added, and make an action, like showing an alert message, or something else.
+					// By the way, you can handle errors manually for each component if you need it...
+				}
+			}*/
+		}
 	}	
 }	
 
 </script>
 <style lang="less">
-		.menu {
-			position: absolute;
-		}
 
-		.aide {
-			display: none;
-			position: absolute;
-			left: 100px;
-			top: 100px;
-			height: 500px;
-			width: 1200px;
-			border-style: solid;
-			border-width: 1px;
-			border-color: black;
-			background-color: white;
+.canvas_container {
+	margin-top: 20px;
+	margin-left: -100px;
+	background-color: white;
+	width: 1300px;
+	height: 600px;
+}
 
-			text-align: center;
-		}
+.menu {
+	position: absolute;
+}
 
-		.text_aide {
-			position: relative;
-			margin-left: auto;
-		}
+.aide {
+	display: none;
+	position: absolute;
+	left: 100px;
+	top: 100px;
+	height: 500px;
+	width: 1200px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+	background-color: white;
 
-		.config {
-			display: none;
-			position: absolute;
-			left: 100px;
-			top: 100px;
-			height: 500px;
-			width: 1200px;
-			border-style: solid;
-			border-width: 1px;
-			border-color: black;
-			background-color: white;
-		}
-		.ipconfig {
-			display: none;
-			position: absolute;
-			left: 200px;
-			top: 200px;
-			height: 150px;
-			width: 360px;
-			border-style: solid;
-			border-width: 1px;
-			border-color: black;
-			background-color: white;
-		}
+	text-align: center;
+}
 
-		.options {
- 				position: absolute;
- 				background-color: white;
- 			}
+.text_aide {
+	position: relative;
+	margin-left: auto;
+}
 
-        .noeud {
-			display: none;
-			position: absolute;
-			left: 50px;
-			top: 50px;
-			height: 500px;
-			width: 1200px;
-			border-style: solid;
-			border-width: 1px;
-			border-color: black;
-			background-color: white;
-		}
-		
-		.legend {
-			position: absolute;
-			left: 1100px;
-			top: 110px;
-		}
+.config {
+	display: none;
+	position: absolute;
+	left: 100px;
+	top: 100px;
+	height: 500px;
+	width: 1200px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+	background-color: white;
+}
 
-		.navbar-template {
-			padding: 40px 15px;
-		}
+.ipconfig {
+	display: none;
+	position: absolute;
+	left: 200px;
+	top: 200px;
+	height: 150px;
+	width: 360px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+	background-color: white;
+}
 
-		.modal-header-success {
-			color: #fff;
-			padding: 9px 15px;
-			border-bottom: 1px solid #eee;
-			background-color: #5cb85c;
-			-webkit-border-top-left-radius: 5px;
-			-webkit-border-top-right-radius: 5px;
-			-moz-border-radius-topleft: 5px;
-			-moz-border-radius-topright: 5px;
-			border-top-left-radius: 5px;
-			border-top-right-radius: 5px;
-		}
+.options {
+	position: absolute;
+	background-color: white;
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+	background-color: grey;
+	text-align: center;
+	padding: 3px;
+}
 
-		.btn.btn-gradient-blue {
-			background-color: #0c5497 !important;
-			background-image: -webkit-linear-gradient(top, #127bde 0%, #072d50 100%);
-			background-image: -o-linear-gradient(top, #127bde 0%, #072d50 100%);
-			background-image: linear-gradient(to bottom, #127bde 0%, #072d50 100%);
-			background-repeat: repeat-x;
-			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff127bde', endColorstr='#ff072d50', GradientType=0);
-			border-color: #072d50 #072d50 #0c5497;
-			color: #fff !important;
-			text-shadow: 0 -1px 0 rgba(31, 31, 31, 0.29);
-			-webkit-font-smoothing: antialiased;  
-		}
+.noeud {
+	display: none;
+	position: absolute;
+	left: 100px;
+	top: 100px;
+	height: 500px;
+	width: 1200px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+	background-color: white;
+}
 
+.legend {
+	position: absolute;
+	left: 1000px;
+	top: 70px;
+}
 
-        .ui-group-buttons .or{position:relative;float:left;width:.3em;height:1.3em;z-index:3;font-size:12px}
-        .ui-group-buttons .or:before{position:absolute;top:50%;left:50%;content:'or';background-color:#5a5a5a;margin-top:-.1em;margin-left:-.9em;width:1.8em;height:1.8em;line-height:1.55;color:#fff;font-style:normal;font-weight:400;text-align:center;border-radius:500px;-webkit-box-shadow:0 0 0 1px rgba(0,0,0,0.1);box-shadow:0 0 0 1px rgba(0,0,0,0.1);-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box}
-        .ui-group-buttons .or:after{position:absolute;top:0;left:0;content:' ';width:.3em;height:2.84em;background-color:rgba(0,0,0,0);border-top:.6em solid #5a5a5a;border-bottom:.6em solid #5a5a5a}
-        .ui-group-buttons .or.or-lg{height:1.3em;font-size:16px}
-        .ui-group-buttons .or.or-lg:after{height:2.85em}
-        .ui-group-buttons .or.or-sm{height:1em}
-        .ui-group-buttons .or.or-sm:after{height:2.5em}
-        .ui-group-buttons .or.or-xs{height:.25em}
-        .ui-group-buttons .or.or-xs:after{height:1.84em;z-index:-1000}
-        .ui-group-buttons{display:inline-block;vertical-align:middle}
-        .ui-group-buttons:after{content:".";display:block;height:0;clear:both;visibility:hidden}
-        .ui-group-buttons .btn{float:left;border-radius:0}
-        .ui-group-buttons .btn:first-child{margin-left:0;border-top-left-radius:.25em;border-bottom-left-radius:.25em;padding-right:15px}
-        .ui-group-buttons .btn:last-child{border-top-right-radius:.25em;border-bottom-right-radius:.25em;padding-left:15px}
+.navbar-template {
+	padding: 40px 15px;
+}
+
+.modal-header-success {
+	color: #fff;
+	padding: 9px 15px;
+	border-bottom: 1px solid #eee;
+	background-color: #5cb85c;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.btn.btn-gradient-blue {
+	background-color: #0c5497 !important;
+	background-image: -webkit-linear-gradient(top, #127bde 0%, #072d50 100%);
+	background-image: -o-linear-gradient(top, #127bde 0%, #072d50 100%);
+	background-image: linear-gradient(to bottom, #127bde 0%, #072d50 100%);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff127bde', endColorstr='#ff072d50', GradientType=0);
+	border-color: #072d50 #072d50 #0c5497;
+	color: #fff !important;
+	text-shadow: 0 -1px 0 rgba(31, 31, 31, 0.29);
+	-webkit-font-smoothing: antialiased;
+}
+
+#button-elements {
+	display: inline-block;
+	height: 50px;
+	width: 100px;
+	padding: 0;
+	margin: 0;
+	vertical-align: top;
+}
+
+#close-image img {
+	display: block;
+	height: 50px;
+	width: 100px;
+}
+
+.ui-group-buttons .or {
+	position: relative;
+	float: left;
+	width: .3em;
+	height: 1.3em;
+	z-index: 3;
+	font-size: 12px
+}
+
+.ui-group-buttons .or:before {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	content: 'or';
+	background-color: #5a5a5a;
+	margin-top: -.1em;
+	margin-left: -.9em;
+	width: 1.8em;
+	height: 1.8em;
+	line-height: 1.55;
+	color: #fff;
+	font-style: normal;
+	font-weight: 400;
+	text-align: center;
+	border-radius: 500px;
+	-webkit-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box
+}
+
+.ui-group-buttons .or:after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	content: ' ';
+	width: .3em;
+	height: 2.84em;
+	background-color: rgba(0, 0, 0, 0);
+	border-top: .6em solid #5a5a5a;
+	border-bottom: .6em solid #5a5a5a
+}
+
+.ui-group-buttons .or.or-lg {
+	height: 1.3em;
+	font-size: 16px
+}
+
+.ui-group-buttons .or.or-lg:after {
+	height: 2.85em
+}
+
+.ui-group-buttons .or.or-sm {
+	height: 1em
+}
+
+.ui-group-buttons .or.or-sm:after {
+	height: 2.5em
+}
+
+.ui-group-buttons .or.or-xs {
+	height: .25em
+}
+
+.ui-group-buttons .or.or-xs:after {
+	height: 1.84em;
+	z-index: -1000
+}
+
+.ui-group-buttons {
+	display: inline-block;
+	vertical-align: middle
+}
+
+.ui-group-buttons:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden
+}
+
+.ui-group-buttons .btn {
+	float: left;
+	border-radius: 0
+}
+
+.ui-group-buttons .btn:first-child {
+	margin-left: 0;
+	border-top-left-radius: .25em;
+	border-bottom-left-radius: .25em;
+	padding-right: 15px
+}
+
+.ui-group-buttons .btn:last-child {
+	border-top-right-radius: .25em;
+	border-bottom-right-radius: .25em;
+	padding-left: 15px
+}
 </style>

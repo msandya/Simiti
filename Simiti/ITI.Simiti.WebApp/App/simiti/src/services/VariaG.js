@@ -1,26 +1,43 @@
 export default {
-		color_0:'black',
-		color_1:'red',
-		color_2:'green',
-		buttons: [],
-		menu_selected: null,
-		trame_type:null,
-		line : null,
-		isDown: null,
-		rect: null,
-		PORT_SIZE: null,
-		selected: null,
-		tab_workstation: null,
-		tab_cable: null,
-		last_object: null,
-		last_object_port_nb: null,
-		line_creation: null,
-		tab_images: null,
-		current: null,
-		buttons_selected: null,
-		start:null,
-		nb_workstation:null,
-		y: null,
-		WorkStationType: null,
-		text:'oui'
+	canvas: null, 
+
+	color_0:'black',
+	color_1:'red',
+	color_2:'green',
+
+	buttons: [],
+	buttons_selected: [],
+
+	menu_selected: null,
+	trame_type:0,
+
+	line: null,
+	isDown: null,
+	rect: null,
+
+	PORT_SIZE: 12,
+	selected: 0,
+	tab_workstation: [],
+	tab_cable: [],
+	last_object: null,
+	last_object_port_nb: null,
+	line_creation: 0,
+	tab_images: [],
+	current: null,
+
+	save_cable: '',
+	save_workstation: '',
+	save_data: '',
+
+	is_sending_package: false,
+	
+	start: 0,
+	nb_workstation: 0,
+	WorkStationType: 0,
+	text: 'oui',
+	test: 0,
+
+	tab_buttons: [],
+
+	ctrl: null
 }
