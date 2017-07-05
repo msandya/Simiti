@@ -1,7 +1,7 @@
 ﻿create proc iti.sProjectCreate
 (
 	@Name nvarchar(32),
-	@Project nvarchar(200),
+	@Project nvarchar(1000),
 	@UserId int
 )
 as 

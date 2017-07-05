@@ -34,7 +34,17 @@ namespace ITI.Simiti.WebApp.Controllers
             return project;
         }
 
-        [HttpPut("{userId}")]
+        [HttpGet("loadproj/{projectN}/{userId}")]
+        public IActionResult GetProject(string projectN, int userId)
+        {
+            Result<TheProject> result = _projectService.GetByNameNUserId(projectN, userId);
+            return this.CreateResult<TheProject, ProjectViewModel>(result, o =>
+            {
+                o.ToViewModel = c => c.ToProjectViewModel();
+            });
+        }
+
+        [HttpPost("saveproj/{userId}")]
         public IActionResult CreateProject(int userId, [FromBody] ProjectViewModel model)
         {
             Result<TheProject> result = _projectService.CreateProject(model.Name, model.Project, model.UserId);

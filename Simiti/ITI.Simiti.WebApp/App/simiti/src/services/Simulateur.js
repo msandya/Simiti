@@ -22,6 +22,18 @@ export default {
 		};
 	},
 
+	get_save_data() {
+		return simu.save_data;
+	},
+
+	get_save_workstation(){
+		return simu.tab_workstation;
+	},
+
+	get_save_cables(){
+		return simu.tab_cable;
+	},
+
 	suppr() // 46 = suppr
 	{
 		var s = null;

@@ -23,3 +23,10 @@ C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti\Simiti\Simiti\ITI.Simiti.DAL\obj
 C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti\Simiti\Simiti\ITI.Simiti.DAL\obj\Debug\netstandard1.4\ITI.Simiti.DAL.AssemblyInfo.cs
 C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti\Simiti\Simiti\ITI.Simiti.DAL\obj\Debug\netstandard1.4\ITI.Simiti.DAL.dll
 C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti\Simiti\Simiti\ITI.Simiti.DAL\obj\Debug\netstandard1.4\ITI.Simiti.DAL.pdb
+C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti ver2.0\Simiti\Simiti\ITI.Simiti.DAL\bin\Debug\netstandard1.4\ITI.Simiti.DAL.deps.json
+C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti ver2.0\Simiti\Simiti\ITI.Simiti.DAL\bin\Debug\netstandard1.4\ITI.Simiti.DAL.dll
+C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti ver2.0\Simiti\Simiti\ITI.Simiti.DAL\bin\Debug\netstandard1.4\ITI.Simiti.DAL.pdb
+C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti ver2.0\Simiti\Simiti\ITI.Simiti.DAL\obj\Debug\netstandard1.4\ITI.Simiti.DAL.csprojResolveAssemblyReference.cache
+C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti ver2.0\Simiti\Simiti\ITI.Simiti.DAL\obj\Debug\netstandard1.4\ITI.Simiti.DAL.AssemblyInfo.cs
+C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti ver2.0\Simiti\Simiti\ITI.Simiti.DAL\obj\Debug\netstandard1.4\ITI.Simiti.DAL.dll
+C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti ver2.0\Simiti\Simiti\ITI.Simiti.DAL\obj\Debug\netstandard1.4\ITI.Simiti.DAL.pdb

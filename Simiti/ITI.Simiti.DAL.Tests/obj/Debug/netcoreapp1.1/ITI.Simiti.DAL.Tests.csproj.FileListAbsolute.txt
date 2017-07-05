@@ -15,3 +15,14 @@ C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL.Tests\obj\Debug\
 C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL.Tests\obj\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.AssemblyInfo.cs
 C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL.Tests\obj\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.dll
 C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL.Tests\obj\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.pdb
+C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti ver2.0\Simiti\Simiti\ITI.Simiti.DAL.Tests\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.deps.json
+C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti ver2.0\Simiti\Simiti\ITI.Simiti.DAL.Tests\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.runtimeconfig.json
+C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti ver2.0\Simiti\Simiti\ITI.Simiti.DAL.Tests\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.runtimeconfig.dev.json
+C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti ver2.0\Simiti\Simiti\ITI.Simiti.DAL.Tests\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.dll
+C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti ver2.0\Simiti\Simiti\ITI.Simiti.DAL.Tests\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.pdb
+C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti ver2.0\Simiti\Simiti\ITI.Simiti.DAL.Tests\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.dll
+C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti ver2.0\Simiti\Simiti\ITI.Simiti.DAL.Tests\bin\Debug\netcoreapp1.1\ITI.Simiti.DAL.pdb
+C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti ver2.0\Simiti\Simiti\ITI.Simiti.DAL.Tests\obj\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.csprojResolveAssemblyReference.cache
+C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti ver2.0\Simiti\Simiti\ITI.Simiti.DAL.Tests\obj\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.AssemblyInfo.cs
+C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti ver2.0\Simiti\Simiti\ITI.Simiti.DAL.Tests\obj\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.dll
+C:\Users\Vu Tuan Trung\Documents\RepoGit\Simiti ver2.0\Simiti\Simiti\ITI.Simiti.DAL.Tests\obj\Debug\netcoreapp1.1\ITI.Simiti.DAL.Tests.pdb

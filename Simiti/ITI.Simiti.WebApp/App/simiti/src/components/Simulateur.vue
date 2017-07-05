@@ -1,77 +1,71 @@
 <template>
-<div>
 	<div>
 		<div>
-			<button v-on:click = "clicked_button(1)" class='button-elements' id="btn1">
-				<img style="width:100px;height:50px" src="../img/mousepointerbutton.png">
-			</button>
-			<button v-on:click = "clicked_button(2)" class='button-elements' id="btn2">
-				<img style="width:100px;height:50px;" src="../img/cablebutton.png">
-			</button>
-			<button v-on:click = "clicked_button(3)" class='button-elements' id="btn3">
-				<img style="width:100px;height:50px;" src="../img/postbutton.png">
-			</button>
-			<button v-on:click = "clicked_button(4)" class='button-elements' id="btn4">
-				<img style="width:100px;height:50px;" src="../img/switchbutton.png">
-			</button>
-			<button v-on:click = "clicked_button(5)" class='button-elements' id="btn5">
-				<img style="width:100px;height:50px;" src="../img/hubbutton.png">
-			</button>
+			<div>
+				<button v-on:click="clicked_button(1)" class='button-elements' id="btn1">
+					<img style="width:100px;height:50px" src="../img/mousepointerbutton.png">
+				</button>
+				<button v-on:click="clicked_button(2)" class='button-elements' id="btn2">
+					<img style="width:100px;height:50px;" src="../img/cablebutton.png">
+				</button>
+				<button v-on:click="clicked_button(3)" class='button-elements' id="btn3">
+					<img style="width:100px;height:50px;" src="../img/postbutton.png">
+				</button>
+				<button v-on:click="clicked_button(4)" class='button-elements' id="btn4">
+					<img style="width:100px;height:50px;" src="../img/switchbutton.png">
+				</button>
+				<button v-on:click="clicked_button(5)" class='button-elements' id="btn5">
+					<img style="width:100px;height:50px;" src="../img/hubbutton.png">
+				</button>
+			</div>
+			<div class="legend">
+				<img src="../img/sample_black.png"></img> Paires torsadées droites
+				<br>
+				<img src="../img/sample_red.png"></img> Paires torsadées croisées
+				<br>
+				<img src="../img/sample_green.png"></img> Cable coaxial
+			</div>
 		</div>
-		<div class="legend">
-			<img src="../img/sample_black.png"></img> Paires torsadées droites
-			<br>
-			<img src="../img/sample_red.png"></img> Paires torsadées croisées
-			<br>
-			<img src="../img/sample_green.png"></img> Cable coaxial
-		</div>
-	</div>
-
-	<div id="canvas_container" class="canvas_container" tabindex="-1" @mousedown="mousedown" @mousemove="move" @keyup.17="contrl(false)" @keydown.17="contrl(true)" @keyup.46="suppr" @keyup.enter="enter" @keyup.space="space" @keyup.65="press_a" @keyup.67="press_c">
-		<canvas id="c" width="1300" height="600" style="border:1px solid #ccc">
-			Canvas is not implemented in this navigator
-		</canvas>
-	</div>
 	
-	<form>
-		<input type="text" v-model="this.projectN" name="project" size="10">
-				
-		<!--<a href="#" @click="RegisterP()" class="">Enregistrer le Project</a>-->
-		<button type="button" @click="onSubmit()" class="btn btn-lg btn-block btn-danger">Sauvegarder</button>
-	</form>
-
-	<div id="config" class="config">
-		<input type="button" onclick="document.getElementById('config').style.display = 'none'" value="X" style="position: relative; float: right;"
-		/>
-		<input type="text" id="mavar" style="position: relative; right: -45%; top: 45%; " />
-		<input type="button" onclick="document.getElementById('config').style.display = 'none'; text = document.getElementById('mavar').value;"
-		    value="Valider" style="position: relative; right: -36%; top: 95%;" />
+		<div id="canvas_container" class="canvas_container" tabindex="-1" @mousedown="mousedown" @mousemove="move" @keyup.17="contrl(false)" @keydown.17="contrl(true)" @keyup.46="suppr" @keyup.enter="enter" @keyup.space="space" @keyup.65="press_a" @keyup.67="press_c">
+			<canvas id="c" width="1300" height="600" style="border:1px solid #ccc">
+				Canvas is not implemented in this navigator
+			</canvas>
+		</div>
+	
+		<form>
+			<input type="text" v-model="projectN" size="10">
+	
+			<!--<a href="#" @click="RegisterP()" class="">Enregistrer le Project</a>-->
+			<button type="button" @click="saveProject()" class="btn btn-lg btn-block btn-danger">Save</button>
+			<button type="button" @click="loadProject()" class="btn btn-lg btn-block btn-danger">Load</button>
+		</form>
+	
+		<div id="config" class="config">
+			<input type="button" onclick="document.getElementById('config').style.display = 'none'" value="X" style="position: relative; float: right;" />
+			<input type="text" id="mavar" style="position: relative; right: -45%; top: 45%; " />
+			<input type="button" onclick="document.getElementById('config').style.display = 'none'; text = document.getElementById('mavar').value;" value="Valider" style="position: relative; right: -36%; top: 95%;" />
+		</div>
+	
+		<div id="aide" class="aide">
+			<input type="button" onclick="document.getElementById('aide').style.display = 'none'" value="X" style="position: relative; float: right;" />
+			<h1 class="text_aide"> AIDE SIMITI </h1>
+			<input type="button" onclick="document.getElementById('aide').style.display = 'none'; text = document.getElementById('mavar').value;" value="Valider" style="position: relative; top: 80%;" />
+		</div>
+	
+		<div id="ipconfig" class="ipconfig">
+			<input type="button" onclick="document.getElementById('ipconfig').style.display = 'none'" value="X" style="position: relative; float: right;" />
+			<input type="text" id="mavar2" style="position: relative; right: -25%; top: 30%; " />
+			<input type="text" id="mavar3" style="position: relative; right: -25%; top: 40%; " />
+			<input type="button" onclick="document.getElementById('ipconfig').style.display = 'none';" value="Valider" id="saveip" style="position: relative; right: 5%; top: 65%;" />
+		</div>
+	
+		<div id="noeud" class="noeud">
+			<h1> Choisissez les stations </h1>
+			<h4 id="message"></h4>
+			<input type="button" onclick="document.getElementById('noeud').style.display = 'none'; text = document.getElementById('mavar').value;" value="Valider" style="position: relative; right: -36%; top: 70%;" />
+		</div>
 	</div>
-
-	<div id="aide" class="aide">
-		<input type="button" onclick="document.getElementById('aide').style.display = 'none'" value="X" style="position: relative; float: right;"
-		/>
-		<h1 class="text_aide"> AIDE SIMITI </h1>
-		<input type="button" onclick="document.getElementById('aide').style.display = 'none'; text = document.getElementById('mavar').value;"
-		    value="Valider" style="position: relative; top: 80%;" />
-	</div>
-
-	<div id="ipconfig" class="ipconfig">
-		<input type="button" onclick="document.getElementById('ipconfig').style.display = 'none'" value="X" style="position: relative; float: right;"
-		/>
-		<input type="text" id="mavar2" style="position: relative; right: -25%; top: 30%; " />
-		<input type="text" id="mavar3" style="position: relative; right: -25%; top: 40%; " />
-		<input type="button" onclick="document.getElementById('ipconfig').style.display = 'none';" value="Valider" id="saveip" style="position: relative; right: 5%; top: 65%;"
-		/>
-	</div>
-
-	<div id="noeud" class="noeud">
-		<h1> Choisissez les stations </h1>
-		<h4 id="message"></h4>
-		<input type="button" onclick="document.getElementById('noeud').style.display = 'none'; text = document.getElementById('mavar').value;"
-		    value="Valider" style="position: relative; right: -36%; top: 70%;" />
-	</div>
-</div>
 </template>
 
 
@@ -82,109 +76,96 @@ import Vue from 'vue'
 import jquery from 'jQuery'
 //import {fabric} from 'fabric'
 import api from '../services/simulateur.js'
+import save from '../services/save.js'
+import load from '../services/load.js'
 import AuthService from '../services/AuthService'
 import UserApiService from '../services/UserApiService'
 import ProjectApiService from '../services/ProjectApiService'
 
 export default {
-	data(){
-		return{
+	data() {
+		return {
 			userInfo: {},
 			projectN: '',
-			model:{
-				nameProject: '',
-				project: '',
-				userId: ''
-			}
+			model: {},
 		}
 	},
 
 	computed: {
-    ...mapGetters(['isLoading']),
-    auth: () => AuthService
-    },
- 
+		...mapGetters(['isLoading']),
+		auth: () => AuthService
+	},
+
 	async mounted() {
 		api.init();
 		var userEmail = AuthService.emailUser();
-        this.userInfo = await UserApiService.getUserAsync(userEmail);
-		
+		this.userInfo = await UserApiService.getUserAsync(userEmail);
+
 	},
 
-	methods:{
+	methods: {
 		clicked_button: function (buttonNum) {
 			api.button_pressed(buttonNum);
 		},
 
-		mousedown: function(e){
+		mousedown: function (e) {
 			var rect = c.getBoundingClientRect();
 			api.mousedown(e.pageX - (rect.left - rect.left % 1), e.pageY - (rect.top - rect.top % 1));
 		},
 
-		move: function(e){
+		move: function (e) {
 			var rect = c.getBoundingClientRect();
 			api.move(e.pageX - (rect.left - rect.left % 1), e.pageY - (rect.top - rect.top % 1));
 		},
 
-		enter: function(){
+		enter: function () {
 			api.enter();
 		},
 
-		suppr: function(){
+		suppr: function () {
 			api.suppr();
 		},
 
-		contrl: function(bool){
+		contrl: function (bool) {
 			api.contrl(bool);
 		},
 
-		press_c: function(){
+		press_c: function () {
 			api.press_c();
 		},
 
-		press_a: function(){
+		press_a: function () {
 			api.press_a();
 		},
 
-		space: function(){
+		space: function () {
 			api.space();
 		},
 
-		set_trame_type: function(nb){
+		set_trame_type: function (nb) {
 			api.set_trame_type(nb);
 		},
-		
-		async onSubmit() {
-			var errors = [];
-			this.model.nameProject = projectN;
+
+		async saveProject() {
+			this.model.name = this.projectN;
 			this.model.userId = this.userInfo.userId;
-			this.model.project = 'datasaved';
+			this.model.project = save.save(api.get_save_workstation(), api.get_save_cables());
 			await ProjectApiService.createProjectAsync(this.model);
+		},
 
-			/*if (!this.model.nameProject)errors.push("Project")
-			this.errors = errors;
+		async loadProject() {
+			this.model.name = this.projectN;
+			this.model.userId = this.userInfo.userId;
 
-			if (errors.length == 0) {
-				try {
-						await ProjectApiService.createProjectAsync(this.model);
-					}
-				catch (error) {
-					
-					this.notifyError(error);
-					
-					// Custom error management here.
-					// In our application, errors throwed when executing a request are managed globally via the "executeAsyncRequest" action: errors are added to the 'app.errors' state.
-					// A custom component should react to this state when a new error is added, and make an action, like showing an alert message, or something else.
-					// By the way, you can handle errors manually for each component if you need it...
-				}
-			}*/
+			var saved_data = await ProjectApiService.getProjectAsync(this.projectN, this.userInfo.userId);
+			console.log(saved_data.project);
+			load.load(saved_data.project);
 		}
-	}	
-}	
+	}
+}
 
 </script>
 <style lang="less">
-
 .canvas_container {
 	margin-top: 20px;
 	margin-left: -100px;
