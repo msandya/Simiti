@@ -11,7 +11,6 @@ namespace ITI.Simiti.WebApp.Models.ProjectViewModel
 
         public string Project { get; set; }
 
-
         public int UserId { get; set; }
     }
 }

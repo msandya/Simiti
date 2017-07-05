@@ -22,6 +22,18 @@ export default {
 		};
 	},
 
+	get_save_data() {
+		return simu.save_data;
+	},
+
+	get_save_workstation(){
+		return simu.tab_workstation;
+	},
+
+	get_save_cables(){
+		return simu.tab_cable;
+	},
+
 	suppr() // 46 = suppr
 	{
 		var s = null;
@@ -55,8 +67,7 @@ export default {
 		this.canvas.renderAll();
 	},
 
-	enter()
-	{
+	enter() {
 		alert('enter pressed');
 	},
 
@@ -73,7 +84,7 @@ export default {
 		/*var test = "c< 1 0 1 5 0 >< 0 1 6 2 0 >< 0 1 5 3 0 >< 0 1 4 5 0 >< 0 0 3 0 0 >< 0 0 2 1 0 >w< 0 s 6 323 165 >< 1 s 6 516 284 >< 2 p 1 267 240 >< 3 p 1 282 94 >< 4 p 1 704 320 >< 5 p 1 574 400 >< 6 p 1 392 380 >";
 		load.load(test);*/
 	},
-	
+
 	press_a() // 65 = a
 	{
 		struct.create_port(tab_workstation[0].ports.length, simu.tab_workstation[0], simu.tab_workstation[0].obj.left + 4 + simu.tab_workstation[0].ports.length * (simu.PORT_SIZE + 3));
@@ -90,7 +101,7 @@ export default {
 			});
 		}
 	},
-	
+
 	space() // 32 = space
 	{
 		var s = null;
@@ -154,26 +165,22 @@ export default {
 		}
 	},
 
-	button_pressed(nb)
-	{
+	button_pressed(nb) {
 		simu.isDown = true;
 		simu.selected = nb - 1;
 		if (nb > 2)
 			simu.ctrl.selected = nb - 1;
 	},
 
-	contrl(bool)
-	{
+	contrl(bool) {
 		simu.ctrl.pressed = bool;
 	},
 
-	set_trame_type(nb)
-	{
+	set_trame_type(nb) {
 		simu.trame_type = nb;
 	},
 
-	mousedown(x, y)
-	{
+	mousedown(x, y) {
 		simu.isDown = true;
 		var points = [x, y, x, y];
 
@@ -252,7 +259,7 @@ export default {
 							aux = ((50 + ((actual_obj.ports.length - 3) * (simu.PORT_SIZE + 3))) / 2) + 1;
 
 						points_line = [actual_obj.obj.left + actual_obj.ports[j].rect.left + aux + simu.PORT_SIZE / 2,
-						actual_obj.obj.top + actual_obj.ports[j].rect.top + 26 + simu.PORT_SIZE / 2, x, y
+							actual_obj.obj.top + actual_obj.ports[j].rect.top + 26 + simu.PORT_SIZE / 2, x, y
 						];
 						simu.last_object_port_nb = j;
 					}
@@ -311,7 +318,7 @@ export default {
 					simu.line.remove();
 				}
 			}
-		} 
+		}
 		this.canvas.renderAll();
 	},
 
@@ -405,8 +412,7 @@ export default {
 		}
 	},
 
-	send_request_3(portOriginal, postIdOriginal, tabVect, workstationType, workstationId, port_1_left, port_1_top, port_2_left, port_2_top, request_size, target)
-	{
+	send_request_3(portOriginal, postIdOriginal, tabVect, workstationType, workstationId, port_1_left, port_1_top, port_2_left, port_2_top, request_size, target) {
 		send_request_2(portOriginal, postIdOriginal, tabVect, workstationType, workstationId, port_1_left, port_1_top, port_2_left, port_2_top, request_size, target)
 	}
 }
@@ -428,9 +434,7 @@ function displayArrayObjects(WorkStation) {
 		if (simu.tab_workstation[i].checked == true) {
 			checkbox = '<input type="checkbox" id="checkbox' + WorkStation[i].id + '" v-model="checkbox" style="margin-right:10px; margin-left:30px;" checked>';
 			checkbox += '<label for="checkbox' + WorkStation[i].id + '">' + label + '</label>';
-		}
-		else
-		{
+		} else {
 			checkbox = '<input type="checkbox" id="checkbox' + WorkStation[i].id + '" v-model="checkbox" style="margin-right:10px; margin-left:30px;">';
 			checkbox += '<label for="checkbox' + WorkStation[i].id + '">' + label + '</label>';
 		}
@@ -505,7 +509,7 @@ function send_request_2(portOriginal, postIdOriginal, tabVect, workstationType, 
 			count2++;
 		}
 		draw();
-	}, fps * points.length);
+	}, fps * points.length * (request_size / 100));
 
 	count1 = 0;
 	count2 = 0;

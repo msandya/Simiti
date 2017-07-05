@@ -3,7 +3,7 @@
 
 	ProjectId int identity(0,1),
 	[Name] nvarchar(32) not null,
-	Project nvarchar(32) not null,
+	Project nvarchar(1000) not null,
 	UserId int not null,
 
 	constraint PK_tProject primary key(ProjectId),

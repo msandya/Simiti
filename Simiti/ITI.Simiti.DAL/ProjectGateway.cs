@@ -58,7 +58,23 @@ namespace ITI.Simiti.DAL
             }
         }
 
-        public TheProject FindByNameNUserId(int userId, string name)
+        public TheProject FindByUserId(int userId)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<TheProject>(
+                    @"select p.ProjectId,
+                             p.Name,
+                             p.Project,
+                             p.UserId
+                          from iti.vProject p
+                          where UserId = @UserId",
+                    new { UserId = userId })
+                    .FirstOrDefault();
+            }
+        }
+
+        public TheProject FindByNameNUserId(string name, int userId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {

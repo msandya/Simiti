@@ -2,7 +2,7 @@
 (
 	@ProjectId int,
 	@Name nvarchar(32),
-	@Project nvarchar(200)
+	@Project nvarchar(1000)
 )
 as
 begin
