@@ -32,8 +32,6 @@
 						<span style="color:#A4A4A4">Type de trame :</span><br />
 						<select v-model="trame" v-on:change="set_trame_type(trame)">
 							<option value="0">Pas a pas</option>
-							<option value="1">Automatique</option>
-							<option value="2">Manuelle</option>
 							<option value="3">Trame reelle</option>
 						</select>
 					</li>
@@ -86,6 +84,7 @@ import AuthService from '../services/AuthService'
 import Vue from 'vue'
 import $ from 'jquery'
 import UserApiService from '../services/AuthService'
+import api from '../services/simulateur.js'
 import { mapGetters, mapActions } from 'vuex'
 import '../directives/requiredProviders'
 
@@ -93,7 +92,8 @@ export default {
   data() {
     return {
       userEmail: null,
-      endpoint:null
+      endpoint:null,
+      trame: ''
     }
   },
 
@@ -122,7 +122,10 @@ export default {
             },
             onAuthenticated() {
                  this.$router.replace('/');
-            }
+            },
+            set_trame_type: function (nb) {
+			           api.set_trame_type(nb);
+		},
   }
 
 }

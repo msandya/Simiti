@@ -87,7 +87,7 @@ export default {
 		return {
 			userInfo: {},
 			projectN: '',
-			model: {},
+			model: {}
 		}
 	},
 
@@ -110,12 +110,12 @@ export default {
 
 		mousedown: function (e) {
 			var rect = c.getBoundingClientRect();
-			api.mousedown(e.pageX - (rect.left - rect.left % 1), e.pageY - (rect.top - rect.top % 1));
+			api.mousedown(e.pageX - (rect.left - rect.left % 1), e.pageY - ((rect.top + window.scrollY) - (rect.top + window.scrollY) % 1));
 		},
 
 		move: function (e) {
 			var rect = c.getBoundingClientRect();
-			api.move(e.pageX - (rect.left - rect.left % 1), e.pageY - (rect.top - rect.top % 1));
+			api.move(e.pageX - (rect.left - rect.left % 1), e.pageY - ((rect.top + window.scrollY) - (rect.top + window.scrollY) % 1));
 		},
 
 		enter: function () {
