@@ -49,6 +49,11 @@ namespace ITI.Simiti.WebApp.Services
             return Result.Success(Status.Ok, projectTesting);
         }
 
+        public Result<IEnumerable<TheProject>> GetAllProjectByUserId(int userId)
+        {
+            return Result.Success(Status.Ok, _projectGateway.GetAllProjectByUserId(userId));
+        }
+
         public Result<IEnumerable<TheProject>> GetAll()
         {
             return Result.Success(Status.Ok, _projectGateway.GetAll());

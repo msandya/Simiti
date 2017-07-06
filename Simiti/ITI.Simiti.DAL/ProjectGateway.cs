@@ -28,6 +28,21 @@ namespace ITI.Simiti.DAL
             }
         }
 
+        public IEnumerable<TheProject> GetAllProjectByUserId(int userId)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                return con.Query<TheProject>(
+                    @"select p.ProjectId,
+                             p.Name,
+                             p.UserId,
+                             p.Project
+                        from iti.vProject p
+                        where p.UserId = @UserId;",
+                    new { UserId = userId});
+            }
+        }
+
         public TheProject FindById( int projectId )
         {
             using (SqlConnection con = new SqlConnection(_connectionString))

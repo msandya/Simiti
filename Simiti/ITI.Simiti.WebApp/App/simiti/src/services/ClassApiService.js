@@ -1,4 +1,9 @@
-import { getAsync, postAsync, putAsync, deleteAsync } from '../helpers/apiHelper'
+import {
+    getAsync,
+    postAsync,
+    putAsync,
+    deleteAsync
+} from '../helpers/apiHelper'
 
 const endpoint = "/api/class";
 

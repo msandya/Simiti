@@ -27,11 +27,21 @@ namespace ITI.Simiti.WebApp.Controllers
             _userService = userService;
         }
 
-        [HttpGet("{ProjectId}")]
+        [HttpGet("{projectId}")]
         public TheProject GetProjectByProjectId(int projectId)
         {
             TheProject project = _projectService.GetByProjectId(projectId);
             return project;
+        }
+
+        [HttpGet("getall/{userId}")]
+        public IActionResult GetProjectList(int userId)
+        {
+            Result<IEnumerable<TheProject>> result = _projectService.GetAllProjectByUserId(userId);
+            return this.CreateResult<IEnumerable<TheProject>, IEnumerable<ProjectViewModel>>(result, o =>
+            {
+                o.ToViewModel = x => x.Select(c => c.ToProjectViewModel());
+            });
         }
 
         [HttpGet("loadproj/{projectN}/{userId}")]
