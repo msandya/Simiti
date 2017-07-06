@@ -13,8 +13,8 @@
           <router-link class="navbar-brand" to="/Quisommesnous">Qui sommes-nous ?</router-link>
         </div>
         <ul class="nav navbar-nav navbar-right" v-if="!auth.isConnected">
-        <li><a href="#" @click="login()">Connexion</a></li>
-        <li><a href="#" @click="register()">Inscription</a></li>
+          <li><a href="#" @click="login()">Connexion</a></li>
+          <li><a href="#" @click="register()">Inscription</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-center">
          <li class=""><a href="#"v-if="!auth.isConnected" onclick="document.getElementById('new').style.display = 'block'">Nouveau</a></li>
@@ -41,9 +41,13 @@
 					</ul> 
           <li class=""><a href="#" onclick="document.getElementById('aide').style.display = 'block'">Aide</a></li>
           </ul>
+          <li class="">
+            <a href="#" onclick="document.getElementById('aide').style.display = 'block'">Aide</a>
+          </li>
+        </ul>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="iti-navbar-collapse" v-if="auth.isConnected">
-
+  
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ auth.email }}
@@ -56,7 +60,7 @@
               </ul>
             </li>
           </ul>
-                    <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right">
             <li>
               <router-link :to="`users/information`">Profile</router-link>
             </li>
@@ -105,29 +109,28 @@ export default {
   async mounted() {
     this.userEmail = AuthService.emailUser();
     console.log(this.userEmail);
-   AuthService.registerAuthenticatedCallback(() => this.onAuthenticated());
+    AuthService.registerAuthenticatedCallback(() => this.onAuthenticated());
 
   },
 
- beforeDestroy() {
-   AuthService.removeAuthenticatedCallback(() => this.onAuthenticated());
+  beforeDestroy() {
+    AuthService.removeAuthenticatedCallback(() => this.onAuthenticated());
   },
   methods: {
-     login() {
+    login() {
      AuthService.login();
      document.reload();
-      },
-            register(){
-                AuthService.register();
-            },
-            onAuthenticated() {
-                 this.$router.replace('/');
-            },
-            set_trame_type: function (nb) {
-			           api.set_trame_type(nb);
+    },
+    register(){
+     AuthService.register();
+    },
+    onAuthenticated() {
+     this.$router.replace('/');
+    },
+     set_trame_type: function (nb) {
+		  api.set_trame_type(nb);
 		},
   }
-
 }
 </script>
 

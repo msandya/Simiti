@@ -44,12 +44,12 @@ class AuthService {
         var identity = this.identity;
         return identity ? identity.boundProviders : [];
     }
-    
+
     isBoundToProvider(expectedProviders) {
         var isBound = false;
 
-        for(var p of expectedProviders) {
-            if(this.boundProviders.indexOf(p) > -1) isBound = true;
+        for (var p of expectedProviders) {
+            if (this.boundProviders.indexOf(p) > -1) isBound = true;
         }
 
         return isBound;
@@ -57,20 +57,20 @@ class AuthService {
 
     onMessage(e) {
         console.log('Is url allowed ?', !(!e.origin || this.allowedOrigins.indexOf(e.origin) < 0));
-        if(!e.origin || this.allowedOrigins.indexOf(e.origin) < 0) return;
+        if (!e.origin || this.allowedOrigins.indexOf(e.origin) < 0) return;
 
         var data = typeof e.data == 'string' ? JSON.parse(e.data) : e.data;
         console.log('onMessage()');
-        if(data.type == 'authenticated') {
+        if (data.type == 'authenticated') {
             console.log('authenticated');
             this.onAuthenticated(data.payload);
-        } else if(data.type == 'signedOut') {
+        } else if (data.type == 'signedOut') {
             console.log('signedOut');
             this.onSignedOut();
         }
     }
-    
-    modifyPassword(){
+
+    modifyPassword() {
         var popup = window.open(this.modifyPasswordEndpoint, "Modifier mot de passe", "menubar=no, status=no, scrollbars=no, menubar=no, width=700, height=700");
     }
 
@@ -79,10 +79,10 @@ class AuthService {
     }
 
     logout() {
-        var popup = window.open(this.logoutEndpoint, "Déconnexion de Simiti", "menubar=no, status=no, scrollbars=no, menubar=no, width=700, height=600");        
+        var popup = window.open(this.logoutEndpoint, "Déconnexion de Simiti", "menubar=no, status=no, scrollbars=no, menubar=no, width=700, height=600");
     }
 
-    register(){
+    register() {
         var popup = window.open(this.registerEndpoint, "S'inscrire à Simiti", "menubar=no, status=no, scrollbars=no, menubar=no, width=700, height=600");
     }
 
@@ -97,7 +97,7 @@ class AuthService {
 
     onAuthenticated(i) {
         this.identity = i;
-        for(var cb of this.authenticatedCallbacks) {
+        for (var cb of this.authenticatedCallbacks) {
             cb();
         }
     }
@@ -112,7 +112,7 @@ class AuthService {
     onSignedOut() {
         this.identity = null;
 
-        for(var cb of this.signedOutCallbacks) {
+        for (var cb of this.signedOutCallbacks) {
             cb();
         }
     }

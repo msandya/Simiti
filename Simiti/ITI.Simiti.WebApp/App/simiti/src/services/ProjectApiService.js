@@ -7,6 +7,10 @@ class  ProjectApiService {
 
     }
 
+    async getAllProjectByUserIdAsync(userId){
+        return await getAsync(`${endpoint}/getall/${userId}`);
+    }
+
     async getProjectAsync(projecN, userId){
         return await getAsync(`${endpoint}/loadproj/${projecN}/${userId}`);
     }
