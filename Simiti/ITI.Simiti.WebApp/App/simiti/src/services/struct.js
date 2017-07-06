@@ -109,6 +109,11 @@ export default {
 		return(station);
 	},
 
+	get_create_port(portId, obj, left)
+	{
+		create_port(portId, obj, left);
+	},
+
 	delete_workStation(station) {
 		for (var i = 0; i < simu.tab_workstation.length; i++) {
 			if (simu.tab_workstation[i] == station)

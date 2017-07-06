@@ -88,7 +88,7 @@ export default {
 	
 	press_a() // 65 = a
 	{
-		struct.create_port(tab_workstation[0].ports.length, simu.tab_workstation[0], simu.tab_workstation[0].obj.left + 4 + simu.tab_workstation[0].ports.length * (simu.PORT_SIZE + 3));
+		struct.get_create_port(simu.tab_workstation[0].ports.length, simu.tab_workstation[0], simu.tab_workstation[0].obj.left + 4 + simu.tab_workstation[0].ports.length * (simu.PORT_SIZE + 3));
 		if (simu.tab_workstation[0].ports.length > 3) {
 			var aux = simu.tab_workstation[0].obj.getObjects();
 			aux[0].set({
@@ -114,55 +114,56 @@ export default {
 		} else
 			s = simu.tab_workstation[0];
 
-		var options = document.createElement("div");
-		options.className = "options";
-		options.style = "left: " + (s.obj.left + 40) + "px; top: " + (s.obj.top + 70) + "px; ";
-		document.body.appendChild(options);
+		if (s.type == 'post')
+		{
+			var options = document.createElement("div");
+			options.className = "options";
+			options.style = "left: " + (s.obj.left + 40) + "px; top: " + (s.obj.top + 70) + "px; ";
+			document.body.appendChild(options);
 
-		var broad = document.createElement("button");
-		broad.className = "btn btn-primary btn-xs";
-		broad.style = "margin-right: 5px";
-		broad.innerHTML = "Broadcast";
-		broad.addEventListener("click", broadcast);
-		options.appendChild(broad);
+			var broad = document.createElement("button");
+			broad.className = "btn btn-primary btn-xs";
+			broad.style = "margin-right: 5px";
+			broad.innerHTML = "Broadcast";
+			broad.addEventListener("click", broadcast);
+			options.appendChild(broad);
 
-		var uni = document.createElement("button");
-		uni.className = "btn btn-primary btn-xs";
-		uni.innerHTML = "Unicast";
-		uni.addEventListener("click", unicast);
-		options.appendChild(uni);
+			var uni = document.createElement("button");
+			uni.className = "btn btn-primary btn-xs";
+			uni.innerHTML = "Unicast";
+			uni.addEventListener("click", unicast);
+			options.appendChild(uni);
 
-		if (simu.trame_type == 3) {
-			var br = document.createElement("br");
-			options.appendChild(br);
-			var input = document.createElement("input");
-			input.type = "text";
-			input.placeholder = "Taille de la trame";
-			input.id = "trameSize";
-			options.appendChild(input);
-		}
-
-		function broadcast() {
-			var tram_size = null;
-			if (document.getElementById("trameSize") != null && document.getElementById("trameSize") != '') {
-				alert(document.getElementById("trameSize").value);
-				tram_size = document.getElementById("trameSize").value;
+			if (simu.trame_type == 3) {
+				var br = document.createElement("br");
+				options.appendChild(br);
+				var input = document.createElement("input");
+				input.type = "text";
+				input.placeholder = "Taille de la trame";
+				input.id = "trameSize";
+				options.appendChild(input);
 			}
-			simulation.simulate(s, null, tram_size);
-			options.remove();
-		}
 
-		function unicast() {
-			var tram_size = null;
-			var targetid = prompt("Select target id");
-			if (document.getElementById("trameSize") != null && document.getElementById("trameSize") != '') {
-				alert(document.getElementById("trameSize").value);
-				tram_size = document.getElementById("trameSize").value;
+			function broadcast() {
+				var tram_size = null;
+				if (document.getElementById("trameSize") != null && document.getElementById("trameSize") != '') {
+					tram_size = document.getElementById("trameSize").value;
+				}
+				simulation.simulate(s, null, tram_size);
+				options.remove();
 			}
-			if (targetid != "") {
-				simulation.simulate(s, targetid, tram_size);
+
+			function unicast() {
+				var tram_size = null;
+				var targetid = prompt("Select target id");
+				if (document.getElementById("trameSize") != null && document.getElementById("trameSize") != '') {
+					tram_size = document.getElementById("trameSize").value;
+				}
+				if (targetid != "") {
+					simulation.simulate(s, targetid, tram_size);
+				}
+				options.remove();
 			}
-			options.remove();
 		}
 	},
 
