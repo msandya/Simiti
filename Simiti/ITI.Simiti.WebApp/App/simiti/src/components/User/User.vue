@@ -1,7 +1,7 @@
 ﻿<template>
     <div>
         <div class="page-header">
-            <h1>Editer un user</h1>
+            <h2>Editer un user</h2>
         </div>
 
         <form>
@@ -100,3 +100,8 @@ export default {
         }
 }
 </script>
+<style lang="less">
+h2 {
+    color: black;
+}
+</style>

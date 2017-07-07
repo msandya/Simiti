@@ -39,11 +39,6 @@ export default {
 		simu.tab_cable.push(cable);
 	},
 
-	//Delete Cable
-	delete_cable(cable) {
-		cable_deletion(cable);
-	},
-
 	//Create a Workstation
 	create_work_station(id, x, y, nb_port, checked, type) {
 		//Create a big rectangle outside
@@ -61,17 +56,17 @@ export default {
 		switch (type) {
 			case "switch":
 				big_rect.set({
-					fill: 'blue'
+					fill: simu.switch_color
 				});
 				break;
 			case "post":
 				big_rect.set({
-					fill: 'green'
+					fill: simu.post_color
 				});
 				break;
 			case "hub":
 				big_rect.set({
-					fill: 'red'
+					fill: simu.hub_color
 				});
 				break;
 		}
@@ -110,15 +105,45 @@ export default {
 	},
 
 	get_create_port(portId, obj, left)
-	{
-		create_port(portId, obj, left);
-	},
+ 	{
+ 		create_port(portId, obj, left);
+ 	},
 
 	delete_workStation(station) {
-		for (var i = 0; i < simu.tab_workstation.length; i++) {
-			if (simu.tab_workstation[i] == station)
-				simu.tab_workstation.splice(i, 1);
+		workstation_deletion(station);
+	},
+	
+	//Delete Cable
+	delete_cable(cable) {
+		cable_deletion(cable);
+	},
+
+
+	reset()
+	{
+		while (simu.tab_workstation.length != 0)
+		{
+			for (var j = 0; j < simu.tab_cable.length; j++) {
+				if (simu.tab_cable[j].object_1 != null && simu.tab_cable[j].object_2 != null) {
+					if (simu.tab_workstation[0].obj == simu.tab_cable[j].object_1.obj || simu.tab_workstation[0].obj == simu.tab_cable[j].object_2.obj) {
+						cable_deletion(simu.tab_cable[j]);
+					}
+				}
+			}
+
+			simu.canvas.remove(simu.tab_workstation[0].obj);
+			workstation_deletion(simu.tab_workstation[0]);
 		}
+		simu.nb_workstation = 0;
+		simu.tab_cable = [];
+	}
+}
+
+function workstation_deletion(station)
+{
+	for (var i = 0; i < simu.tab_workstation.length; i++) {
+		if (simu.tab_workstation[i] == station)
+			simu.tab_workstation.splice(i, 1);
 	}
 }
 
@@ -132,6 +157,11 @@ function cable_deletion(cable)
 	cable.object_2.ports[cable.obj_2_port_nb].used = false;
 	cable.object_1 = null;
 	cable.object_2 = null;
+
+	/*for (var i = 0; i < simu.tab_cable.length; i++) {
+		if (simu.cable[i] == cable)
+			simu.tab_cable.splice(i, 1);
+	}*/
 }
 
 //Create a port

@@ -210,16 +210,17 @@ function station_progress(workStationChecked, portOriginal, postIdOriginal, tabV
 
 				x.addEventListener('mousedown', function (e) {
 					simu.isDown = true;
-					var offset = [
+					/*var offset = [
 						x.offsetLeft - e.clientX,
 						x.offsetTop - e.clientY
-					];
+					];*/
 				}, true);
 
 				x.addEventListener('mouseup', function () {
 					simu.isDown = false;
 				}, true);
 
+				/*
 				x.addEventListener('mousemove', function (event) {
 					event.preventDefault();
 					if (simu.isDown) {
@@ -230,7 +231,7 @@ function station_progress(workStationChecked, portOriginal, postIdOriginal, tabV
 						x.style.left = (mousePosition.posX + offset[0]) + 'px';
 						x.style.top = (mousePosition.posY + offset[1]) + 'px';
 					}
-				}, true);
+				}, true);*/
 
 				var list_bg = document.createElement("div");
 				list_bg.style.overflow = "auto";

@@ -9,6 +9,8 @@ export default {
         var cables = '';
         var workstations = '';
 
+        struct.reset();
+
         while (j < savedData.length) {
             if (savedData[j] == 'w') {
                 index = j;

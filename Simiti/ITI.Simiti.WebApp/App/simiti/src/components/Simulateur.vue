@@ -32,19 +32,45 @@
 				Canvas is not implemented in this navigator
 			</canvas>
 		</div>
-	
-		<form>
-			<input type="text" v-model="projectN" size="10">
-	
-			<!--<a href="#" @click="RegisterP()" class="">Enregistrer le Project</a>-->
-			<button type="button" @click="saveProject()" class="btn btn-lg btn-block btn-danger">Save</button>
-			<button type="button" @click="loadProject()" class="btn btn-lg btn-block btn-danger">Load</button>
-		</form>
-	
+
 		<div id="config" class="config">
-			<input type="button" onclick="document.getElementById('config').style.display = 'none'" value="X" style="position: relative; float: right;" />
-			<input type="text" id="mavar" style="position: relative; right: -45%; top: 45%; " />
-			<input type="button" onclick="document.getElementById('config').style.display = 'none'; text = document.getElementById('mavar').value;" value="Valider" style="position: relative; right: -36%; top: 95%;" />
+			<input type="button" onclick="document.getElementById('config').style.display = 'none'" value="X" style="margin: 10px; position: relative; float: right;" /><br>
+			<div style="text-align:left; margin-left: 200px;">
+				<label style="color: White; padding-right: 14px;">Couleur des post : </label>
+				<select v-model="post_color" v-on:change="set_color(0, post_color)">
+						<option style="background-color: Blue " value="blue">Blue</option>
+						<option style="background-color: BlueViolet " value="blueViolet">BlueViolet</option>
+						<option style="background-color: Chocolate " value="chocolate">Chocolate</option>
+						<option style="background-color: Crimson " value="crimson">Crimson</option>
+						<option style="background-color: Green " value="green">Green</option>
+						<option style="background-color: Purple " value="purple">Purple</option>
+						<option style="background-color: Red " value="red">Red</option>
+						<option style="background-color: Teal " value="teal">Teal</option>
+				</select><br>
+				<label style="color: White; padding-right: 18px;">Couleur des hub : </label>
+				<select v-model="hub_color" v-on:change="set_color(1, hub_color)">
+						<option style="background-color: Blue " value="blue">Blue</option>
+						<option style="background-color: BlueViolet " value="blueViolet">BlueViolet</option>
+						<option style="background-color: Chocolate " value="chocolate">Chocolate</option>
+						<option style="background-color: Crimson " value="crimson">Crimson</option>
+						<option style="background-color: Green " value="green">Green</option>
+						<option style="background-color: Purple " value="purple">Purple</option>
+						<option style="background-color: Red " value="red">Red</option>
+						<option style="background-color: Teal " value="teal">Teal</option>
+				</select><br>
+				<label style="color: White">Couleur des switch : </label>
+				<select v-model="switch_color" v-on:change="set_color(2, switch_color)">
+						<option style="background-color: Blue " value="blue">Blue</option>
+						<option style="background-color: BlueViolet " value="blueViolet">BlueViolet</option>
+						<option style="background-color: Chocolate " value="chocolate">Chocolate</option>
+						<option style="background-color: Crimson " value="crimson">Crimson</option>
+						<option style="background-color: Green " value="green">Green</option>
+						<option style="background-color: Purple " value="purple">Purple</option>
+						<option style="background-color: Red " value="red">Red</option>
+						<option style="background-color: Teal " value="teal">Teal</option>
+				</select>
+			</div>
+			<input type="button" onclick="document.getElementById('config').style.display = 'none';" value="Valider" style="margin: 10px;"/>
 		</div>
 	
 		<div id="aide" class="aide">
@@ -59,6 +85,29 @@
 			<input type="text" id="mavar3" style="position: relative; right: -25%; top: 40%; " />
 			<input type="button" onclick="document.getElementById('ipconfig').style.display = 'none';" value="Valider" id="saveip" style="position: relative; right: 5%; top: 65%;" />
 		</div>
+
+		<div id="save" class="save" >
+		<form>
+			<h3>Nom de Projet</h3>
+			<input class="form-control" v-model="projectN" size="10" id="save" type="text">
+			<!--<a href="#" @click="RegisterP()" class="">Enregistrer le Project</a>-->
+			<button type="button" onclick="document.getElementById('save').style.display = 'none'" @click="saveProject()" class="btn btn-success">Save</button>
+			<button type="button" onclick="document.getElementById('save').style.display = 'none'" class="btn btn-danger">close</button></br>
+
+		</form>
+		</div>
+
+		<div id="load" class="load" >
+ 		<div id="list">
+ 		<h4 id="listProject"></h4>
+ 		</div>
+ 		<form>
+ 			<input class="form-control" v-model="projectN" size="10" id="load" type="text"><br>
+ 			<!--<a href="#" @click="RegisterP()" class="">Enregistrer le Project</a>-->
+ 			<button type="button" onclick="document.getElementById('load').style.display = 'none'" @click="loadProject()" class="btn btn-info">Load</button>
+ 			<button type="button" onclick="document.getElementById('load').style.display = 'none'" class="btn btn-danger">close</button></br>
+ 		</form>
+ 		</div>
 	
 		<div id="noeud" class="noeud">
 			<h1> Choisissez les stations </h1>
@@ -71,7 +120,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-
+//<button type="button" @click="loadProject()" class="btn btn-info">Load</button>
 import Vue from 'vue'
 import jquery from 'jQuery'
 //import {fabric} from 'fabric'
@@ -87,7 +136,10 @@ export default {
 		return {
 			userInfo: {},
 			projectN: '',
-			model: {}
+			model: {},
+			post_color: 'green', 
+			hub_color: 'red',
+			switch_color: 'blue'
 		}
 	},
 
@@ -142,8 +194,9 @@ export default {
 			api.space();
 		},
 
-		set_trame_type: function (nb) {
-			api.set_trame_type(nb);
+		set_color: function(i, color)
+		{
+			api.set_color(i, color);
 		},
 
 		async saveProject() {
@@ -188,10 +241,50 @@ export default {
 	border-style: solid;
 	border-width: 1px;
 	border-color: black;
+	background-color: black;
+	text-align: center;
+}
+
+h1{
+	color:white;
+}
+
+.save {
+	display: none;
+	position: absolute;
+	left: 100px;
+	top: 100px;
+	height: 150px;
+	width: 250px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
 	background-color: white;
+
+	border-radius: 25px;
 
 	text-align: center;
 }
+
+.load {
+ 	display: none;
+ 	position: absolute;
+ 	left: 100px;
+ 	top: 100px;
+ 	padding-left: 50px;
+ 	padding-right: 50px;
+ 	padding-top: 10px;
+ 	padding-bottom: 10px;
+ 
+ 	border-style: solid;
+ 	border-width: 1px;
+ 	border-color: black;
+ 	background-color: black;
+
+	border-radius: 25px;
+ 
+ 	text-align: center;
+ }
 
 .text_aide {
 	position: relative;
@@ -203,12 +296,14 @@ export default {
 	position: absolute;
 	left: 100px;
 	top: 100px;
-	height: 500px;
+	height: auto;
 	width: 1200px;
 	border-style: solid;
 	border-width: 1px;
 	border-color: black;
-	background-color: white;
+	background-color: black;
+	text-align:center;
+	border-radius: 25px;
 }
 
 .ipconfig {
@@ -221,7 +316,7 @@ export default {
 	border-style: solid;
 	border-width: 1px;
 	border-color: black;
-	background-color: white;
+	background-color: black;
 }
 
 .options {
@@ -230,7 +325,7 @@ export default {
 	border-style: solid;
 	border-width: 1px;
 	border-color: black;
-	background-color: grey;
+	background-color: black;
 	text-align: center;
 	padding: 3px;
 }
@@ -240,15 +335,20 @@ export default {
 	position: absolute;
 	left: 100px;
 	top: 100px;
-	height: 500px;
+	height: auto;
 	width: 1200px;
 	border-style: solid;
 	border-width: 1px;
 	border-color: black;
-	background-color: white;
+	background-color: black;
+	text-align:center;
+	border-radius: 25px;
 }
 
 .legend {
+	padding: 10px;
+	border-color: black;
+	background-color: white;
 	position: absolute;
 	left: 1000px;
 	top: 70px;

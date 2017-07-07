@@ -5,6 +5,10 @@ export default {
 	color_1:'red',
 	color_2:'green',
 
+	post_color:'green',
+	switch_color:'blue',
+	hub_color:'red',
+
 	buttons: [],
 	buttons_selected: [],
 
@@ -39,5 +43,6 @@ export default {
 
 	tab_buttons: [],
 
-	ctrl: null
+	ctrl: null,
+	project:null
 }

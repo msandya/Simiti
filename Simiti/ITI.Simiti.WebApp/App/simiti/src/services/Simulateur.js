@@ -7,6 +7,7 @@ import simulation from '../services/simulation.js';
 import struct from '../services/struct.js';
 import load from '../services/load.js';
 import save from '../services/save.js';
+import simi from '../components/simulateur.vue';
 
 
 export default {
@@ -21,6 +22,19 @@ export default {
 			'pressed': false
 		};
 	},
+	displayArrayProject(listProject) {
+ 		var len = listProject.length;
+		 console.log(len);
+ 		var text = '<span style="color:#A4A4A4">PROJETS :</span><br>';
+ 		text += '<select v-model="projectN">';
+ 		for (var i = 0; i < len; i++) {
+ 			var myObject = listProject[i];
+ 
+ 			text += '<option value="' + myObject.name + '">' + myObject.name + '</option>';
+ 		}
+ 		text += '</select>';
+ 		document.getElementById("listProject").innerHTML = text;
+ 	},
 
 	get_save_data() {
 		return simu.save_data;
@@ -67,23 +81,13 @@ export default {
 		this.canvas.renderAll();
 	},
 
-	enter()
+	space()  // 32 = space
 	{
-		alert('enter pressed');
+		//alert('space pressed');
 	},
 
 	press_c() // 67 = c 
 	{
-		/*
-		for (var i = 0; i < simu.tab_workstation.length; i++) {
-			console.log("id: " + simu.tab_workstation[i].id + " checked:" + simu.tab_workstation[i].checked);
-		}
-		*/
-		var save_data = save.save(simu.tab_workstation, simu.tab_cable);
-		console.log(save_data);
-
-		/*var test = "c< 1 0 1 5 0 >< 0 1 6 2 0 >< 0 1 5 3 0 >< 0 1 4 5 0 >< 0 0 3 0 0 >< 0 0 2 1 0 >w< 0 s 6 323 165 >< 1 s 6 516 284 >< 2 p 1 267 240 >< 3 p 1 282 94 >< 4 p 1 704 320 >< 5 p 1 574 400 >< 6 p 1 392 380 >";
-		load.load(test);*/
 	},
 	
 	press_a() // 65 = a
@@ -103,7 +107,7 @@ export default {
 		}
 	},
 	
-	space() // 32 = space
+	enter()
 	{
 		var s = null;
 		if (this.canvas.getActiveObject() != null) {
@@ -143,12 +147,25 @@ export default {
 				input.id = "trameSize";
 				options.appendChild(input);
 			}
-
+		
 			function broadcast() {
 				var tram_size = null;
-				if (document.getElementById("trameSize") != null && document.getElementById("trameSize") != '') {
-					tram_size = document.getElementById("trameSize").value;
+				if (simu.trame_type == 3)
+				{
+					var imput = document.getElementById("trameSize").value;
+					if (imput != null && imput != '' && !isNaN(Number(imput)) && imput > 63) {
+						tram_size = imput;
+					}
+					else
+					{
+						if (imput < 64)
+							alert("La taille minimum d'une trame est de 64 octets");
+						tram_size = 128;
+						alert('Entrée invalide, trame de 128 octets par défault');
+					}
 				}
+				else
+					tram_size = 128;
 				simulation.simulate(s, null, tram_size);
 				options.remove();
 			}
@@ -156,12 +173,31 @@ export default {
 			function unicast() {
 				var tram_size = null;
 				var targetid = prompt("Select target id");
-				if (document.getElementById("trameSize") != null && document.getElementById("trameSize") != '') {
-					tram_size = document.getElementById("trameSize").value;
+				if (simu.tram_type == 3)
+				{
+					var imput = document.getElementById("trameSize").value;
+					if (imput != null && imput != '' && !isNaN(Number(imput)) && imput > 63) {
+						tram_size = imput;
+					}
+					else
+					{
+						if (imput < 64)
+							alert("La taille minimum d'une trame est de 64 octets");
+						tram_size = 128;
+						alert('Entrée invalide, trame de 128 octets par défault');
+					}
 				}
-				if (targetid != "") {
-					simulation.simulate(s, targetid, tram_size);
+				else
+					tram_size = 128;
+				if (targetid != "" && !isNaN(Number(targetid)))
+				{
+					if (targetid == s.id)
+						alert('Vous ne pouvez pas envoyer une requette au post émetteur.')
+					else if (test_target_id(targetid))
+						simulation.simulate(s, targetid, tram_size);
 				}
+				else
+					alert('Entrée invalide');
 				options.remove();
 			}
 		}
@@ -418,10 +454,44 @@ export default {
 		}
 	},
 
+	set_color(i, color)
+	{
+		if (i == 0)
+			simu.post_color = color;
+		else if (i == 1)
+			simu.hub_color = color;
+		else
+			simu.switch_color = color;
+
+		for (var i = 0; i < simu.tab_workstation.length; i++)
+		{
+			var aux = simu.tab_workstation[i].obj.getObjects();
+			if (simu.tab_workstation[i].type == 'hub')
+				aux[0].set({fill: simu.hub_color});
+			else if (simu.tab_workstation[i].type == 'post')
+			{
+				aux[0].set({fill: simu.post_color});
+			}
+			else
+				aux[0].set({fill: simu.switch_color});
+		}
+	},
+
 	send_request_3(portOriginal, postIdOriginal, tabVect, workstationType, workstationId, port_1_left, port_1_top, port_2_left, port_2_top, request_size, target)
 	{
 		send_request_2(portOriginal, postIdOriginal, tabVect, workstationType, workstationId, port_1_left, port_1_top, port_2_left, port_2_top, request_size, target)
 	}
+}
+
+function test_target_id(id)
+{
+	for (var i = 0; i < simu.tab_workstation.length; i++)
+	{
+		if(simu.tab_workstation[i].id == id && simu.tab_workstation[i].type == "post")
+			return true;
+	}
+	alert('Aucun post ne possède cette id');
+	return false;
 }
 
 function displayArrayObjects(WorkStation) {
@@ -440,12 +510,12 @@ function displayArrayObjects(WorkStation) {
 
 		if (simu.tab_workstation[i].checked == true) {
 			checkbox = '<input type="checkbox" id="checkbox' + WorkStation[i].id + '" v-model="checkbox" style="margin-right:10px; margin-left:30px;" checked>';
-			checkbox += '<label for="checkbox' + WorkStation[i].id + '">' + label + '</label>';
+			checkbox += '<label style="color:white;" for="checkbox' + WorkStation[i].id + '">' + label + '</label>';
 		}
 		else
 		{
 			checkbox = '<input type="checkbox" id="checkbox' + WorkStation[i].id + '" v-model="checkbox" style="margin-right:10px; margin-left:30px;">';
-			checkbox += '<label for="checkbox' + WorkStation[i].id + '">' + label + '</label>';
+			checkbox += '<label style="color:white;" for="checkbox' + WorkStation[i].id + '">' + label + '</label>';
 		}
 
 		text += checkbox + "</br>";
@@ -518,7 +588,7 @@ function send_request_2(portOriginal, postIdOriginal, tabVect, workstationType, 
 			count2++;
 		}
 		draw();
-	}, fps * points.length);
+	}, fps * points.length * (request_size / 200));
 
 	count1 = 0;
 	count2 = 0;
@@ -538,7 +608,7 @@ function send_request_2(portOriginal, postIdOriginal, tabVect, workstationType, 
 					target);
 			}
 		}
-	}, 2 * fps * points.length);
+	}, fps * points.length * (request_size / 200) + 1500);
 }
 
 // calculate waypoints traveling along vertices
