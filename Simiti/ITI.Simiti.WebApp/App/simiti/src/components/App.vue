@@ -8,7 +8,7 @@
             <span class="icon-bar"></span>
           </button>
           <router-link class="navbar-brand" to="/">
-            <img src="../img/LogoPI.png" style="width:50px"></img>
+            <img src="../img/LogoPI.png" style="width:40px; margin-top:-13px" ></img>
           </router-link>
           <!--router-link class="navbar-brand" to="/Quisommesnous">Qui sommes-nous ?</router-link-->
         </div>
@@ -24,7 +24,7 @@
 				<ul class="dropdown-menu">
 					<li><a href="#" v-on:click="reset()">Nouveau</a></li>
 					<li><a href="#" onclick="document.getElementById('save').style.display = 'block'">Sauvegarder</a></li>
-					<li><a href="#" onclick="document.getElementById('load').style.display = 'block'" v-on:click="set_list()">Charger</a></li>
+					<li><a href="#" onclick="document.getElementById('load').style.display = 'block'">Charger</a></li>
 				</ul>
 			</li>
 			<li class=""><a href="#" onclick="document.getElementById('config').style.display = 'block'">Parametrage</a></li>

@@ -173,7 +173,7 @@ export default {
 			function unicast() {
 				var tram_size = null;
 				var targetid = prompt("Select target id");
-				if (simu.tram_type == 3)
+				if (simu.trame_type == 3)
 				{
 					var imput = document.getElementById("trameSize").value;
 					if (imput != null && imput != '' && !isNaN(Number(imput)) && imput > 63) {

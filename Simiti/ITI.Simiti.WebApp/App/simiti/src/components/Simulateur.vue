@@ -34,7 +34,7 @@
 		</div>
 
 		<div id="config" class="config">
-			<input type="button" onclick="document.getElementById('config').style.display = 'none'" value="X" style="margin: 10px; position: relative; float: right;" /><br>
+			<input type="button" onclick="document.getElementById('config').style.display = 'none'" class="btn btn-primary" value="X" style="margin: 10px; position: relative; float: right;" /><br>
 			<div style="text-align:left; margin-left: 200px;">
 				<label style="color: White; padding-right: 14px;">Couleur des post : </label>
 				<select v-model="post_color" v-on:change="set_color(0, post_color)">
@@ -70,7 +70,7 @@
 						<option style="background-color: Teal " value="teal">Teal</option>
 				</select>
 			</div>
-			<input type="button" onclick="document.getElementById('config').style.display = 'none';" value="Valider" style="margin: 10px;"/>
+			<input type="button" onclick="document.getElementById('config').style.display = 'none';" class="btn btn-primary" value="Valider" style="margin: 10px;"/>
 		</div>
 	
 		<div id="aide" class="aide">
@@ -83,13 +83,13 @@
 			<input type="button" onclick="document.getElementById('ipconfig').style.display = 'none'" value="X" style="position: relative; float: right;" />
 			<input type="text" id="mavar2" style="position: relative; right: -25%; top: 30%; " />
 			<input type="text" id="mavar3" style="position: relative; right: -25%; top: 40%; " />
-			<input type="button" onclick="document.getElementById('ipconfig').style.display = 'none';" value="Valider" id="saveip" style="position: relative; right: 5%; top: 65%;" />
+			<input type="button" onclick="document.getElementById('ipconfig').style.display = 'none';" class="btn btn-primary" value="Valider" id="saveip" style="position: relative; right: 5%; top: 65%;" />
 		</div>
 
 		<div id="save" class="save" >
 		<form>
-			<h3>Nom de Projet</h3>
-			<input class="form-control" v-model="projectN" size="10" id="save" type="text">
+			<h3 style="margin-top:0px">Nom de Projet</h3>
+			<input style="margin-bottom:10px"class="form-control" v-model="projectN" size="10" id="save" type="text">
 			<!--<a href="#" @click="RegisterP()" class="">Enregistrer le Project</a>-->
 			<button type="button" onclick="document.getElementById('save').style.display = 'none'" @click="saveProject()" class="btn btn-success">Save</button>
 			<button type="button" onclick="document.getElementById('save').style.display = 'none'" class="btn btn-danger">close</button></br>
@@ -99,10 +99,14 @@
 
 		<div id="load" class="load" >
  		<div id="list">
- 		<h4 id="listProject"></h4>
+ 		<!--h4 id="listProject"></h4-->
+		<h4 style="color:white"> Vos projets </h4>
  		</div>
  		<form>
- 			<input class="form-control" v-model="projectN" size="10" id="load" type="text"><br>
+		 	<select style="margin-bottom: 10px" v-model="project">
+				<option v-for="i in this.list" style="color: black" v-model="i.name">{{i.name}}</option>
+			</select><br>
+ 			<!--input class="form-control" v-model="projectN" size="10" id="load" type="text"><br-->
  			<!--<a href="#" @click="RegisterP()" class="">Enregistrer le Project</a>-->
  			<button type="button" onclick="document.getElementById('load').style.display = 'none'" @click="loadProject()" class="btn btn-info">Load</button>
  			<button type="button" onclick="document.getElementById('load').style.display = 'none'" class="btn btn-danger">close</button></br>
@@ -112,7 +116,7 @@
 		<div id="noeud" class="noeud">
 			<h1> Choisissez les stations </h1>
 			<h4 id="message"></h4>
-			<input type="button" onclick="document.getElementById('noeud').style.display = 'none'; text = document.getElementById('mavar').value;" value="Valider" style="position: relative; right: -36%; top: 70%;" />
+			<input type="button" onclick="document.getElementById('noeud').style.display = 'none'; text = document.getElementById('mavar').value;" class="btn btn-primary" value="Valider" style="position: relative; top: 70%;" />
 		</div>
 	</div>
 </template>
@@ -136,10 +140,12 @@ export default {
 		return {
 			userInfo: {},
 			projectN: '',
+			project: '',
 			model: {},
 			post_color: 'green', 
 			hub_color: 'red',
-			switch_color: 'blue'
+			switch_color: 'blue',
+			list: []
 		}
 	},
 
@@ -152,7 +158,7 @@ export default {
 		api.init();
 		var userEmail = AuthService.emailUser();
 		this.userInfo = await UserApiService.getUserAsync(userEmail);
-
+		this.list = await ProjectApiService.getAllProjectByUserIdAsync(this.userInfo.userId);
 	},
 
 	methods: {
@@ -207,10 +213,10 @@ export default {
 		},
 
 		async loadProject() {
-			this.model.name = this.projectN;
+			this.model.name = this.project;
 			this.model.userId = this.userInfo.userId;
 
-			var saved_data = await ProjectApiService.getProjectAsync(this.projectN, this.userInfo.userId);
+			var saved_data = await ProjectApiService.getProjectAsync(this.project, this.userInfo.userId);
 			console.log(saved_data.project);
 			load.load(saved_data.project);
 		}
@@ -248,6 +254,9 @@ export default {
 h1{
 	color:white;
 }
+h3{
+	color:white;
+}
 
 .save {
 	display: none;
@@ -256,10 +265,11 @@ h1{
 	top: 100px;
 	height: 150px;
 	width: 250px;
+	padding: 20px;
 	border-style: solid;
 	border-width: 1px;
 	border-color: black;
-	background-color: white;
+	background-color: black;
 
 	border-radius: 25px;
 

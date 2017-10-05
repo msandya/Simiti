@@ -3,37 +3,85 @@
 @model RegisterViewModel
 
 @{
-    ViewData[ "Title" ] = "Register";
+    ViewData["Title"] = "Register";
 }
 <div class="container">
     <div class="page-header">
-        <h1>@ViewData["Title"]</h1>
+        <h2>Inscription</h2>
     </div>
+
+    @*<div class="form-group">
+            <label asp-for="Pseudo">Pseudo : </label>
+            <input asp-for="Pseudo" class="form-control" />
+            <span asp-validation-for="Pseudo"></span>
+        </div>*@
     <form asp-controller="Account" asp-action="Register" method="post">
-        @if( !ViewContext.ViewData.ModelState.IsValid )
+        @if (!ViewContext.ViewData.ModelState.IsValid)
         {
             <div asp-validation-summary="All" class="alert alert-danger"></div>
         }
         <div class="form-group">
-            <label asp-for="Pseudo">Pseudo : </label>
-            <input asp-for="Pseudo" class="form-control" />
-            <span asp-validation-for="Pseudo"></span>
+            <label asp-for="Pseudo" class="cols-sm-2 control-label">Pseudo</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                    <input type="text" asp-for="Pseudo" class="form-control" placeholder="Entrer votre Pseudo" />
+                    <span asp-validation-for="Pseudo"></span>
+                </div>
+            </div>
         </div>
+
         <div class="form-group">
-            <label asp-for="Email">E-mail : </label>
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email"></span>
+            <label asp-for="Email" class="cols-sm-2 control-label">Votre Email</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" name="email" id="email" placeholder="Entrer votre Email" />
+                    <span asp-validation-for="Email"></span>
+                </div>
+            </div>
         </div>
+        @*<div class="form-group">
+                <label asp-for="Email">E-mail : </label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email"></span>
+            </div>*@
+        @*<div class="form-group">
+                <label asp-for="Password">Password : </label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password"></span>
+            </div>*@
         <div class="form-group">
-            <label asp-for="Password">Password : </label>
-            <input asp-for="Password" class="form-control" />
-            <span asp-validation-for="Password"></span>
+            <label asp-for="Password" class="cols-sm-2 control-label">Mot de Passe</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input asp-for="Password" type="password" class="form-control" name="password" id="password" placeholder="Entrer le mot de passe" />
+                    <span asp-validation-for="Password"></span>
+                </div>
+            </div>
         </div>
+
+
+        @*<div class="form-group">
+                <label asp-for="ConfirmPassword">Confirm Password: </label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword"></span>
+            </div>*@
+
         <div class="form-group">
-            <label asp-for="ConfirmPassword">Confirm Password: </label>
-            <input asp-for="ConfirmPassword" class="form-control" />
-            <span asp-validation-for="ConfirmPassword"></span>
+            <label asp-for="ConfirmPassword" class="cols-sm-2 control-label">Confirmer mot de Passe</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="password" asp-for="ConfirmPassword" class="form-control" placeholder="Confirmer mot de Passe" />
+                    <span asp-validation-for="ConfirmPassword"></span>
+                </div>
+            </div>
         </div>
+
+
         <button type="submit" class="btn btn-primary btn-block">S'enregistrer</button>
     </form>
+
 </div>

@@ -1,0 +1,7 @@
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL\bin\Debug\netstandard1.4\ITI.Simiti.DAL.deps.json
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL\bin\Debug\netstandard1.4\ITI.Simiti.DAL.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL\bin\Debug\netstandard1.4\ITI.Simiti.DAL.pdb
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL\obj\Debug\netstandard1.4\ITI.Simiti.DAL.csprojResolveAssemblyReference.cache
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL\obj\Debug\netstandard1.4\ITI.Simiti.DAL.AssemblyInfo.cs
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL\obj\Debug\netstandard1.4\ITI.Simiti.DAL.dll
+C:\Users\sandy\Documents\PI\Simiti\Simiti\Simiti\ITI.Simiti.DAL\obj\Debug\netstandard1.4\ITI.Simiti.DAL.pdb

@@ -44,12 +44,12 @@ namespace ITI.Simiti.WebApp.Controllers
                 Console.WriteLine("User is authenticated {0}", user != null);
                 if (user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid email or password attempt.");
+                    ModelState.AddModelError(string.Empty, "Invalide email ou mot de passe.");
                     return View(model);
                 }
                 if (model.NewPassword != model.NewPasswordConfirm)
                 {
-                    ModelState.AddModelError(string.Empty, "New passwords are not match.");
+                    ModelState.AddModelError(string.Empty, "Mot de passe differents.");
                     return View(model);
                 }
                 _userService.UpdateUserPassword(user.UserId, model.NewPassword);
@@ -76,7 +76,7 @@ namespace ITI.Simiti.WebApp.Controllers
                 Console.WriteLine("User is authenticated {0}", user != null);
                 if (user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Identifiant invalide.");
                     return View(model);
                 }
                 await SignIn(user.Email, user.UserId.ToString());
@@ -101,12 +101,12 @@ namespace ITI.Simiti.WebApp.Controllers
             {
                 if (_userService.FindUserByEmail(model.Email) != null )
                 {
-                    ModelState.AddModelError(string.Empty, "An account with this email already exists.");
+                    ModelState.AddModelError(string.Empty, "Compte existant.");
                     return View(model);
                 }
                 if (_userService.FindUserByPseudo(model.Pseudo) != null)
                 {
-                    ModelState.AddModelError(string.Empty, "An account with this nickname already exists.");
+                    ModelState.AddModelError(string.Empty, "Pseudo existant.");
                     return View(model);
                 }
                 _userService.CreatePasswordUser(model.Pseudo, model.Email, model.Password);
